@@ -1,0 +1,4 @@
+# Standard library only for the current starter app.
+# PyInstaller is optional when you want to build an EXE.
+pyinstaller>=6.0
+openpyxl>=3.1

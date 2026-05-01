@@ -1,0 +1,9 @@
+START HERE 1. Run app.py
+2. For Excel: click Auto-detect R or browse to Rscript.exe.
+3. For PDF summarize/question mode: - Select PDF(s) - Run workflow - ChatGPT opens in your browser - Upload the file(s) - Click once inside the message box - If auto-paste works, the prompt will paste after the delay - If it does not, press Ctrl+V manually Optional for auto-paste: pip install pyautogui Notes:
+- The Excel clean/process scripts now fall back to CSV output if your R/openxlsx version cannot write XLSX cleanly.
+- Check the output folder for cleaned files and report text files. NEW IN THIS BUNDLE
+- Integrated AI toolkit logging (Use Case Matrix / Process Tracker / Data Pipeline)
+- Structured metadata saved for Excel and PDF runs
+- Bundled toolkit workbook and Word guide in workflow_app/toolkit
+- UI kept intact; changes are backend only

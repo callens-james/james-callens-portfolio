@@ -1,0 +1,6 @@
+Analyze each uploaded PDF separately. For each file:
+1. Identify the file by name
+2. Give a concise overall summary
+3. List dates, deadlines, risks, action items, open questions, or unclear points
+4. Do not combine conclusions across files unless asked
+5. Provide a short executive summary for that file Then provide a final cross-file comparison section. Format the response clearly using headers for each file. Base the answer only on the uploaded file(s). If something is not clearly supported by the file(s), say so.

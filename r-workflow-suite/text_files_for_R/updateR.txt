@@ -1,0 +1,4 @@
+install.packages("installr")
+if(!require(installr)) { install.packages("installr"); require(installr)}
+updateR()
+R.version.string

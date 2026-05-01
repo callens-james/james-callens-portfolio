@@ -1,0 +1,1 @@
+df$newVariableName[which(df$oldVariableName<=250)] <- "<=250"
