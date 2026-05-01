@@ -49,3 +49,30 @@ These scripts are designed to help prevent accidental publication of sensitive d
 ## Notes
 - This is a local-only draft scaffold before public release.
 - Final public version should include screenshots, architecture diagrams, and polished project evidence artifacts.
+
+## New Portfolio Uploads (May 2026)
+
+### 3) Workflow Studio
+Operational workflow toolkit combining Python orchestration, R data-processing scripts, and structured prompt assets for repeatable analysis tasks.
+
+- Folder: [`workflow-studio/`](./workflow-studio)
+
+### 4) AI Toolkit
+Process and enablement toolkit for practical AI adoption: audit templates, prompt libraries, and operational guidance docs.
+
+- Folder: [`ai-toolkit/`](./ai-toolkit)
+
+### 5) R Workflow Suite
+Hands-on R analysis scripts and companion files for behavioral/data workflows with reproducible processing patterns.
+
+- Folder: [`r-workflow-suite/`](./r-workflow-suite)
+
+### 6) Weather Dashboard (Desktop, local-first)
+Portable desktop weather planner for outdoor projects and gardening with multi-source aggregation, scoring, and practical day planning.
+
+- Folder: [`weather-dashboard/`](./weather-dashboard)
+
+### 7) AI Automation Studio Suite Bundle
+Archive bundle of additional automation artifacts.
+
+- File: [`AI-Automation-Studio-Suite-Bundle.zip`](./AI-Automation-Studio-Suite-Bundle.zip)
