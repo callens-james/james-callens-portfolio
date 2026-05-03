@@ -75,7 +75,7 @@ Portable desktop weather planner for outdoor projects and gardening with multi-s
 ### 7) AI Automation Studio Suite Bundle
 Archive bundle of additional automation artifacts.
 
-- File: [`AI-Automation-Studio-Suite-Bundle.zip`](./AI-Automation-Studio-Suite-Bundle.zip)
+- File: [`archives/AI-Automation-Studio-Suite-Bundle.zip`](./archives/AI-Automation-Studio-Suite-Bundle.zip)
 
 ### 8) Ops Insight Copilot (Analyst Workbench)
 Local-first operations dashboard that ingests raw support/CRM CSV exports, normalizes metrics, flags anomalies, generates prioritized recommendations, and outputs weekly executive briefs + CSV exports with audit traces.
