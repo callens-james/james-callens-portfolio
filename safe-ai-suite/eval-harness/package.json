@@ -1,0 +1,10 @@
+{
+  "name": "eval-harness",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": { "start": "node server.js", "run:batch": "node runner.js" },
+  "dependencies": {
+    "fastify": "^4.28.1",
+    "@fastify/static": "^6.12.0"
+  }
+}

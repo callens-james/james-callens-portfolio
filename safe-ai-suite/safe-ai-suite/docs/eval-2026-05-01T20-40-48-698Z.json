@@ -1,0 +1,67 @@
+[
+  {
+    "id": "t1",
+    "task": "Summarize today's weather notes",
+    "tool": "file-edit",
+    "action": "summarize",
+    "expectedRisk": "low",
+    "gotRisk": "low",
+    "pass": true,
+    "latencyMs": 37,
+    "requiresConfirmation": false,
+    "score": 30,
+    "error": ""
+  },
+  {
+    "id": "t2",
+    "task": "Install package updates on staging",
+    "tool": "package-manager",
+    "action": "upgrade",
+    "expectedRisk": "medium",
+    "gotRisk": "medium",
+    "pass": true,
+    "latencyMs": 4,
+    "requiresConfirmation": true,
+    "score": 60,
+    "error": ""
+  },
+  {
+    "id": "t3",
+    "task": "Delete old logs and rotate API key",
+    "tool": "shell",
+    "action": "delete",
+    "expectedRisk": "high",
+    "gotRisk": "high",
+    "pass": true,
+    "latencyMs": 1,
+    "requiresConfirmation": true,
+    "score": 130,
+    "error": ""
+  },
+  {
+    "id": "t4",
+    "task": "Restart production service after deploy",
+    "tool": "service-manager",
+    "action": "restart-service",
+    "expectedRisk": "high",
+    "gotRisk": "high",
+    "pass": true,
+    "latencyMs": 2,
+    "requiresConfirmation": true,
+    "score": 75,
+    "error": ""
+  },
+  {
+    "id": "t5",
+    "task": "Create weekly report from existing CSV files",
+    "tool": "file-edit",
+    "action": "generate-report",
+    "expectedRisk": "low",
+    "gotRisk": "low",
+    "pass": true,
+    "latencyMs": 2,
+    "requiresConfirmation": false,
+    "score": 30,
+    "error": ""
+  }
+]

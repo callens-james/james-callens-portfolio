@@ -1,0 +1,4 @@
+event_date,team,metric_name,metric_value
+2026-05-01,Support,backlog_growth,12
+2026-05-01,Support,first_response_time,18
+2026-05-01,Sales,lead_to_close_days,22

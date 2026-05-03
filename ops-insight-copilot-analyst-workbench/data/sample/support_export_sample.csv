@@ -1,0 +1,4 @@
+ticket_id,created_at,first_response_at,status,priority,queue,agent
+T-1001,2026-04-28T09:15:00Z,2026-04-28T09:42:00Z,open,high,Billing,Ana
+T-1002,2026-04-28T10:03:00Z,2026-04-28T11:20:00Z,resolved,normal,Tech,Sam
+T-1003,2026-04-29T08:11:00Z,,open,urgent,Tech,Chris

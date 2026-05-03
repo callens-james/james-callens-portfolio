@@ -1,0 +1,7 @@
+{
+  "name": "timeline-viewer",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": { "start": "node server.js" },
+  "dependencies": { "fastify": "^4.28.1", "@fastify/static": "^6.12.0" }
+}

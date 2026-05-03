@@ -76,3 +76,22 @@ Portable desktop weather planner for outdoor projects and gardening with multi-s
 Archive bundle of additional automation artifacts.
 
 - File: [`AI-Automation-Studio-Suite-Bundle.zip`](./AI-Automation-Studio-Suite-Bundle.zip)
+
+### 8) Ops Insight Copilot (Analyst Workbench)
+Local-first operations dashboard that ingests raw support/CRM CSV exports, normalizes metrics, flags anomalies, generates prioritized recommendations, and outputs weekly executive briefs + CSV exports with audit traces.
+
+- Folder (staging): `ops-insight-copilot-analyst-workbench/`
+- Key value: faster analyst reporting cycle with human-in-the-loop controls
+
+
+### 8) Safe AI Suite
+A local-first safety engineering portfolio suite with risk gating, timeline observability, evaluation harnesses, and publish-safe evidence artifacts.
+
+- Folder: [`safe-ai-suite/`](./safe-ai-suite)
+- Highlights: policy controls, eval trend progression, runbooks, failure taxonomy, screenshots
+
+### 9) Ops Insight Copilot (Analyst Workbench)
+A local-first operations dashboard that ingests support/CRM exports, normalizes data, computes KPIs, flags anomalies, generates recommendations, and produces weekly briefs with exports and audit traces.
+
+- Folder: [`ops-insight-copilot-analyst-workbench/`](./ops-insight-copilot-analyst-workbench)
+- Highlights: multi-format CSV normalization, human-in-the-loop approve/undo, explainable thresholds

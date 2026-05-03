@@ -1,0 +1,4 @@
+lead_id,created_date,close_date,stage,owner,region,amount
+L-2001,2026-03-01,2026-03-24,Closed Won,Jamie,NA,18000
+L-2002,2026-03-05,2026-04-02,Closed Lost,Taylor,EMEA,9500
+L-2003,2026-03-11,,Negotiation,Jordan,NA,12000

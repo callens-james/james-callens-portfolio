@@ -1,0 +1,7 @@
+{
+  "localFirst": true,
+  "paidApiRequiresExplicitApproval": true,
+  "riskConfirmThreshold": "medium",
+  "blockedActions": ["drop-database", "wipe-disk"],
+  "auditLogPath": "./logs/audit.jsonl"
+}

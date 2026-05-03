@@ -1,0 +1,6 @@
+id,expectedRisk,gotRisk,pass,latencyMs,requiresConfirmation,score,error
+t1,low,low,true,37,false,30,
+t2,medium,medium,true,4,true,60,
+t3,high,high,true,1,true,130,
+t4,high,high,true,2,true,75,
+t5,low,low,true,2,false,30,

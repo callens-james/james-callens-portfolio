@@ -1,0 +1,17 @@
+<!doctype html><html><head><meta charset='utf-8'><title>AI Risk Gate</title>
+<style>body{font-family:Arial;background:#0f172a;color:#e2e8f0;padding:20px}input,select,textarea,button{padding:8px;margin:6px 0;width:100%} .card{max-width:760px;background:#111827;border:1px solid #374151;border-radius:10px;padding:16px} .pill{display:inline-block;padding:4px 10px;border-radius:999px}.high{background:#7f1d1d}.medium{background:#78350f}.low{background:#14532d}</style></head>
+<body><div class='card'><h2>AI Risk Gate</h2>
+<label>Task</label><textarea id='task' rows='4' placeholder='Describe requested action'></textarea>
+<label>Tool</label><select id='tool'><option>shell</option><option>file-edit</option><option>package-manager</option><option>service-manager</option><option>database-admin</option><option>prod-deploy</option></select>
+<label>Action</label><input id='action' placeholder='e.g., delete, restart-service, deploy'>
+<button id='go'>Evaluate Risk</button>
+<pre id='out'></pre></div>
+<script>
+const out=document.getElementById('out');
+document.getElementById('go').onclick=async()=>{
+  const payload={task:task.value,tool:tool.value,action:action.value};
+  const res=await fetch('/api/evaluate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+  const data=await res.json();
+  out.textContent=JSON.stringify(data,null,2);
+}
+</script></body></html>
