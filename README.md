@@ -77,13 +77,6 @@ Archived bundle of supporting automation artifacts preserved for reference.
 
 - File: [`archives/AI-Automation-Studio-Suite-Bundle.zip`](./archives/AI-Automation-Studio-Suite-Bundle.zip)
 
-### 8) Ops Insight Copilot (Analyst Workbench)
-Local-first operations dashboard that ingests raw support/CRM CSV exports, normalizes metrics, flags anomalies, generates prioritized recommendations, and outputs weekly executive briefs + CSV exports with audit traces.
-
-- Folder (staging): `ops-insight-copilot-analyst-workbench/`
-- Key value: faster analyst reporting cycle with human-in-the-loop controls
-
-
 ### 8) Safe AI Suite
 Practical AI safety engineering suite with risk gating, decision traceability, eval harnesses, and publish-safe evidence artifacts.
 
