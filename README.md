@@ -53,27 +53,27 @@ These scripts are designed to help prevent accidental publication of sensitive d
 ## New Portfolio Uploads (May 2026)
 
 ### 3) Workflow Studio
-Operational workflow toolkit combining Python orchestration, R data-processing scripts, and structured prompt assets for repeatable analysis tasks.
+Local-first workflow automation toolkit for orchestrating analysis and operational tasks across scripts, prompts, and process steps.
 
 - Folder: [`workflow-studio/`](./workflow-studio)
 
 ### 4) AI Toolkit
-Process and enablement toolkit for practical AI adoption: audit templates, prompt libraries, and operational guidance docs.
+Applied AI enablement toolkit with templates, frameworks, and operational guides for safe, practical adoption.
 
 - Folder: [`ai-toolkit/`](./ai-toolkit)
 
 ### 5) R Workflow Suite
-Hands-on R analysis scripts and companion files for behavioral/data workflows with reproducible processing patterns.
+Reproducible R-based data processing and analysis workflows for structured research and operational reporting.
 
 - Folder: [`r-workflow-suite/`](./r-workflow-suite)
 
 ### 6) Weather Dashboard (Desktop, local-first)
-Portable desktop weather planner for outdoor projects and gardening with multi-source aggregation, scoring, and practical day planning.
+Local-first weather planning dashboard focused on actionable day-level decisions using multi-source forecast inputs.
 
 - Folder: [`weather-dashboard/`](./weather-dashboard)
 
 ### 7) AI Automation Studio Suite Bundle
-Archive bundle of additional automation artifacts.
+Archived bundle of supporting automation artifacts preserved for reference.
 
 - File: [`archives/AI-Automation-Studio-Suite-Bundle.zip`](./archives/AI-Automation-Studio-Suite-Bundle.zip)
 
@@ -85,13 +85,13 @@ Local-first operations dashboard that ingests raw support/CRM CSV exports, norma
 
 
 ### 8) Safe AI Suite
-A local-first safety engineering portfolio suite with risk gating, timeline observability, evaluation harnesses, and publish-safe evidence artifacts.
+Practical AI safety engineering suite with risk gating, decision traceability, eval harnesses, and publish-safe evidence artifacts.
 
 - Folder: [`safe-ai-suite/`](./safe-ai-suite)
 - Highlights: policy controls, eval trend progression, runbooks, failure taxonomy, screenshots
 
 ### 9) Ops Insight Copilot (Analyst Workbench)
-A local-first operations dashboard that ingests support/CRM exports, normalizes data, computes KPIs, flags anomalies, generates recommendations, and produces weekly briefs with exports and audit traces.
+Local-first analyst workbench that transforms raw support/CRM exports into KPIs, anomaly alerts, prioritized actions, and weekly briefs.
 
 - Folder: [`ops-insight-copilot-analyst-workbench/`](./ops-insight-copilot-analyst-workbench)
 - Highlights: multi-format CSV normalization, human-in-the-loop approve/undo, explainable thresholds
