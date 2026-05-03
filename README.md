@@ -14,7 +14,19 @@ I build systems that connect AI reasoning with real operational workflows — sa
 
 ## Featured Projects
 
-### 1) AI Mission Control Dashboard
+### 1) Safe AI Suite
+Practical AI safety engineering suite with risk gating, decision traceability, eval harnesses, and publish-safe evidence artifacts.
+
+- Folder: [`safe-ai-suite/`](./safe-ai-suite)
+- Highlights: policy controls, eval trend progression, runbooks, failure taxonomy, screenshots
+
+### 2) Ops Insight Copilot (Analyst Workbench)
+Local-first analyst workbench that transforms raw support/CRM exports into KPIs, anomaly alerts, prioritized actions, and weekly briefs.
+
+- Folder: [`ops-insight-copilot-analyst-workbench/`](./ops-insight-copilot-analyst-workbench)
+- Highlights: multi-format CSV normalization, human-in-the-loop approve/undo, explainable thresholds
+
+### 3) AI Mission Control Dashboard
 A local-first control plane for conversational AI + execution workflows.
 
 - Project page: [`projects/ai-mission-control.md`](./projects/ai-mission-control.md)
@@ -22,7 +34,7 @@ A local-first control plane for conversational AI + execution workflows.
 
 ![Mission Control Main Interface](./assets/mission-control-main.jpg)
 
-### 2) Job Application Pipeline Automation
+### 4) Job Application Pipeline Automation
 A structured pipeline for sourcing, scoring, and tracking remote opportunities.
 
 - Project page: [`projects/job-pipeline.md`](./projects/job-pipeline.md)
@@ -47,8 +59,7 @@ This repo scaffold includes fail-closed prepublish checks:
 These scripts are designed to help prevent accidental publication of sensitive data.
 
 ## Notes
-- This is a local-only draft scaffold before public release.
-- Final public version should include screenshots, architecture diagrams, and polished project evidence artifacts.
+- Continuously updated with new project evidence, screenshots, and implementation refinements.
 
 ## New Portfolio Uploads (May 2026)
 
@@ -77,14 +88,3 @@ Archived bundle of supporting automation artifacts preserved for reference.
 
 - File: [`archives/AI-Automation-Studio-Suite-Bundle.zip`](./archives/AI-Automation-Studio-Suite-Bundle.zip)
 
-### 8) Safe AI Suite
-Practical AI safety engineering suite with risk gating, decision traceability, eval harnesses, and publish-safe evidence artifacts.
-
-- Folder: [`safe-ai-suite/`](./safe-ai-suite)
-- Highlights: policy controls, eval trend progression, runbooks, failure taxonomy, screenshots
-
-### 9) Ops Insight Copilot (Analyst Workbench)
-Local-first analyst workbench that transforms raw support/CRM exports into KPIs, anomaly alerts, prioritized actions, and weekly briefs.
-
-- Folder: [`ops-insight-copilot-analyst-workbench/`](./ops-insight-copilot-analyst-workbench)
-- Highlights: multi-format CSV normalization, human-in-the-loop approve/undo, explainable thresholds
