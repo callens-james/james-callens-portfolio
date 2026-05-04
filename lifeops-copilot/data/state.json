@@ -928,6 +928,29 @@
         "level": "medium",
         "kind": "reminder"
       }
+    },
+    {
+      "id": "57424b87-d65a-41d6-9261-00d5313f74ad",
+      "ts": "2026-05-04T18:05:03.909Z",
+      "eventType": "modules_updated",
+      "detail": {
+        "career": false,
+        "smb": false,
+        "health": false
+      },
+      "hash": "11514b6329be3cecd9c9f33385867269f07e9f2dcdad8631be74eefbaeeba969",
+      "prevHash": "11514b6329be3cecd9c9f33385867269f07e9f2dcdad8631be74eefbaeeba969"
+    },
+    {
+      "id": "f4618d77-b041-4c79-89f1-49c2a5dd5dbc",
+      "ts": "2026-05-04T18:11:42.894Z",
+      "eventType": "onboarding_updated",
+      "detail": {
+        "beginnerMode": true,
+        "setupComplete": false
+      },
+      "hash": "9822b189bfd1336716b7ff07bd7dbee603fe753316c2520c998f2a0a7e744acc",
+      "prevHash": "9822b189bfd1336716b7ff07bd7dbee603fe753316c2520c998f2a0a7e744acc"
     }
   ],
   "settings": {
@@ -941,7 +964,9 @@
       "intervalSec": 30,
       "quietStart": "23:00",
       "quietEnd": "08:00"
-    }
+    },
+    "beginnerMode": true,
+    "setupComplete": false
   },
   "profile": {
     "householdSize": 1,
@@ -1382,5 +1407,39 @@
       "fitScore": 50,
       "createdAt": "2026-05-04T17:10:28.423Z"
     }
-  ]
+  ],
+  "stateVersion": "0.3.0",
+  "smbInvoices": [],
+  "smbCompliance": [],
+  "smbVendors": [],
+  "healthCases": [],
+  "modules": {
+    "career": false,
+    "smb": false,
+    "health": false
+  },
+  "security": {
+    "lockEnabled": false,
+    "passcodeHash": null,
+    "redactionDefault": true
+  },
+  "users": [
+    {
+      "id": "u-owner",
+      "name": "Owner",
+      "role": "owner"
+    },
+    {
+      "id": "u-member",
+      "name": "Member",
+      "role": "member"
+    },
+    {
+      "id": "u-viewer",
+      "name": "Viewer",
+      "role": "viewer"
+    }
+  ],
+  "userNotifications": {},
+  "auditPrevHash": "9822b189bfd1336716b7ff07bd7dbee603fe753316c2520c998f2a0a7e744acc"
 }

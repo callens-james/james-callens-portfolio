@@ -1,8 +1,35 @@
 <!doctype html><html><head><meta charset='utf-8'><title>LifeOps Copilot</title>
-<style>body{font-family:Arial;background:#0f172a;color:#e2e8f0;padding:20px}.card{background:#111827;border:1px solid #334155;border-radius:8px;padding:12px;margin:10px 0}button{margin-left:6px}.badge{padding:2px 8px;border-radius:999px;font-size:12px}.risk-overdue{background:#7f1d1d;color:#fecaca}.risk-due-soon{background:#78350f;color:#fde68a}.risk-stable{background:#14532d;color:#bbf7d0}.st{background:#1e293b;color:#cbd5e1}.small{font-size:12px;color:#93c5fd}.msg{padding:6px 8px;background:#0b1220;border:1px solid #334155;border-radius:6px;display:inline-block}.primary{background:#1d4ed8;color:#fff}.success{background:#065f46;color:#fff}</style></head>
+<style>body{font-family:Arial;background:#0f172a;color:#e2e8f0;padding:20px}.card{background:#111827;border:1px solid #334155;border-radius:8px;padding:12px;margin:10px 0}button{margin-left:6px}.badge{padding:2px 8px;border-radius:999px;font-size:12px}.risk-overdue{background:#7f1d1d;color:#fecaca}.risk-due-soon{background:#78350f;color:#fde68a}.risk-stable{background:#14532d;color:#bbf7d0}.st{background:#1e293b;color:#cbd5e1}.small{font-size:12px;color:#93c5fd}.hidden{display:none}.msg{padding:6px 8px;background:#0b1220;border:1px solid #334155;border-radius:6px;display:inline-block}.primary{background:#1d4ed8;color:#fff}.success{background:#065f46;color:#fff}</style></head>
 <body>
-<h1>LifeOps Copilot (v0.2.0-demo)</h1>
-<div class='card'><button class='primary' onclick='quickStartDemo()'>Run Quick Start Demo</button> <span class='small'>Reset + seed + scenario + queue/digest/plan</span></div>
+<h1>LifeOps Copilot (v0.3.0-v2-demo-final)</h1>
+
+
+<div class='card'><h3>First-Time Setup (Sprint 3.9)</h3>
+<div class='small'>Beginner mode shows only essential sections.</div>
+<label><input type='checkbox' id='beginnerModeChk' checked> Beginner mode</label>
+<label><input type='checkbox' id='setupDoneChk'> Setup complete</label>
+<button onclick='saveOnboarding()'>Save Onboarding</button>
+<button onclick='toggleAdvanced()'>Apply View</button>
+<div id='onbMsg' class='small'></div>
+</div>
+
+<div class='card'>Jump to:
+<a href='#core'>Core</a> |
+<a href='#career'>Career</a> |
+<a href='#smb'>SMB</a> |
+<a href='#health'>Health</a> |
+<a href='#ops'>Ops</a>
+</div>
+
+
+<div class='card'><h3>Multi-User (Sprint 3.8)</h3>
+<select id='userSel'></select>
+<button onclick='switchUser()'>Switch User</button>
+<span id='userMsg' class='small'></span>
+<div id='meInfo' class='small'></div>
+</div>
+
+<div id='core' class='card'><button class='primary' onclick='quickStartDemo()'>Run Quick Start Demo</button> <span class='small'>Reset + seed + scenario + queue/digest/plan</span></div>
 <div class='card'><input id='txt' style='width:70%' placeholder='Paste a notice/task with date like 2026-05-20'><button onclick='addItem()'>Add to Inbox</button><button onclick='seedDemo()'>Load Demo Data</button><button onclick='resetDemo()'>Reset Demo Data</button><span id='msg' class='msg'></span></div>
 
 <div class='card'><h3>Module Registry (Sprint 2.8)</h3>
@@ -14,12 +41,23 @@
 <div id='moduleMsg'></div>
 </div>
 
-<div class='card'><h3>Install Profile / Integrations</h3><select id='profile'><option value='core-only'>LifeOps (Core Only)</option><option value='local-ai'>LifeOps + Local AI</option><option value='openclaw'>LifeOps + OpenClaw</option></select><label><input type='checkbox' id='warnAck'> acknowledge warnings</label><button onclick='saveInstallProfile()'>Save Profile</button><div id='onboardSummary' class='small'></div><details><summary>Debug Settings</summary><div id='settings'></div></details></div>
-<div class='card'><h3>Model Manager</h3><select id='modelSelect'></select><button onclick='testModel()'>Test</button><button onclick='applyModel()'>Apply</button><div id='modelMsg' class='small'></div></div>
-<div class='card'><h3>Career Copilot</h3><input id='caCompany' placeholder='Company'><input id='caRole' placeholder='Role'><input id='caSource' placeholder='Source'><input id='caFollow' placeholder='Follow-up YYYY-MM-DD'><input id='caNotes' placeholder='Notes'><button onclick='addCareerApp()'>Add</button><div id='careerList'></div></div>
-<div class='card'><h3>Career Analytics + Reports</h3><button onclick='loadCareerAnalytics()'>Refresh</button><button onclick='downloadCareerCSV()'>CSV</button><button onclick='generateCareerReport()'>Weekly MD</button><div id='careerAnalytics'></div><pre id='careerReport'></pre></div>
 
-<div class='card'><h3>SMB Console (Sprint 2.6)</h3>
+<div class='card'><h3>Setup Wizard (Sprint 3.5)</h3>
+<div id='wizStep'>Step 1: Choose install profile</div>
+<select id='wizProfile'></select>
+<label><input type='checkbox' id='wizAck'> I acknowledge performance/security warnings for optional profiles</label>
+<button onclick='wizardLoadProfiles()'>Load Profiles</button>
+<button onclick='wizardApplyProfile()'>Apply Selected Profile</button>
+<button onclick='wizardNext()'>Next Step</button>
+<div id='wizMsg' class='small'></div>
+</div>
+
+<div class='card'><h3>Install Profile / Integrations</h3><select id='profile'><option value='core-only'>LifeOps (Core Only)</option><option value='local-ai'>LifeOps + Local AI</option><option value='openclaw'>LifeOps + OpenClaw</option></select><label><input type='checkbox' id='warnAck'> acknowledge warnings</label><button onclick='saveInstallProfile()'>Save Profile</button><div id='onboardSummary' class='small'></div><details><summary>Debug Settings</summary><div id='settings'></div></details></div>
+<div class='card advanced'><h3>Model Manager</h3><select id='modelSelect'></select><button onclick='testModel()'>Test</button><button onclick='applyModel()'>Apply</button><div id='modelMsg' class='small'></div></div>
+<details open><summary><b>Career</b></summary><div id='career' class='card'><h3>Career Copilot</h3><input id='caCompany' placeholder='Company'><input id='caRole' placeholder='Role'><input id='caSource' placeholder='Source'><input id='caFollow' placeholder='Follow-up YYYY-MM-DD'><input id='caNotes' placeholder='Notes'><button onclick='addCareerApp()'>Add</button><div id='careerList'></div></div>
+<div class='card advanced'><h3>Career Analytics + Reports</h3><button onclick='loadCareerAnalytics()'>Refresh</button><button onclick='downloadCareerCSV()'>CSV</button><button onclick='generateCareerReport()'>Weekly MD</button><div id='careerAnalytics'></div><pre id='careerReport'></pre></div>
+
+</details><details><summary><b>SMB</b></summary><div id='smb' class='card'><h3>SMB Console (Sprint 2.6)</h3>
 <div>
 <input id='smbClient' placeholder='Invoice client'><input id='smbAmount' placeholder='Amount' style='width:90px'><input id='smbDue' placeholder='Due YYYY-MM-DD' style='width:130px'><button onclick='addInvoice()'>Add Invoice</button>
 </div>
@@ -36,7 +74,7 @@
 </div>
 
 
-<div class='card'><h3>Health Bureaucracy Copilot (Sprint 2.7)</h3>
+</details><details><summary><b>Health</b></summary><div id='health' class='card'><h3>Health Bureaucracy Copilot (Sprint 2.7)</h3>
 <input id='hcType' placeholder='Type (claim/prior-auth/referral/appeal)' style='width:220px'>
 <input id='hcPayer' placeholder='Payer' style='width:140px'>
 <input id='hcDeadline' placeholder='Deadline YYYY-MM-DD' style='width:140px'>
@@ -47,9 +85,9 @@
 <pre id='healthDigest'></pre>
 </div>
 
-<div class='card'><h3>Opportunity Profile</h3><label>Household <input id='pfHouse' type='number' value='1' style='width:70px'></label><label>Income <input id='pfIncome' type='number' value='0' style='width:90px'></label><label>Location <input id='pfLoc' style='width:80px'></label><label>Employment <select id='pfEmp'><option>unknown</option><option>unemployed</option><option>part-time</option><option>full-time</option></select></label><button onclick='saveOpportunityProfile()'>Save</button></div>
-<div class='card'><h3>Opportunity Navigator</h3><button onclick='loadOpportunities()'>Refresh</button><div id='opps'></div></div>
-<div class='card'><h3>Opportunity Action Tracker</h3><div id='oppActions'></div></div>
+<div class='card advanced'><h3>Opportunity Profile</h3><label>Household <input id='pfHouse' type='number' value='1' style='width:70px'></label><label>Income <input id='pfIncome' type='number' value='0' style='width:90px'></label><label>Location <input id='pfLoc' style='width:80px'></label><label>Employment <select id='pfEmp'><option>unknown</option><option>unemployed</option><option>part-time</option><option>full-time</option></select></label><button onclick='saveOpportunityProfile()'>Save</button></div>
+<div class='card advanced'><h3>Opportunity Navigator</h3><button onclick='loadOpportunities()'>Refresh</button><div id='opps'></div></div>
+<div class='card advanced'><h3>Opportunity Action Tracker</h3><div id='oppActions'></div></div>
 <div class='card'><h3>Prioritized Items</h3><div id='items'></div></div>
 <div class='card'><h3>Item Detail</h3><div id='itemDetail'>Select an item.</div></div>
 <div class='card'><h3>Weekly Brief</h3><button onclick='loadBrief()'>Generate</button><pre id='brief'></pre></div>
@@ -83,6 +121,20 @@
 </div>
 <div class='card'><h3>UX + Perf (Sprint 3.2)</h3><button onclick='loadPerf()'>Refresh Perf</button><div id='perfOut'></div></div>
 
+
+<div class='card'><h3>Data Portability + Privacy (Sprint 3.7)</h3>
+<label><input type='checkbox' id='dpRedacted' checked> Redacted export</label>
+<label><input type='checkbox' id='dpAudit' checked> Include audit</label>
+<label><input type='checkbox' id='dpNotes' checked> Include notes</label>
+<button onclick='exportDataPackage()'>Export My Data</button>
+<button onclick='previewImportPrompt()'>Import Preview</button>
+<button onclick='applyImportPrompt()'>Import Apply</button>
+<select id='clearModule'><option value='career'>Clear Career</option><option value='smb'>Clear SMB</option><option value='health'>Clear Health</option><option value='all'>Clear All</option></select>
+<button onclick='clearDataPrompt()'>Clear Data</button>
+<button onclick='loadIntegrity()'>Integrity Report</button>
+<pre id='integrityOut'></pre>
+</div>
+
 <div class='card'><h3>Reliability (Sprint 3.0)</h3>
 <button onclick='runSelfcheck()'>Run Selfcheck</button>
 <button onclick='listBackups()'>List Backups</button>
@@ -90,15 +142,29 @@
 <div id='selfcheckOut'></div>
 </div>
 
-<div class='card'><h3>Release + Config + Datasets</h3><button onclick='showVersion()'>Version</button><button onclick='exportConfig()'>Export Config</button><button onclick='importConfigPrompt()'>Import Config</button><input id='dsName' placeholder='dataset'><button onclick='saveDataset()'>Save Dataset</button><button onclick='loadDatasets()'>List</button><select id='dsList'></select><button onclick='loadDataset()'>Load Dataset</button><button onclick='exportBundle()'>Export Bundle</button><button onclick="setMode('real')">Real</button><button onclick="setMode('demo')">Demo</button><div id='releaseMsg'></div><div id='modeMsg'></div></div>
-<div class='card'><h3>Rollback Timeline</h3><button onclick='loadTimeline()'>Refresh</button><button onclick='rollbackLast()'>Rollback Last</button><div id='timeline'></div></div>
-<div class='card'><h3>Audit (latest)</h3><div id='audit'></div></div>
+<div class='card advanced'><h3>Release + Config + Datasets</h3><button onclick='showVersion()'>Version</button><button onclick='exportConfig()'>Export Config</button><button onclick='importConfigPrompt()'>Import Config</button><input id='dsName' placeholder='dataset'><button onclick='saveDataset()'>Save Dataset</button><button onclick='loadDatasets()'>List</button><select id='dsList'></select><button onclick='loadDataset()'>Load Dataset</button><button onclick='exportBundle()'>Export Bundle</button><button onclick="setMode('real')">Real</button><button onclick="setMode('demo')">Demo</button><div id='releaseMsg'></div><div id='modeMsg'></div></div>
+<div class='card advanced'><h3>Rollback Timeline</h3><button onclick='loadTimeline()'>Refresh</button><button onclick='rollbackLast()'>Rollback Last</button><div id='timeline'></div></div>
+<div class='card advanced'><h3>Audit (latest)</h3><div id='audit'></div></div>
+</details>
+<div id='ops'></div>
 <script>
 const API='http://192.168.1.170:3360/api';
-const j=async(u,o)=>{const r=await fetch(API+u,o); const d=await r.json(); if(!r.ok||d.ok===false) throw new Error(d.error||'Something went wrong.'); return d;};
+let LIFEOPS_USER='u-owner';
+const j=async(u,o)=>{o=o||{}; o.headers=o.headers||{}; o.headers['x-lifeops-user']=LIFEOPS_USER; const r=await fetch(API+u,o); const d=await r.json(); if(!r.ok||d.ok===false) throw new Error(d.error||'Something went wrong.'); return d;};
 const showMsg=(t)=>document.getElementById('msg').textContent=t;
+
+async function loadUsers(){
+  const users = await j('/users');
+  userSel.innerHTML = users.map(u=>`<option value="${u.id}">${u.name} (${u.role})</option>`).join('');
+  userSel.value = LIFEOPS_USER;
+  const me = await j('/user/me');
+  meInfo.textContent = `Current user: ${me.user.name} (${me.user.role})`;
+}
+function switchUser(){ LIFEOPS_USER = userSel.value; userMsg.textContent = 'Switched to '+LIFEOPS_USER; load(); }
+
 async function load(){
- const s=await j('/settings'); document.getElementById('settings').textContent=JSON.stringify(s); document.getElementById('profile').value=s.installProfile||'core-only'; document.getElementById('onboardSummary').textContent=`Profile:${s.installProfile||'core-only'} AI:${s.aiEnabled?'on':'off'} Model:${s.aiModel||'phi3:mini'} OpenClaw:${s.openclawEnabled?'on':'off'}`; const sch=s.scheduler||{}; schEnabled.checked=!!sch.enabled; schInt.value=sch.intervalSec||60; schStart.value=sch.quietStart||'23:00'; schEnd.value=sch.quietEnd||'08:00';
+ await loadUsers();
+ const s=await j('/settings'); document.getElementById('beginnerModeChk').checked=!!s.beginnerMode; document.getElementById('setupDoneChk').checked=!!s.setupComplete; document.getElementById('settings').textContent=JSON.stringify(s); document.getElementById('profile').value=s.installProfile||'core-only'; document.getElementById('onboardSummary').textContent=`Profile:${s.installProfile||'core-only'} AI:${s.aiEnabled?'on':'off'} Model:${s.aiModel||'phi3:mini'} OpenClaw:${s.openclawEnabled?'on':'off'}`; const sch=s.scheduler||{}; schEnabled.checked=!!sch.enabled; schInt.value=sch.intervalSec||60; schStart.value=sch.quietStart||'23:00'; schEnd.value=sch.quietEnd||'08:00';
  const mods=await j('/modules'); modCareer.checked=!!mods.career; modSmb.checked=!!mods.smb; modHealth.checked=!!mods.health; const models=await j('/model/options'); modelSelect.innerHTML=models.map(m=>`<option value="${m.id}">${m.id} (${m.tier})</option>`).join(''); modelSelect.value=s.aiModel||'phi3:mini';
  const items=await j('/items'); itemsDiv(items); const actions=await j('/actions'); approvals.innerHTML=actions.filter(x=>x.status==='awaiting_approval').map(x=>`<div>[${x.risk||'low'}] ${x.title} <button onclick="approveAction('${x.id}','${x.risk||'low'}')">Approve</button> <button onclick="revertAction('${x.id}')">Undo</button></div>`).join('')||'No pending';
  const pf=await j('/profile'); pfHouse.value=pf.householdSize||1; pfIncome.value=pf.income||0; pfLoc.value=pf.location||''; pfEmp.value=pf.employment||'unknown';
@@ -106,7 +172,7 @@ async function load(){
  await loadCareerApps();
  await loadSmb();
  await loadHealthCases(); await loadCareerAnalytics();
- await loadPerf(); await loadOpportunities(); await loadQueue(); await loadDigest(); await loadConfirmations(); await loadTimeline(); await loadNotifications(); await loadScenarios(); await loadImpact(); const a=await j('/audit'); audit.innerHTML=a.slice(0,10).map(x=>`<div>${x.ts} - ${x.eventType}</div>`).join('');
+ await loadPerf(); await loadOpportunities(); await loadQueue(); await loadDigest(); await loadConfirmations(); await loadTimeline(); await loadNotifications(); await loadScenarios(); await loadImpact(); toggleAdvanced(); const a=await j('/audit'); audit.innerHTML=a.slice(0,10).map(x=>`<div>${x.ts} - ${x.eventType}</div>`).join('');
 }
 function itemsDiv(items){document.getElementById('items').innerHTML=items.map(i=>`<div><b>${i.priority}</b> | <span class="badge risk-${i.risk}">${i.risk}</span> | <span class="badge st">${i.status}</span> | ${i.deadline||'-'} | ${i.text} <button onclick="inspectItem('${i.id}')">Inspect</button> <button onclick="propose('${i.id}')">Propose</button> <button onclick="advance('${i.id}','parsed')">Parse</button><button onclick="advance('${i.id}','planned')">Plan</button><button onclick="advance('${i.id}','awaiting_approval')">Await</button><button onclick="advance('${i.id}','in_progress')">Start</button><button onclick="advance('${i.id}','done')">Done</button></div>`).join('');}
 async function inspectItem(id){const d=await j('/items/'+id); itemDetail.innerHTML=`<div>Type:${d.docType||'other'} Risk:${d.risk} Priority:${d.priority}</div><div>Confidence:${d.deadlineConfidence||'n/a'} Notes:${d.extractionNotes||''}</div><ul>${(d.checklist||[]).map(x=>`<li>${x}</li>`).join('')}</ul><ul>${(d.actionTemplates||[]).map(x=>`<li>${x}</li>`).join('')}</ul>`;}
@@ -198,5 +264,28 @@ async function importConfigPrompt(){const txt=prompt('Paste config JSON'); if(!t
 async function saveDataset(){const r=await j('/datasets/save',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:dsName.value||'demo'})}); releaseMsg.textContent='Saved '+r.file; loadDatasets();}
 async function loadDatasets(){const list=await j('/datasets'); dsList.innerHTML=list.map(x=>`<option value='${x}'>${x}</option>`).join('');}
 async function loadDataset(){if(!dsList.value) return; await j('/datasets/load',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:dsList.value})}); releaseMsg.textContent='Loaded '+dsList.value; load();}
+
+async function saveSecurity(){ await j('/security',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({lockEnabled:secLock.checked,passcode:secPass.value||undefined,redactionDefault:secRedact.checked})}); secMsg.textContent='Security settings saved'; }
+async function unlockSession(){ const r=await j('/security/unlock',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({passcode:unlockPass.value||''})}); secMsg.textContent=r.unlocked?'Unlocked':'Unlock failed'; }
+async function runSelfcheck(){ const r=await j('/selfcheck'); selfcheckOut.textContent=`Selfcheck passed: ${r.passed} | version: ${r.stateVersion}`; }
+async function listBackups(){ const b=await j('/backups'); backupSel.innerHTML=b.map(x=>`<option value="${x}">${x}</option>`).join(''); }
+async function restoreBackup(){ if(!backupSel.value) return; const r=await j('/backups/restore',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:backupSel.value})}); showMsg(r.ok?'Backup restored':'Restore failed'); load(); }
+async function loadPerf(){ const p=await j('/perf'); perfOut.textContent=JSON.stringify(p); }
+async function exportDataPackage(){ const q=`?redacted=${dpRedacted.checked?1:0}&audit=${dpAudit.checked?1:0}&notes=${dpNotes.checked?1:0}`; const d=await j('/data/export-package'+q); const b=new Blob([JSON.stringify(d,null,2)],{type:'application/json'}); const a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download='lifeops_data_package.json'; a.click(); }
+async function previewImportPrompt(){ const txt=prompt('Paste data package JSON'); if(!txt) return; try{ const r=await j('/data/import-preview',{method:'POST',headers:{'Content-Type':'application/json'},body:txt}); integrityOut.textContent=JSON.stringify(r,null,2);}catch(e){showMsg('Import preview failed');}}
+async function applyImportPrompt(){ const txt=prompt('Paste data package JSON to APPLY'); if(!txt) return; try{ const r=await j('/data/import-apply',{method:'POST',headers:{'Content-Type':'application/json'},body:txt}); showMsg(r.ok?'Import applied':'Import failed'); load(); }catch(e){showMsg('Import apply failed');}}
+async function clearDataPrompt(){ const phrase=prompt('Type CLEAR DATA to confirm'); const mod=clearModule.value; const r=await j('/data/clear',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({module:mod,confirmPhrase:phrase||''})}); showMsg(r.ok?'Data cleared':'Clear failed'); load(); }
+async function loadIntegrity(){ const r=await j('/data/integrity'); integrityOut.textContent=JSON.stringify(r,null,2); }
+async function wizardLoadProfiles(){ const d=await j('/installer/profiles'); wizProfile.innerHTML=(d.profiles||[]).map(p=>`<option value="${p.id}">${p.label}${p.recommended?' (recommended)':''}</option>`).join(''); wizMsg.textContent='Profiles loaded'; }
+async function wizardApplyProfile(){ const profileId=wizProfile.value||'core-only'; if(profileId!=='core-only'&&!wizAck.checked){wizMsg.textContent='Acknowledge warnings first'; return;} await j('/installer/apply-profile',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({profileId})}); wizMsg.textContent='Applied '+profileId; load(); }
+let wizStep=1; function wizardNext(){ wizStep=wizStep>=4?1:wizStep+1; const labels={1:'Step 1: Choose install profile',2:'Step 2: Select model tier and test compatibility',3:'Step 3: Configure scheduler and quiet hours',4:'Step 4: Review summary and launch'}; const el=document.getElementById('wizStep'); if(el) el.textContent=labels[wizStep]; }
+async function activateV2Demo(){ await j('/v2/demo/activate',{method:'POST'}); showMsg('V2 demo mode activated'); load(); }
+async function checkV2Readiness(){ const r=await j('/v2/release-readiness'); v2Readiness.textContent=`Ready: ${r.passed} | Version: ${r.version}`; }
+async function loadV2CaseStudies(){ const d=await j('/v2/case-studies'); v2CaseStudies.textContent=JSON.stringify(d.docs,null,2); }
+
+
+function toggleAdvanced(){ const beginner=document.getElementById('beginnerModeChk')?.checked; document.querySelectorAll('.advanced').forEach(el=>el.classList.toggle('hidden', !!beginner)); }
+async function saveOnboarding(){ const beginnerMode=!!document.getElementById('beginnerModeChk')?.checked; const setupComplete=!!document.getElementById('setupDoneChk')?.checked; await j('/onboarding',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({beginnerMode,setupComplete})}); onbMsg.textContent='Onboarding saved'; toggleAdvanced(); }
+
 load();
 </script></body></html>
