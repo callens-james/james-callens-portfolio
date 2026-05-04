@@ -22,3 +22,7 @@ __pycache__/
 
 # Logs
 *.log
+
+# LifeOps build outputs (do not track)
+lifeops-copilot/tauri/src-tauri/target/
+lifeops-copilot/release/artifacts/*.AppImage

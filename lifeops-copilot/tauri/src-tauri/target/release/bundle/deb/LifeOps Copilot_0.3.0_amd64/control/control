@@ -1,9 +1,0 @@
-Package: life-ops-copilot
-Version: 0.3.0
-Architecture: amd64
-Installed-Size: 9250
-Maintainer: lifeops
-Priority: optional
-Depends: libwebkit2gtk-4.1-0, libgtk-3-0
-Description: (none)
- (none)
