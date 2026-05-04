@@ -738,6 +738,196 @@
         "level": "medium",
         "kind": "reminder"
       }
+    },
+    {
+      "id": "522df6bd-386f-45ad-80df-48abfd3dacfe",
+      "ts": "2026-05-04T17:15:14.093Z",
+      "eventType": "notification_created",
+      "detail": {
+        "id": "8b8d1ae7-7c7f-404f-b6a1-c7bc25adbd70",
+        "level": "medium",
+        "kind": "reminder"
+      }
+    },
+    {
+      "id": "bf1f403f-d92b-4d37-b508-d2361040d6bf",
+      "ts": "2026-05-04T17:15:44.108Z",
+      "eventType": "notification_created",
+      "detail": {
+        "id": "08649653-41bf-4812-95de-4c5ef0b13691",
+        "level": "medium",
+        "kind": "reminder"
+      }
+    },
+    {
+      "id": "a4d134e4-42e6-409a-9257-55a5425777db",
+      "ts": "2026-05-04T17:16:14.120Z",
+      "eventType": "notification_created",
+      "detail": {
+        "id": "a569d215-83d9-47ec-ac50-96b515a9e741",
+        "level": "medium",
+        "kind": "reminder"
+      }
+    },
+    {
+      "id": "df5ec28b-19ed-4b2a-be41-84f5ec0b9cbe",
+      "ts": "2026-05-04T17:16:44.133Z",
+      "eventType": "notification_created",
+      "detail": {
+        "id": "f1eed1a6-65b3-4b42-81cf-042a2f653708",
+        "level": "medium",
+        "kind": "reminder"
+      }
+    },
+    {
+      "id": "65333ed3-0a7f-4e04-b092-8b7d90c896fb",
+      "ts": "2026-05-04T17:17:14.146Z",
+      "eventType": "notification_created",
+      "detail": {
+        "id": "f00a209d-0d66-4dac-8581-50fd3bd5d464",
+        "level": "medium",
+        "kind": "reminder"
+      }
+    },
+    {
+      "id": "ba30e85e-2e3a-4de6-a6ac-7b99da082d56",
+      "ts": "2026-05-04T17:17:44.158Z",
+      "eventType": "notification_created",
+      "detail": {
+        "id": "b4ebc360-c0b0-4981-855c-b80db4cec38a",
+        "level": "medium",
+        "kind": "reminder"
+      }
+    },
+    {
+      "id": "40123626-7514-4f02-92b4-7f18db5fb92a",
+      "ts": "2026-05-04T17:18:14.172Z",
+      "eventType": "notification_created",
+      "detail": {
+        "id": "3f71f675-c045-40d8-937a-516839b129a9",
+        "level": "medium",
+        "kind": "reminder"
+      }
+    },
+    {
+      "id": "91ff0af5-97d6-4700-8f5f-097730cd543a",
+      "ts": "2026-05-04T17:18:44.185Z",
+      "eventType": "notification_created",
+      "detail": {
+        "id": "ac10535f-0d91-4c90-b28d-2770c12dc991",
+        "level": "medium",
+        "kind": "reminder"
+      }
+    },
+    {
+      "id": "ba6da870-f6ce-4d01-8d89-4705f39f3e9c",
+      "ts": "2026-05-04T17:19:14.198Z",
+      "eventType": "notification_created",
+      "detail": {
+        "id": "c21871ad-0b4f-4061-b5d6-5ec3c336f5c3",
+        "level": "medium",
+        "kind": "reminder"
+      }
+    },
+    {
+      "id": "5400cf8e-fc2a-4820-8109-7c1ce54c051d",
+      "ts": "2026-05-04T17:19:44.211Z",
+      "eventType": "notification_created",
+      "detail": {
+        "id": "f6026fbc-36ed-4169-823e-d3e3666afff9",
+        "level": "medium",
+        "kind": "reminder"
+      }
+    },
+    {
+      "id": "74c1d1ba-7582-40c5-b666-44f1dd8d4830",
+      "ts": "2026-05-04T17:20:14.223Z",
+      "eventType": "notification_created",
+      "detail": {
+        "id": "1d586519-9f7a-433f-8b07-e56eb738fa2b",
+        "level": "medium",
+        "kind": "reminder"
+      }
+    },
+    {
+      "id": "9624bb1e-ed28-4d63-a80f-09ad61cb6bad",
+      "ts": "2026-05-04T17:20:44.235Z",
+      "eventType": "notification_created",
+      "detail": {
+        "id": "4af79944-933a-46e7-b8c4-3e5f06b1469d",
+        "level": "medium",
+        "kind": "reminder"
+      }
+    },
+    {
+      "id": "e96109dd-cd6f-4e36-9548-4b24e28b0ca6",
+      "ts": "2026-05-04T17:21:14.248Z",
+      "eventType": "notification_created",
+      "detail": {
+        "id": "e8a1f619-1219-45ac-806d-7a9346a8a840",
+        "level": "medium",
+        "kind": "reminder"
+      }
+    },
+    {
+      "id": "892acaa3-c459-48b5-aff5-49beac0c8d5d",
+      "ts": "2026-05-04T17:21:44.261Z",
+      "eventType": "notification_created",
+      "detail": {
+        "id": "c05688a1-cc43-40f5-9c9e-0e77f36598d1",
+        "level": "medium",
+        "kind": "reminder"
+      }
+    },
+    {
+      "id": "3faf4ba6-5d0b-4a44-b2d2-04becbda12a6",
+      "ts": "2026-05-04T17:22:14.272Z",
+      "eventType": "notification_created",
+      "detail": {
+        "id": "61b70d86-8238-4327-8350-def05cf4c149",
+        "level": "medium",
+        "kind": "reminder"
+      }
+    },
+    {
+      "id": "426624bd-358b-4f87-851e-8d152411beda",
+      "ts": "2026-05-04T17:22:44.285Z",
+      "eventType": "notification_created",
+      "detail": {
+        "id": "6ae4a5d8-2cc6-4698-970e-282e2654e745",
+        "level": "medium",
+        "kind": "reminder"
+      }
+    },
+    {
+      "id": "585f58b9-8906-450d-b353-1e50fbb462a1",
+      "ts": "2026-05-04T17:23:14.298Z",
+      "eventType": "notification_created",
+      "detail": {
+        "id": "0724b872-383b-4015-bd64-0d88a051c120",
+        "level": "medium",
+        "kind": "reminder"
+      }
+    },
+    {
+      "id": "826d016f-619e-4db4-8d04-ff8338ff25f5",
+      "ts": "2026-05-04T17:23:44.311Z",
+      "eventType": "notification_created",
+      "detail": {
+        "id": "06e541d7-ffe2-4383-9055-8fd5464638d4",
+        "level": "medium",
+        "kind": "reminder"
+      }
+    },
+    {
+      "id": "df053087-26a4-472e-98c7-0322470a40bd",
+      "ts": "2026-05-04T17:24:14.323Z",
+      "eventType": "notification_created",
+      "detail": {
+        "id": "d74a5f66-1766-47a6-87a0-2a90eb6304ce",
+        "level": "medium",
+        "kind": "reminder"
+      }
     }
   ],
   "settings": {
@@ -941,6 +1131,177 @@
     {
       "id": "208be906-5484-4b97-b348-38f8bfdcfc60",
       "ts": "2026-05-04T17:14:44.081Z",
+      "level": "medium",
+      "message": "1 item(s) due soon.",
+      "kind": "reminder",
+      "read": false,
+      "snoozedUntil": null
+    },
+    {
+      "id": "8b8d1ae7-7c7f-404f-b6a1-c7bc25adbd70",
+      "ts": "2026-05-04T17:15:14.093Z",
+      "level": "medium",
+      "message": "1 item(s) due soon.",
+      "kind": "reminder",
+      "read": false,
+      "snoozedUntil": null
+    },
+    {
+      "id": "08649653-41bf-4812-95de-4c5ef0b13691",
+      "ts": "2026-05-04T17:15:44.108Z",
+      "level": "medium",
+      "message": "1 item(s) due soon.",
+      "kind": "reminder",
+      "read": false,
+      "snoozedUntil": null
+    },
+    {
+      "id": "a569d215-83d9-47ec-ac50-96b515a9e741",
+      "ts": "2026-05-04T17:16:14.120Z",
+      "level": "medium",
+      "message": "1 item(s) due soon.",
+      "kind": "reminder",
+      "read": false,
+      "snoozedUntil": null
+    },
+    {
+      "id": "f1eed1a6-65b3-4b42-81cf-042a2f653708",
+      "ts": "2026-05-04T17:16:44.133Z",
+      "level": "medium",
+      "message": "1 item(s) due soon.",
+      "kind": "reminder",
+      "read": false,
+      "snoozedUntil": null
+    },
+    {
+      "id": "f00a209d-0d66-4dac-8581-50fd3bd5d464",
+      "ts": "2026-05-04T17:17:14.146Z",
+      "level": "medium",
+      "message": "1 item(s) due soon.",
+      "kind": "reminder",
+      "read": false,
+      "snoozedUntil": null
+    },
+    {
+      "id": "b4ebc360-c0b0-4981-855c-b80db4cec38a",
+      "ts": "2026-05-04T17:17:44.158Z",
+      "level": "medium",
+      "message": "1 item(s) due soon.",
+      "kind": "reminder",
+      "read": false,
+      "snoozedUntil": null
+    },
+    {
+      "id": "3f71f675-c045-40d8-937a-516839b129a9",
+      "ts": "2026-05-04T17:18:14.172Z",
+      "level": "medium",
+      "message": "1 item(s) due soon.",
+      "kind": "reminder",
+      "read": false,
+      "snoozedUntil": null
+    },
+    {
+      "id": "ac10535f-0d91-4c90-b28d-2770c12dc991",
+      "ts": "2026-05-04T17:18:44.185Z",
+      "level": "medium",
+      "message": "1 item(s) due soon.",
+      "kind": "reminder",
+      "read": false,
+      "snoozedUntil": null
+    },
+    {
+      "id": "c21871ad-0b4f-4061-b5d6-5ec3c336f5c3",
+      "ts": "2026-05-04T17:19:14.198Z",
+      "level": "medium",
+      "message": "1 item(s) due soon.",
+      "kind": "reminder",
+      "read": false,
+      "snoozedUntil": null
+    },
+    {
+      "id": "f6026fbc-36ed-4169-823e-d3e3666afff9",
+      "ts": "2026-05-04T17:19:44.210Z",
+      "level": "medium",
+      "message": "1 item(s) due soon.",
+      "kind": "reminder",
+      "read": false,
+      "snoozedUntil": null
+    },
+    {
+      "id": "1d586519-9f7a-433f-8b07-e56eb738fa2b",
+      "ts": "2026-05-04T17:20:14.223Z",
+      "level": "medium",
+      "message": "1 item(s) due soon.",
+      "kind": "reminder",
+      "read": false,
+      "snoozedUntil": null
+    },
+    {
+      "id": "4af79944-933a-46e7-b8c4-3e5f06b1469d",
+      "ts": "2026-05-04T17:20:44.235Z",
+      "level": "medium",
+      "message": "1 item(s) due soon.",
+      "kind": "reminder",
+      "read": false,
+      "snoozedUntil": null
+    },
+    {
+      "id": "e8a1f619-1219-45ac-806d-7a9346a8a840",
+      "ts": "2026-05-04T17:21:14.248Z",
+      "level": "medium",
+      "message": "1 item(s) due soon.",
+      "kind": "reminder",
+      "read": false,
+      "snoozedUntil": null
+    },
+    {
+      "id": "c05688a1-cc43-40f5-9c9e-0e77f36598d1",
+      "ts": "2026-05-04T17:21:44.261Z",
+      "level": "medium",
+      "message": "1 item(s) due soon.",
+      "kind": "reminder",
+      "read": false,
+      "snoozedUntil": null
+    },
+    {
+      "id": "61b70d86-8238-4327-8350-def05cf4c149",
+      "ts": "2026-05-04T17:22:14.272Z",
+      "level": "medium",
+      "message": "1 item(s) due soon.",
+      "kind": "reminder",
+      "read": false,
+      "snoozedUntil": null
+    },
+    {
+      "id": "6ae4a5d8-2cc6-4698-970e-282e2654e745",
+      "ts": "2026-05-04T17:22:44.285Z",
+      "level": "medium",
+      "message": "1 item(s) due soon.",
+      "kind": "reminder",
+      "read": false,
+      "snoozedUntil": null
+    },
+    {
+      "id": "0724b872-383b-4015-bd64-0d88a051c120",
+      "ts": "2026-05-04T17:23:14.298Z",
+      "level": "medium",
+      "message": "1 item(s) due soon.",
+      "kind": "reminder",
+      "read": false,
+      "snoozedUntil": null
+    },
+    {
+      "id": "06e541d7-ffe2-4383-9055-8fd5464638d4",
+      "ts": "2026-05-04T17:23:44.311Z",
+      "level": "medium",
+      "message": "1 item(s) due soon.",
+      "kind": "reminder",
+      "read": false,
+      "snoozedUntil": null
+    },
+    {
+      "id": "d74a5f66-1766-47a6-87a0-2a90eb6304ce",
+      "ts": "2026-05-04T17:24:14.323Z",
       "level": "medium",
       "message": "1 item(s) due soon.",
       "kind": "reminder",

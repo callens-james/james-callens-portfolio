@@ -4,10 +4,49 @@
 <h1>LifeOps Copilot (v0.2.0-demo)</h1>
 <div class='card'><button class='primary' onclick='quickStartDemo()'>Run Quick Start Demo</button> <span class='small'>Reset + seed + scenario + queue/digest/plan</span></div>
 <div class='card'><input id='txt' style='width:70%' placeholder='Paste a notice/task with date like 2026-05-20'><button onclick='addItem()'>Add to Inbox</button><button onclick='seedDemo()'>Load Demo Data</button><button onclick='resetDemo()'>Reset Demo Data</button><span id='msg' class='msg'></span></div>
+
+<div class='card'><h3>Module Registry (Sprint 2.8)</h3>
+<label><input type='checkbox' id='modCareer'> Career</label>
+<label><input type='checkbox' id='modSmb'> SMB</label>
+<label><input type='checkbox' id='modHealth'> Health</label>
+<button onclick='saveModules()'>Save Modules</button>
+<button onclick='exportCommon()'>Export Common Contract</button>
+<div id='moduleMsg'></div>
+</div>
+
 <div class='card'><h3>Install Profile / Integrations</h3><select id='profile'><option value='core-only'>LifeOps (Core Only)</option><option value='local-ai'>LifeOps + Local AI</option><option value='openclaw'>LifeOps + OpenClaw</option></select><label><input type='checkbox' id='warnAck'> acknowledge warnings</label><button onclick='saveInstallProfile()'>Save Profile</button><div id='onboardSummary' class='small'></div><details><summary>Debug Settings</summary><div id='settings'></div></details></div>
 <div class='card'><h3>Model Manager</h3><select id='modelSelect'></select><button onclick='testModel()'>Test</button><button onclick='applyModel()'>Apply</button><div id='modelMsg' class='small'></div></div>
 <div class='card'><h3>Career Copilot</h3><input id='caCompany' placeholder='Company'><input id='caRole' placeholder='Role'><input id='caSource' placeholder='Source'><input id='caFollow' placeholder='Follow-up YYYY-MM-DD'><input id='caNotes' placeholder='Notes'><button onclick='addCareerApp()'>Add</button><div id='careerList'></div></div>
 <div class='card'><h3>Career Analytics + Reports</h3><button onclick='loadCareerAnalytics()'>Refresh</button><button onclick='downloadCareerCSV()'>CSV</button><button onclick='generateCareerReport()'>Weekly MD</button><div id='careerAnalytics'></div><pre id='careerReport'></pre></div>
+
+<div class='card'><h3>SMB Console (Sprint 2.6)</h3>
+<div>
+<input id='smbClient' placeholder='Invoice client'><input id='smbAmount' placeholder='Amount' style='width:90px'><input id='smbDue' placeholder='Due YYYY-MM-DD' style='width:130px'><button onclick='addInvoice()'>Add Invoice</button>
+</div>
+<div id='smbInvoices'></div>
+<div>
+<input id='smbCompItem' placeholder='Compliance item'><input id='smbCompDue' placeholder='Due YYYY-MM-DD' style='width:130px'><button onclick='addCompliance()'>Add Compliance</button>
+</div>
+<div id='smbCompliance'></div>
+<div>
+<input id='smbVendor' placeholder='Vendor'><select id='smbRisk'><option>low</option><option>medium</option><option>high</option></select><button onclick='addVendor()'>Add Vendor</button>
+</div>
+<div id='smbVendors'></div>
+<button onclick='loadSmbBrief()'>Generate SMB Weekly Brief</button><pre id='smbBrief'></pre>
+</div>
+
+
+<div class='card'><h3>Health Bureaucracy Copilot (Sprint 2.7)</h3>
+<input id='hcType' placeholder='Type (claim/prior-auth/referral/appeal)' style='width:220px'>
+<input id='hcPayer' placeholder='Payer' style='width:140px'>
+<input id='hcDeadline' placeholder='Deadline YYYY-MM-DD' style='width:140px'>
+<select id='hcPriority'><option>low</option><option selected>medium</option><option>high</option></select>
+<button onclick='addHealthCase()'>Add Health Case</button>
+<div id='healthCases'></div>
+<button onclick='loadHealthDigest()'>Generate Health Digest</button>
+<pre id='healthDigest'></pre>
+</div>
+
 <div class='card'><h3>Opportunity Profile</h3><label>Household <input id='pfHouse' type='number' value='1' style='width:70px'></label><label>Income <input id='pfIncome' type='number' value='0' style='width:90px'></label><label>Location <input id='pfLoc' style='width:80px'></label><label>Employment <select id='pfEmp'><option>unknown</option><option>unemployed</option><option>part-time</option><option>full-time</option></select></label><button onclick='saveOpportunityProfile()'>Save</button></div>
 <div class='card'><h3>Opportunity Navigator</h3><button onclick='loadOpportunities()'>Refresh</button><div id='opps'></div></div>
 <div class='card'><h3>Opportunity Action Tracker</h3><div id='oppActions'></div></div>
@@ -22,6 +61,15 @@
 <div class='card'><h3>Outcome + Impact</h3><button onclick='loadImpact()'>Refresh Impact</button> Manual <input id='blManual' type='number' value='45' style='width:70px'> Assisted <input id='blAssist' type='number' value='20' style='width:70px'><button onclick='saveImpactAssumptions()'>Save</button><div id='outcomes'></div><div id='impact'></div></div>
 <div class='card'><h3>Case Study + Scenarios</h3><button onclick='generateCaseStudy()'>Case Study MD</button><select id='scenarioSel'></select><button onclick='loadScenario()'>Load Scenario</button><button onclick='runDemoScript()'>Demo Script</button><pre id='caseStudy'></pre></div>
 <div class='card'><h3>Daily Digest + Local Metrics</h3><button onclick='loadDigest()'>Refresh Digest</button><div id='digest'></div><div id='metrics'></div></div>
+
+<div class='card'><h3>V2 Release Prep (Sprint 2.9)</h3>
+<button onclick='activateV2Demo()'>Activate V2 Demo Mode</button>
+<button onclick='checkV2Readiness()'>Check V2 Readiness</button>
+<button onclick='loadV2CaseStudies()'>Load V2 Case Studies</button>
+<div id='v2Readiness'></div>
+<pre id='v2CaseStudies'></pre>
+</div>
+
 <div class='card'><h3>Release + Config + Datasets</h3><button onclick='showVersion()'>Version</button><button onclick='exportConfig()'>Export Config</button><button onclick='importConfigPrompt()'>Import Config</button><input id='dsName' placeholder='dataset'><button onclick='saveDataset()'>Save Dataset</button><button onclick='loadDatasets()'>List</button><select id='dsList'></select><button onclick='loadDataset()'>Load Dataset</button><button onclick='exportBundle()'>Export Bundle</button><button onclick="setMode('real')">Real</button><button onclick="setMode('demo')">Demo</button><div id='releaseMsg'></div><div id='modeMsg'></div></div>
 <div class='card'><h3>Rollback Timeline</h3><button onclick='loadTimeline()'>Refresh</button><button onclick='rollbackLast()'>Rollback Last</button><div id='timeline'></div></div>
 <div class='card'><h3>Audit (latest)</h3><div id='audit'></div></div>
@@ -31,10 +79,12 @@ const j=async(u,o)=>{const r=await fetch(API+u,o); const d=await r.json(); if(!r
 const showMsg=(t)=>document.getElementById('msg').textContent=t;
 async function load(){
  const s=await j('/settings'); document.getElementById('settings').textContent=JSON.stringify(s); document.getElementById('profile').value=s.installProfile||'core-only'; document.getElementById('onboardSummary').textContent=`Profile:${s.installProfile||'core-only'} AI:${s.aiEnabled?'on':'off'} Model:${s.aiModel||'phi3:mini'} OpenClaw:${s.openclawEnabled?'on':'off'}`; const sch=s.scheduler||{}; schEnabled.checked=!!sch.enabled; schInt.value=sch.intervalSec||60; schStart.value=sch.quietStart||'23:00'; schEnd.value=sch.quietEnd||'08:00';
- const models=await j('/model/options'); modelSelect.innerHTML=models.map(m=>`<option value="${m.id}">${m.id} (${m.tier})</option>`).join(''); modelSelect.value=s.aiModel||'phi3:mini';
+ const mods=await j('/modules'); modCareer.checked=!!mods.career; modSmb.checked=!!mods.smb; modHealth.checked=!!mods.health; const models=await j('/model/options'); modelSelect.innerHTML=models.map(m=>`<option value="${m.id}">${m.id} (${m.tier})</option>`).join(''); modelSelect.value=s.aiModel||'phi3:mini';
  const items=await j('/items'); itemsDiv(items); const actions=await j('/actions'); approvals.innerHTML=actions.filter(x=>x.status==='awaiting_approval').map(x=>`<div>[${x.risk||'low'}] ${x.title} <button onclick="approveAction('${x.id}','${x.risk||'low'}')">Approve</button> <button onclick="revertAction('${x.id}')">Undo</button></div>`).join('')||'No pending';
  const pf=await j('/profile'); pfHouse.value=pf.householdSize||1; pfIncome.value=pf.income||0; pfLoc.value=pf.location||''; pfEmp.value=pf.employment||'unknown';
- await loadCareerApps(); await loadCareerAnalytics(); await loadOpportunities(); await loadQueue(); await loadDigest(); await loadConfirmations(); await loadTimeline(); await loadNotifications(); await loadScenarios(); await loadImpact(); const a=await j('/audit'); audit.innerHTML=a.slice(0,10).map(x=>`<div>${x.ts} - ${x.eventType}</div>`).join('');
+ await loadCareerApps();
+ await loadSmb();
+ await loadHealthCases(); await loadCareerAnalytics(); await loadOpportunities(); await loadQueue(); await loadDigest(); await loadConfirmations(); await loadTimeline(); await loadNotifications(); await loadScenarios(); await loadImpact(); const a=await j('/audit'); audit.innerHTML=a.slice(0,10).map(x=>`<div>${x.ts} - ${x.eventType}</div>`).join('');
 }
 function itemsDiv(items){document.getElementById('items').innerHTML=items.map(i=>`<div><b>${i.priority}</b> | <span class="badge risk-${i.risk}">${i.risk}</span> | <span class="badge st">${i.status}</span> | ${i.deadline||'-'} | ${i.text} <button onclick="inspectItem('${i.id}')">Inspect</button> <button onclick="propose('${i.id}')">Propose</button> <button onclick="advance('${i.id}','parsed')">Parse</button><button onclick="advance('${i.id}','planned')">Plan</button><button onclick="advance('${i.id}','awaiting_approval')">Await</button><button onclick="advance('${i.id}','in_progress')">Start</button><button onclick="advance('${i.id}','done')">Done</button></div>`).join('');}
 async function inspectItem(id){const d=await j('/items/'+id); itemDetail.innerHTML=`<div>Type:${d.docType||'other'} Risk:${d.risk} Priority:${d.priority}</div><div>Confidence:${d.deadlineConfidence||'n/a'} Notes:${d.extractionNotes||''}</div><ul>${(d.checklist||[]).map(x=>`<li>${x}</li>`).join('')}</ul><ul>${(d.actionTemplates||[]).map(x=>`<li>${x}</li>`).join('')}</ul>`;}
@@ -48,6 +98,18 @@ async function approveAction(id,risk){try{if(risk==='high'){const phrase=prompt(
 async function revertAction(id){await j('/actions/'+id+'/revert',{method:'POST'}); load();}
 async function loadBrief(){const b=await j('/brief/weekly'); brief.textContent=b.brief||'';}
 async function rollbackLast(){try{await j('/rollback/last',{method:'POST'}); showMsg('rollback applied');}catch(e){showMsg(e.message)} load();}
+
+async function saveModules(){
+  const r = await j('/modules',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({career:modCareer.checked,smb:modSmb.checked,health:modHealth.checked})});
+  moduleMsg.textContent = 'Modules saved: '+JSON.stringify(r.modules);
+  load();
+}
+async function exportCommon(){
+  const c = await j('/export/common');
+  const b = new Blob([JSON.stringify(c,null,2)],{type:'application/json'});
+  const a = document.createElement('a'); a.href=URL.createObjectURL(b); a.download='lifeops_common_export.json'; a.click();
+}
+
 async function saveInstallProfile(){if(profile.value!=='core-only'&&!warnAck.checked){profileMsg.textContent='Acknowledge warnings first';return;} await j('/settings',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({installProfile:profile.value,aiEnabled:profile.value==='local-ai',openclawEnabled:profile.value==='openclaw'})}); profileMsg.textContent='saved'; load();}
 async function testModel(){const r=await j('/model/check?model='+encodeURIComponent(modelSelect.value)); modelMsg.textContent=r.compatible?`Compatible ${r.model}`:`Not recommended (${r.requiredRamGb}GB required)`;}
 async function applyModel(){await j('/settings',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({aiModel:modelSelect.value})}); modelMsg.textContent='Applied'; load();}
@@ -63,6 +125,35 @@ async function saveOpportunityProfile(){await j('/profile',{method:'PATCH',heade
 async function loadOpportunities(){const opp=await j('/opportunities'); opps.innerHTML=opp.map(o=>`<div><b>${o.score}</b> ${o.name} (${o.type}) due ${o.deadline} <button onclick="addOppAction('${o.id}')">Add to Plan</button><div class='small'>${(o.reasons||[]).join('; ')}</div></div>`).join(''); const acts=await j('/opportunity-actions'); oppActions.innerHTML=acts.map(a=>`<div>${a.name} | ${a.status} | due ${a.deadline} <button onclick="setOppStatus('${a.id}','in-progress')">Start</button><button onclick="setOppStatus('${a.id}','submitted')">Submitted</button><button onclick="setOppStatus('${a.id}','blocked')">Blocked</button></div>`).join('')||'No actions';}
 async function addOppAction(id){await j('/opportunities/'+id+'/add-action',{method:'POST'}); loadOpportunities();}
 async function setOppStatus(id,status){await j('/opportunity-actions/'+id,{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({status})}); loadOpportunities();}
+
+
+async function loadHealthCases(){
+  const rows = await j('/healthcases');
+  document.getElementById('healthCases').innerHTML = rows.map(c=>`<div>${c.type} | ${c.payer} | ${c.priority} | ${c.status} | due ${c.deadline||'-'} <button onclick="setHealthStatus('${c.id}','in_progress')">Start</button><button onclick="setHealthStatus('${c.id}','done')">Done</button><button onclick="setHealthStatus('${c.id}','blocked')">Blocked</button></div>`).join('') || '<div>No health cases</div>';
+}
+async function addHealthCase(){
+  await j('/healthcases',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({type:hcType.value||'claim',payer:hcPayer.value||'Unknown Payer',deadline:hcDeadline.value||null,priority:hcPriority.value})});
+  showMsg('Health case added');
+  loadHealthCases();
+}
+async function setHealthStatus(id,status){ await j('/healthcases/'+id,{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({status})}); loadHealthCases(); }
+async function loadHealthDigest(){ const d = await j('/healthcases/digest'); document.getElementById('healthDigest').textContent = d.text || ''; }
+
+async function loadSmb(){
+  const inv = await j('/smb/invoices');
+  smbInvoices.innerHTML = inv.map(i=>`<div>${i.client} $${i.amount} due ${i.dueDate||'-'} | ${i.status} <button onclick="setInvoiceStatus('${i.id}','paid')">Paid</button><button onclick="setInvoiceStatus('${i.id}','open')">Open</button></div>`).join('') || '<div>No invoices</div>';
+  const comp = await j('/smb/compliance');
+  smbCompliance.innerHTML = comp.map(c=>`<div>${c.item} due ${c.dueDate||'-'} | ${c.status} <button onclick="setComplianceStatus('${c.id}','done')">Done</button><button onclick="setComplianceStatus('${c.id}','open')">Open</button></div>`).join('') || '<div>No compliance items</div>';
+  const ven = await j('/smb/vendors');
+  smbVendors.innerHTML = ven.map(v=>`<div>${v.name} | risk ${v.risk}</div>`).join('') || '<div>No vendors</div>';
+}
+async function addInvoice(){ await j('/smb/invoices',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({client:smbClient.value,amount:Number(smbAmount.value||0),dueDate:smbDue.value||null})}); showMsg('Invoice added'); loadSmb(); }
+async function setInvoiceStatus(id,status){ await j('/smb/invoices/'+id,{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({status})}); loadSmb(); }
+async function addCompliance(){ await j('/smb/compliance',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({item:smbCompItem.value,dueDate:smbCompDue.value||null})}); showMsg('Compliance item added'); loadSmb(); }
+async function setComplianceStatus(id,status){ await j('/smb/compliance/'+id,{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({status})}); loadSmb(); }
+async function addVendor(){ await j('/smb/vendors',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:smbVendor.value,risk:smbRisk.value})}); showMsg('Vendor added'); loadSmb(); }
+async function loadSmbBrief(){ const b = await j('/smb/weekly-brief'); smbBrief.textContent = b.text || ''; }
+
 async function loadCareerApps(){const rows=await j('/career/apps'); careerList.innerHTML=rows.map(r=>`<div><b>${r.fitScore}</b> ${r.company} | ${r.role} | ${r.status} | follow-up ${r.followUpAt||'-'} <button onclick="setCareerStatus('${r.id}','applied')">Applied</button><button onclick="setCareerStatus('${r.id}','interview')">Interview</button><button onclick="setCareerStatus('${r.id}','rejected')">Rejected</button><button onclick="prepCareer('${r.id}')">Prep</button></div>`).join('')||'No applications';}
 async function addCareerApp(){await j('/career/apps',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({company:caCompany.value,role:caRole.value,source:caSource.value,followUpAt:caFollow.value||null,notes:caNotes.value})}); showMsg('Career app added'); loadCareerApps();}
 async function setCareerStatus(id,status){await j('/career/apps/'+id,{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({status,appliedAt:status==='applied'?new Date().toISOString().slice(0,10):undefined})}); loadCareerApps();}
