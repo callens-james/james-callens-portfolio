@@ -1,8 +1,8 @@
 {
   "items": [
     {
-      "id": "c0adba81-3e2f-415d-a796-4ab360883b36",
-      "createdAt": "2026-05-04T15:41:16.227Z",
+      "id": "ecc6b9e0-e1d2-4a64-9bfd-a57c23db765e",
+      "createdAt": "2026-05-04T01:55:43.395Z",
       "type": "note",
       "docType": "bill",
       "text": "Utility bill final notice due 2026-05-08",
@@ -22,8 +22,8 @@
       "status": "planned"
     },
     {
-      "id": "e113e8e1-58a2-4f68-a334-30229b6bdeb4",
-      "createdAt": "2026-05-04T15:41:16.227Z",
+      "id": "0861e28c-52ed-4143-ae2a-f4d4748f6fd0",
+      "createdAt": "2026-05-04T01:55:43.395Z",
       "type": "note",
       "docType": "application",
       "text": "Submit aid application by 2026-05-06",
@@ -43,8 +43,8 @@
       "status": "awaiting_approval"
     },
     {
-      "id": "5794172f-e0a2-4224-b897-0b39100a7d8b",
-      "createdAt": "2026-05-04T15:41:16.227Z",
+      "id": "93c895c6-476c-43e8-aa88-a2b62d018c0c",
+      "createdAt": "2026-05-04T01:55:43.395Z",
       "type": "note",
       "docType": "other",
       "text": "Renew license before 2026-05-20",
@@ -64,20 +64,20 @@
   ],
   "actions": [
     {
-      "id": "fb2eb87c-f215-4835-87a8-de588c2b0c09",
-      "itemId": "e113e8e1-58a2-4f68-a334-30229b6bdeb4",
+      "id": "bb9a0651-14e8-497e-aac7-c0e578d636b5",
+      "itemId": "0861e28c-52ed-4143-ae2a-f4d4748f6fd0",
       "title": "Prepare docs and submit",
       "risk": "high",
       "status": "awaiting_approval",
-      "createdAt": "2026-05-04T15:41:16.227Z"
+      "createdAt": "2026-05-04T01:55:43.395Z"
     }
   ],
   "approvals": [
     {
-      "id": "b92955ba-8eb8-4291-88ba-cb99f3e0ef71",
-      "actionId": "fb2eb87c-f215-4835-87a8-de588c2b0c09",
+      "id": "25be4337-c7ba-4a42-88b6-dd825672e0f9",
+      "actionId": "bb9a0651-14e8-497e-aac7-c0e578d636b5",
       "status": "pending",
-      "createdAt": "2026-05-04T15:41:16.227Z"
+      "createdAt": "2026-05-04T01:55:43.395Z"
     }
   ],
   "audit": [
@@ -317,88 +317,6 @@
       "detail": {
         "count": 3
       }
-    },
-    {
-      "id": "4e06d8e7-3c12-477b-8825-4adc0a7e86da",
-      "ts": "2026-05-04T13:57:39.667Z",
-      "eventType": "demo_seed_loaded",
-      "detail": {
-        "added": 0
-      }
-    },
-    {
-      "id": "fee660e2-8316-4f59-aeee-41ca3e3a6d68",
-      "ts": "2026-05-04T14:00:19.709Z",
-      "eventType": "day_plan_generated",
-      "detail": {
-        "count": 3
-      }
-    },
-    {
-      "id": "45c636dd-9858-44ad-a7d6-97a357ebae4d",
-      "ts": "2026-05-04T14:01:07.431Z",
-      "eventType": "weekly_brief_generated",
-      "detail": {
-        "total": 3,
-        "overdue": 0,
-        "soon": 1,
-        "awaiting": 1,
-        "approved": 0
-      }
-    },
-    {
-      "id": "8614ba00-569d-4644-b24d-29f34e02e2ed",
-      "ts": "2026-05-04T14:01:36.916Z",
-      "eventType": "demo_seed_loaded",
-      "detail": {
-        "added": 0
-      }
-    },
-    {
-      "id": "6dc060ed-88d6-45ae-8bd5-bc6c826f42c8",
-      "ts": "2026-05-04T14:01:38.686Z",
-      "eventType": "demo_seed_loaded",
-      "detail": {
-        "added": 0
-      }
-    },
-    {
-      "id": "a51c01f3-a65f-4f6a-9c2d-50643d8b7e7a",
-      "ts": "2026-05-04T14:01:39.777Z",
-      "eventType": "demo_seed_loaded",
-      "detail": {
-        "added": 0
-      }
-    },
-    {
-      "id": "99e40636-1167-4e04-a7a3-d9bd22560ab0",
-      "ts": "2026-05-04T15:41:16.216Z",
-      "eventType": "demo_reset",
-      "detail": {}
-    },
-    {
-      "id": "c9a9c228-4d03-4302-ac58-4c56a41a4e34",
-      "ts": "2026-05-04T15:41:16.227Z",
-      "eventType": "demo_seed_loaded",
-      "detail": {
-        "added": 3
-      }
-    },
-    {
-      "id": "54d4020a-51e0-4558-a774-3c0c1596bf84",
-      "ts": "2026-05-04T15:41:16.239Z",
-      "eventType": "scenario_loaded",
-      "detail": {
-        "name": "job-seeker-pipeline"
-      }
-    },
-    {
-      "id": "d555ea67-b9b2-4623-9add-9be43e3a7bda",
-      "ts": "2026-05-04T15:41:16.331Z",
-      "eventType": "day_plan_generated",
-      "detail": {
-        "count": 4
-      }
     }
   ],
   "settings": {
@@ -470,17 +388,7 @@
       }
     }
   ],
-  "opportunityActions": [
-    {
-      "id": "2f20f2f2-ed14-4729-9c29-3eb8e76179c5",
-      "opportunityId": "opp-job-1",
-      "name": "Remote Ops Analyst Fellowship",
-      "status": "not-started",
-      "nextStep": "Tailor resume",
-      "deadline": "2026-06-01",
-      "createdAt": "2026-05-04T15:41:16.239Z"
-    }
-  ],
+  "opportunityActions": [],
   "baseline": {
     "manualMinutesPerTask": 45,
     "assistedMinutesPerTask": 20

@@ -1,0 +1,12 @@
+{
+  "name": "lifeops-copilot",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "node backend/server.js"
+  },
+  "dependencies": {
+    "fastify": "^4.29.1",
+    "csv-parse": "^5.5.6"
+  }
+}

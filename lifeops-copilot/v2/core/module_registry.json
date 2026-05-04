@@ -1,0 +1,7 @@
+{
+  "modules": [
+    {"id":"career","enabled":true,"label":"Career Copilot"},
+    {"id":"smb","enabled":true,"label":"Small Business Console"},
+    {"id":"health","enabled":true,"label":"Health Bureaucracy Copilot"}
+  ]
+}

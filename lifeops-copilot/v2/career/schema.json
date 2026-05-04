@@ -1,0 +1,4 @@
+{
+  "application": ["id","company","role","source","status","appliedAt","followUpAt","fitScore","notes"],
+  "statuses": ["target","applied","interview","offer","rejected","archived"]
+}

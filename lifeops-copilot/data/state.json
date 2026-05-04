@@ -1,8 +1,8 @@
 {
   "items": [
     {
-      "id": "c0adba81-3e2f-415d-a796-4ab360883b36",
-      "createdAt": "2026-05-04T15:41:16.227Z",
+      "id": "c4f46ad8-bb13-41c6-94cf-298b7e0bb10d",
+      "createdAt": "2026-05-04T17:10:02.683Z",
       "type": "note",
       "docType": "bill",
       "text": "Utility bill final notice due 2026-05-08",
@@ -22,8 +22,8 @@
       "status": "planned"
     },
     {
-      "id": "e113e8e1-58a2-4f68-a334-30229b6bdeb4",
-      "createdAt": "2026-05-04T15:41:16.227Z",
+      "id": "28646942-9ade-4a76-9fb1-faaaeac8dc4d",
+      "createdAt": "2026-05-04T17:10:02.683Z",
       "type": "note",
       "docType": "application",
       "text": "Submit aid application by 2026-05-06",
@@ -43,8 +43,8 @@
       "status": "awaiting_approval"
     },
     {
-      "id": "5794172f-e0a2-4224-b897-0b39100a7d8b",
-      "createdAt": "2026-05-04T15:41:16.227Z",
+      "id": "b905401a-a6ef-457a-afa5-591aaa877606",
+      "createdAt": "2026-05-04T17:10:02.683Z",
       "type": "note",
       "docType": "other",
       "text": "Renew license before 2026-05-20",
@@ -60,24 +60,45 @@
         "Create next-step plan"
       ],
       "status": "inbox"
+    },
+    {
+      "id": "b6760c0a-864a-4c08-8907-f4037bd42fa2",
+      "createdAt": "2026-05-04T17:12:17.593Z",
+      "type": "note",
+      "docType": "bill",
+      "text": "Internet bill due 2026-05-10",
+      "deadline": "2026-05-10",
+      "deadlineConfidence": "explicit",
+      "extractionNotes": "scenario",
+      "checklist": [
+        "Verify account and amount",
+        "Check due date",
+        "Choose pay/dispute plan",
+        "Save confirmation"
+      ],
+      "actionTemplates": [
+        "Verify amount and due date",
+        "Prepare payment or dispute action"
+      ],
+      "status": "planned"
     }
   ],
   "actions": [
     {
-      "id": "fb2eb87c-f215-4835-87a8-de588c2b0c09",
-      "itemId": "e113e8e1-58a2-4f68-a334-30229b6bdeb4",
+      "id": "b4f54b94-f35a-47ad-a88d-37bc5e990702",
+      "itemId": "28646942-9ade-4a76-9fb1-faaaeac8dc4d",
       "title": "Prepare docs and submit",
       "risk": "high",
       "status": "awaiting_approval",
-      "createdAt": "2026-05-04T15:41:16.227Z"
+      "createdAt": "2026-05-04T17:10:02.683Z"
     }
   ],
   "approvals": [
     {
-      "id": "b92955ba-8eb8-4291-88ba-cb99f3e0ef71",
-      "actionId": "fb2eb87c-f215-4835-87a8-de588c2b0c09",
+      "id": "7209ed4f-e8fb-4067-af8d-890611c83f4c",
+      "actionId": "b4f54b94-f35a-47ad-a88d-37bc5e990702",
       "status": "pending",
-      "createdAt": "2026-05-04T15:41:16.227Z"
+      "createdAt": "2026-05-04T17:10:02.683Z"
     }
   ],
   "audit": [
@@ -399,6 +420,324 @@
       "detail": {
         "count": 4
       }
+    },
+    {
+      "id": "305bcf7b-7524-4883-8a27-0ab733650818",
+      "ts": "2026-05-04T17:04:07.145Z",
+      "eventType": "notification_created",
+      "detail": {
+        "id": "6c91f94c-7ddc-4a42-915f-278a7acd860c",
+        "level": "medium",
+        "kind": "career-followup"
+      }
+    },
+    {
+      "id": "3371afd7-6abd-4473-a8f6-4165b1f5067b",
+      "ts": "2026-05-04T17:04:07.145Z",
+      "eventType": "career_app_added",
+      "detail": {
+        "id": "912f61a1-fd4f-40ba-89e7-c8304745784c"
+      }
+    },
+    {
+      "id": "d102ba7b-c0e1-4dc2-8f07-fdb77a27fbdd",
+      "ts": "2026-05-04T17:04:07.148Z",
+      "eventType": "notification_created",
+      "detail": {
+        "id": "a1502d33-dfdc-4f7b-a427-79d9a5b8a160",
+        "level": "medium",
+        "kind": "career-followup"
+      }
+    },
+    {
+      "id": "47792591-a1e2-4145-bcde-ddc5a03455e6",
+      "ts": "2026-05-04T17:04:07.148Z",
+      "eventType": "career_app_added",
+      "detail": {
+        "id": "0088caa2-3538-4b72-9c87-92e79d7c55c7"
+      }
+    },
+    {
+      "id": "75fc18a4-eed5-46d6-964d-7face64083dd",
+      "ts": "2026-05-04T17:04:07.150Z",
+      "eventType": "notification_created",
+      "detail": {
+        "id": "523ebb8c-0de7-4e09-8d7e-6c5a968577a8",
+        "level": "medium",
+        "kind": "career-followup"
+      }
+    },
+    {
+      "id": "b65a9d55-5429-42ae-8861-c3fdfcbea99b",
+      "ts": "2026-05-04T17:04:07.151Z",
+      "eventType": "career_app_added",
+      "detail": {
+        "id": "398866c1-773a-4697-a296-7f70f27628e7"
+      }
+    },
+    {
+      "id": "3e6f09ac-36fc-4206-b2c7-6d8543644337",
+      "ts": "2026-05-04T17:04:07.153Z",
+      "eventType": "notification_created",
+      "detail": {
+        "id": "f698ccb0-f161-4ac0-b22a-00708fbb8be2",
+        "level": "medium",
+        "kind": "career-followup"
+      }
+    },
+    {
+      "id": "7f01f9e6-7c0e-4018-9f40-187facf30955",
+      "ts": "2026-05-04T17:04:07.153Z",
+      "eventType": "career_app_added",
+      "detail": {
+        "id": "847976b2-a3b6-47b6-9a69-e71d6b834ad6"
+      }
+    },
+    {
+      "id": "51ff157b-9075-4c18-a940-f08ff94672dd",
+      "ts": "2026-05-04T17:04:07.155Z",
+      "eventType": "notification_created",
+      "detail": {
+        "id": "67b95f97-3008-43eb-87b0-dabe1bfb58de",
+        "level": "medium",
+        "kind": "career-followup"
+      }
+    },
+    {
+      "id": "b6567c69-35a6-4b7d-8c7c-b93715b79315",
+      "ts": "2026-05-04T17:04:07.156Z",
+      "eventType": "career_app_added",
+      "detail": {
+        "id": "63f10d18-3d28-49c5-b945-c08f5a73c65d"
+      }
+    },
+    {
+      "id": "919c1d36-d7df-4ecc-bb7e-e5b28c84bc11",
+      "ts": "2026-05-04T17:09:56.446Z",
+      "eventType": "demo_reset",
+      "detail": {}
+    },
+    {
+      "id": "97fe1826-a033-4e17-8f10-1cd7aca8caaa",
+      "ts": "2026-05-04T17:09:56.581Z",
+      "eventType": "demo_seed_loaded",
+      "detail": {
+        "added": 3
+      }
+    },
+    {
+      "id": "0adf0374-cde2-4047-9bc6-13ed326c4c8f",
+      "ts": "2026-05-04T17:09:56.621Z",
+      "eventType": "scenario_loaded",
+      "detail": {
+        "name": "job-seeker-pipeline"
+      }
+    },
+    {
+      "id": "9e452f08-3814-45a6-9cf7-cda4afe4846d",
+      "ts": "2026-05-04T17:09:56.781Z",
+      "eventType": "day_plan_generated",
+      "detail": {
+        "count": 5
+      }
+    },
+    {
+      "id": "6959f6b0-ddd7-4cf8-97be-542296744134",
+      "ts": "2026-05-04T17:09:59.512Z",
+      "eventType": "demo_seed_loaded",
+      "detail": {
+        "added": 0
+      }
+    },
+    {
+      "id": "2a332e1f-3efb-472e-b771-6f11ee34450e",
+      "ts": "2026-05-04T17:10:01.438Z",
+      "eventType": "demo_reset",
+      "detail": {}
+    },
+    {
+      "id": "9bbd2094-268e-4247-86a8-0d3824ccecad",
+      "ts": "2026-05-04T17:10:02.613Z",
+      "eventType": "demo_reset",
+      "detail": {}
+    },
+    {
+      "id": "8a742482-494a-4469-a0f3-74ee293ead29",
+      "ts": "2026-05-04T17:10:02.684Z",
+      "eventType": "demo_seed_loaded",
+      "detail": {
+        "added": 3
+      }
+    },
+    {
+      "id": "cf5f782d-c46b-4c83-8f9d-bed7034dd4a3",
+      "ts": "2026-05-04T17:10:02.759Z",
+      "eventType": "scenario_loaded",
+      "detail": {
+        "name": "job-seeker-pipeline"
+      }
+    },
+    {
+      "id": "cc52eea7-e273-4ba4-b3dc-3599310683cf",
+      "ts": "2026-05-04T17:10:02.850Z",
+      "eventType": "day_plan_generated",
+      "detail": {
+        "count": 6
+      }
+    },
+    {
+      "id": "9ee90ac9-ac7d-4d02-a1e4-caa4bd13a5de",
+      "ts": "2026-05-04T17:10:10.409Z",
+      "eventType": "settings_updated",
+      "detail": {
+        "installProfile": "core-only",
+        "aiEnabled": false,
+        "openclawEnabled": false
+      }
+    },
+    {
+      "id": "ffa7327d-9ba8-41e0-8945-7b90415f3153",
+      "ts": "2026-05-04T17:10:21.787Z",
+      "eventType": "settings_updated",
+      "detail": {
+        "aiModel": "phi3:mini"
+      }
+    },
+    {
+      "id": "3ab53800-8782-4467-b7e4-8cd575591bcb",
+      "ts": "2026-05-04T17:10:28.424Z",
+      "eventType": "career_app_added",
+      "detail": {
+        "id": "b5ecd1e3-2509-4c0d-b9e6-70ae3c426670"
+      }
+    },
+    {
+      "id": "0f2712a2-6ff9-49a5-8146-799d2924ef7d",
+      "ts": "2026-05-04T17:11:03.608Z",
+      "eventType": "profile_updated",
+      "detail": {
+        "householdSize": 1,
+        "income": 0,
+        "location": "",
+        "employment": "unemployed"
+      }
+    },
+    {
+      "id": "641b4f8b-f196-4f49-9e4f-7ccef086d954",
+      "ts": "2026-05-04T17:11:20.405Z",
+      "eventType": "opportunity_action_updated",
+      "detail": {
+        "id": "2f20f2f2-ed14-4729-9c29-3eb8e76179c5",
+        "status": "in-progress"
+      }
+    },
+    {
+      "id": "95a9f34a-eb92-4cd4-9a75-1a7c606e48ce",
+      "ts": "2026-05-04T17:11:37.598Z",
+      "eventType": "weekly_brief_generated",
+      "detail": {
+        "total": 3,
+        "overdue": 0,
+        "soon": 1,
+        "awaiting": 1,
+        "approved": 0
+      }
+    },
+    {
+      "id": "25b4c595-0c5d-4c01-bf6a-fc8fc052135c",
+      "ts": "2026-05-04T17:11:44.017Z",
+      "eventType": "scheduler_settings_updated",
+      "detail": {
+        "enabled": true,
+        "intervalSec": 30,
+        "quietStart": "23:00",
+        "quietEnd": "08:00"
+      }
+    },
+    {
+      "id": "10ed669b-dcbf-401e-aacc-a249a64a6a45",
+      "ts": "2026-05-04T17:12:07.853Z",
+      "eventType": "day_plan_generated",
+      "detail": {
+        "count": 6
+      }
+    },
+    {
+      "id": "5511d1b3-e965-4f1c-8ef1-e7e431d9ac5c",
+      "ts": "2026-05-04T17:12:14.018Z",
+      "eventType": "notification_created",
+      "detail": {
+        "id": "cce3d393-c666-41e1-817d-c02d9d7fab6b",
+        "level": "medium",
+        "kind": "reminder"
+      }
+    },
+    {
+      "id": "239da1e1-0125-477d-86a6-7414d1ea6ed0",
+      "ts": "2026-05-04T17:12:14.278Z",
+      "eventType": "impact_assumptions_updated",
+      "detail": {
+        "manualMinutesPerTask": 45,
+        "assistedMinutesPerTask": 20
+      }
+    },
+    {
+      "id": "60cbf054-05d0-4525-b104-1b748f53bbd3",
+      "ts": "2026-05-04T17:12:17.594Z",
+      "eventType": "scenario_loaded",
+      "detail": {
+        "name": "household-admin"
+      }
+    },
+    {
+      "id": "92d1482d-b22d-4e22-9450-594a45114a98",
+      "ts": "2026-05-04T17:12:44.028Z",
+      "eventType": "notification_created",
+      "detail": {
+        "id": "9fb8f757-ef4d-4112-b679-13f7106f9191",
+        "level": "medium",
+        "kind": "reminder"
+      }
+    },
+    {
+      "id": "ff93ea0f-c55e-42be-bd68-9d77b8e196ed",
+      "ts": "2026-05-04T17:13:14.042Z",
+      "eventType": "notification_created",
+      "detail": {
+        "id": "b5580c5e-9412-4a54-ac2d-37012c136266",
+        "level": "medium",
+        "kind": "reminder"
+      }
+    },
+    {
+      "id": "57371a4a-acb1-4beb-b8e0-2b6aae7ae229",
+      "ts": "2026-05-04T17:13:44.055Z",
+      "eventType": "notification_created",
+      "detail": {
+        "id": "4c7fbe1e-19ec-41fb-bc46-7bf43ee2eaf7",
+        "level": "medium",
+        "kind": "reminder"
+      }
+    },
+    {
+      "id": "d4422898-9a5f-47a7-8a21-58ccdef6a869",
+      "ts": "2026-05-04T17:14:14.068Z",
+      "eventType": "notification_created",
+      "detail": {
+        "id": "d99e778e-fba6-481e-800b-d8f05ab81707",
+        "level": "medium",
+        "kind": "reminder"
+      }
+    },
+    {
+      "id": "56a340ec-f0da-463b-a081-9b7b08c6f3cb",
+      "ts": "2026-05-04T17:14:44.081Z",
+      "eventType": "notification_created",
+      "detail": {
+        "id": "208be906-5484-4b97-b348-38f8bfdcfc60",
+        "level": "medium",
+        "kind": "reminder"
+      }
     }
   ],
   "settings": {
@@ -418,7 +757,7 @@
     "householdSize": 1,
     "income": 0,
     "location": "",
-    "employment": "unknown"
+    "employment": "unemployed"
   },
   "opportunities": [
     {
@@ -475,10 +814,28 @@
       "id": "2f20f2f2-ed14-4729-9c29-3eb8e76179c5",
       "opportunityId": "opp-job-1",
       "name": "Remote Ops Analyst Fellowship",
-      "status": "not-started",
+      "status": "in-progress",
       "nextStep": "Tailor resume",
       "deadline": "2026-06-01",
       "createdAt": "2026-05-04T15:41:16.239Z"
+    },
+    {
+      "id": "8aec55b1-19b5-4b56-9055-ff111bf4fc12",
+      "opportunityId": "opp-job-1",
+      "name": "Remote Ops Analyst Fellowship",
+      "status": "not-started",
+      "nextStep": "Tailor resume",
+      "deadline": "2026-06-01",
+      "createdAt": "2026-05-04T17:09:56.620Z"
+    },
+    {
+      "id": "0671bfc1-ee90-4546-a7bb-5d579e2de1da",
+      "opportunityId": "opp-job-1",
+      "name": "Remote Ops Analyst Fellowship",
+      "status": "not-started",
+      "nextStep": "Tailor resume",
+      "deadline": "2026-06-01",
+      "createdAt": "2026-05-04T17:10:02.758Z"
     }
   ],
   "baseline": {
@@ -490,5 +847,179 @@
     "job-seeker-pipeline",
     "small-business-compliance"
   ],
-  "notifications": []
+  "notifications": [
+    {
+      "id": "6c91f94c-7ddc-4a42-915f-278a7acd860c",
+      "ts": "2026-05-04T17:04:07.145Z",
+      "level": "medium",
+      "message": "Career follow-up due for Datavant (Data Operations Analyst (Remote))",
+      "kind": "career-followup",
+      "read": false,
+      "snoozedUntil": null
+    },
+    {
+      "id": "a1502d33-dfdc-4f7b-a427-79d9a5b8a160",
+      "ts": "2026-05-04T17:04:07.148Z",
+      "level": "medium",
+      "message": "Career follow-up due for Wellth (Business Operations Analyst)",
+      "kind": "career-followup",
+      "read": false,
+      "snoozedUntil": null
+    },
+    {
+      "id": "523ebb8c-0de7-4e09-8d7e-6c5a968577a8",
+      "ts": "2026-05-04T17:04:07.150Z",
+      "level": "medium",
+      "message": "Career follow-up due for Aledade (AI Operations Analyst)",
+      "kind": "career-followup",
+      "read": false,
+      "snoozedUntil": null
+    },
+    {
+      "id": "f698ccb0-f161-4ac0-b22a-00708fbb8be2",
+      "ts": "2026-05-04T17:04:07.153Z",
+      "level": "medium",
+      "message": "Career follow-up due for GitLab (Business Data Analyst)",
+      "kind": "career-followup",
+      "read": false,
+      "snoozedUntil": null
+    },
+    {
+      "id": "67b95f97-3008-43eb-87b0-dabe1bfb58de",
+      "ts": "2026-05-04T17:04:07.155Z",
+      "level": "medium",
+      "message": "Career follow-up due for Zapier (Operations Analyst)",
+      "kind": "career-followup",
+      "read": true,
+      "snoozedUntil": "2026-05-04T17:41:50.310Z"
+    },
+    {
+      "id": "cce3d393-c666-41e1-817d-c02d9d7fab6b",
+      "ts": "2026-05-04T17:12:14.018Z",
+      "level": "medium",
+      "message": "1 item(s) due soon.",
+      "kind": "reminder",
+      "read": false,
+      "snoozedUntil": null
+    },
+    {
+      "id": "9fb8f757-ef4d-4112-b679-13f7106f9191",
+      "ts": "2026-05-04T17:12:44.028Z",
+      "level": "medium",
+      "message": "1 item(s) due soon.",
+      "kind": "reminder",
+      "read": false,
+      "snoozedUntil": null
+    },
+    {
+      "id": "b5580c5e-9412-4a54-ac2d-37012c136266",
+      "ts": "2026-05-04T17:13:14.042Z",
+      "level": "medium",
+      "message": "1 item(s) due soon.",
+      "kind": "reminder",
+      "read": false,
+      "snoozedUntil": null
+    },
+    {
+      "id": "4c7fbe1e-19ec-41fb-bc46-7bf43ee2eaf7",
+      "ts": "2026-05-04T17:13:44.055Z",
+      "level": "medium",
+      "message": "1 item(s) due soon.",
+      "kind": "reminder",
+      "read": false,
+      "snoozedUntil": null
+    },
+    {
+      "id": "d99e778e-fba6-481e-800b-d8f05ab81707",
+      "ts": "2026-05-04T17:14:14.068Z",
+      "level": "medium",
+      "message": "1 item(s) due soon.",
+      "kind": "reminder",
+      "read": false,
+      "snoozedUntil": null
+    },
+    {
+      "id": "208be906-5484-4b97-b348-38f8bfdcfc60",
+      "ts": "2026-05-04T17:14:44.081Z",
+      "level": "medium",
+      "message": "1 item(s) due soon.",
+      "kind": "reminder",
+      "read": false,
+      "snoozedUntil": null
+    }
+  ],
+  "careerApps": [
+    {
+      "id": "912f61a1-fd4f-40ba-89e7-c8304745784c",
+      "company": "Datavant",
+      "role": "Data Operations Analyst (Remote)",
+      "source": "LinkedIn",
+      "status": "target",
+      "appliedAt": null,
+      "followUpAt": "2026-05-08",
+      "notes": "remote, operations, data, ai automation",
+      "fitScore": 100,
+      "createdAt": "2026-05-04T17:04:07.145Z"
+    },
+    {
+      "id": "0088caa2-3538-4b72-9c87-92e79d7c55c7",
+      "company": "Wellth",
+      "role": "Business Operations Analyst",
+      "source": "Wellfound",
+      "status": "target",
+      "appliedAt": null,
+      "followUpAt": "2026-05-09",
+      "notes": "remote, process improvement, analytics",
+      "fitScore": 90,
+      "createdAt": "2026-05-04T17:04:07.148Z"
+    },
+    {
+      "id": "398866c1-773a-4697-a296-7f70f27628e7",
+      "company": "Aledade",
+      "role": "AI Operations Analyst",
+      "source": "LinkedIn",
+      "status": "target",
+      "appliedAt": null,
+      "followUpAt": "2026-05-10",
+      "notes": "remote, ai enablement, workflow automation",
+      "fitScore": 100,
+      "createdAt": "2026-05-04T17:04:07.150Z"
+    },
+    {
+      "id": "847976b2-a3b6-47b6-9a69-e71d6b834ad6",
+      "company": "GitLab",
+      "role": "Business Data Analyst",
+      "source": "Company Site",
+      "status": "target",
+      "appliedAt": null,
+      "followUpAt": "2026-05-11",
+      "notes": "all-remote, data analyst, sql",
+      "fitScore": 90,
+      "createdAt": "2026-05-04T17:04:07.153Z"
+    },
+    {
+      "id": "63f10d18-3d28-49c5-b945-c08f5a73c65d",
+      "company": "Zapier",
+      "role": "Operations Analyst",
+      "source": "Company Site",
+      "status": "target",
+      "appliedAt": null,
+      "followUpAt": "2026-05-12",
+      "notes": "remote, automation, operations",
+      "fitScore": 100,
+      "createdAt": "2026-05-04T17:04:07.155Z"
+    },
+    {
+      "id": "b5ecd1e3-2509-4c0d-b9e6-70ae3c426670",
+      "company": "Unknown",
+      "role": "Unknown Role",
+      "source": "manual",
+      "status": "target",
+      "appliedAt": null,
+      "followUpAt": null,
+      "notes": "",
+      "fitScore": 50,
+      "createdAt": "2026-05-04T17:10:28.423Z"
+    }
+  ]
 }

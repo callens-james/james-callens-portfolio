@@ -1,0 +1,4 @@
+{
+  "invoice": ["id","client","amount","dueDate","status","lastFollowUpAt","risk"],
+  "compliance": ["id","item","dueDate","status","owner"]
+}

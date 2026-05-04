@@ -34,7 +34,6 @@ state.baseline = state.baseline || { manualMinutesPerTask: 45, assistedMinutesPe
 state.scenarios = state.scenarios || ['household-admin','job-seeker-pipeline','small-business-compliance'];
 state.notifications = state.notifications || [];
 state.settings.scheduler = state.settings.scheduler || { enabled:false, intervalSec:60, quietStart:'23:00', quietEnd:'08:00' };
-state.careerApps = state.careerApps || [];
 
 function audit(eventType, detail = {}) {
   state.audit.push({ id: crypto.randomUUID(), ts: new Date().toISOString(), eventType, detail });
@@ -243,104 +242,6 @@ fastify.post('/api/datasets/load', async (req)=>{
   state.profile = d.profile || state.profile;
   saveState();
   audit('dataset_loaded',{name});
-  return { ok:true };
-});
-
-
-function careerFitScore(app){
-  let score = 50;
-  const role = String(app.role||'').toLowerCase();
-  const notes = String(app.notes||'').toLowerCase();
-  if (/analyst|operations|data/.test(role)) score += 25;
-  if (/remote/.test(role+ ' ' + notes)) score += 15;
-  if (/ai|automation/.test(role+ ' ' + notes)) score += 10;
-  return Math.max(0, Math.min(100, score));
-}
-
-
-fastify.get('/api/career/analytics', async ()=>{
-  const rows = state.careerApps;
-  const total = rows.length;
-  const bySource = {};
-  const byRole = {};
-  let responded = 0;
-  const respDays = [];
-  for (const r of rows){
-    bySource[r.source||'unknown'] = (bySource[r.source||'unknown']||0)+1;
-    byRole[r.role||'unknown'] = (byRole[r.role||'unknown']||0)+1;
-    if (['interview','offer','rejected'].includes(r.status)) responded += 1;
-    if (r.appliedAt && r.status==='interview') {
-      const d1 = new Date(r.appliedAt).getTime();
-      const d2 = new Date().getTime();
-      if (Number.isFinite(d1)) respDays.push((d2-d1)/(1000*60*60*24));
-    }
-  }
-  const responseRate = total ? Math.round((responded/total)*1000)/10 : 0;
-  const medianResponseDays = respDays.length ? respDays.sort((a,b)=>a-b)[Math.floor(respDays.length/2)].toFixed(1) : 'n/a';
-  return { ok:true, total, responded, responseRate, bySource, byRole, medianResponseDays };
-});
-
-fastify.get('/api/career/report/weekly.md', async ()=>{
-  const a = await (async()=>{
-    const rows = state.careerApps;
-    const total = rows.length;
-    const responded = rows.filter(r=>['interview','offer','rejected'].includes(r.status)).length;
-    const rate = total ? ((responded/total)*100).toFixed(1) : '0.0';
-    const top = rows.slice(-10).reverse().map(r=>`- ${r.company} | ${r.role} | ${r.status} | fit ${r.fitScore}`).join('\n');
-    return { total, responded, rate, top };
-  })();
-  const md = `# Weekly Career Report\n\n- Total tracked applications: ${a.total}\n- Responded outcomes: ${a.responded}\n- Response rate: ${a.rate}%\n\n## Latest Applications\n${a.top||'- none'}`;
-  return { ok:true, markdown: md };
-});
-
-fastify.get('/api/career/report/weekly.csv', async (req, reply)=>{
-  const rows = state.careerApps;
-  const cols = ['id','company','role','source','status','appliedAt','followUpAt','fitScore'];
-  const esc=v=>{const s=String(v??''); return /[",\n]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s};
-  const csv = [cols.join(','), ...rows.map(r=>cols.map(c=>esc(r[c])).join(','))].join('\n');
-  reply.header('Content-Type','text/csv');
-  return csv;
-});
-
-fastify.get('/api/career/interview-prep/:id', async (req, reply)=>{
-  const r = state.careerApps.find(x=>x.id===req.params.id);
-  if(!r) return reply.code(404).send({ok:false,error:'app not found'});
-  const md = `# Interview Prep: ${r.company} — ${r.role}\n\n## Positioning\n- Emphasize local-first automation and safety controls\n- Show metrics-driven impact\n\n## Company Questions\n- How does this role define success in 90 days?\n- What operational bottlenecks are highest priority?\n\n## Story Points\n- Built LifeOps Copilot modules for paperwork + opportunities + trust layer\n- Implemented explainable scoring, approvals, rollback, and auditability`;
-  return { ok:true, markdown: md };
-});
-
-fastify.get('/api/career/apps', async ()=> state.careerApps);
-fastify.post('/api/career/apps', async (req)=>{
-  const b = req.body||{};
-  const app = {
-    id: crypto.randomUUID(),
-    company: b.company || 'Unknown',
-    role: b.role || 'Unknown Role',
-    source: b.source || 'manual',
-    status: b.status || 'target',
-    appliedAt: b.appliedAt || null,
-    followUpAt: b.followUpAt || null,
-    notes: b.notes || '',
-    fitScore: 0,
-    createdAt: new Date().toISOString()
-  };
-  app.fitScore = careerFitScore(app);
-  state.careerApps.push(app);
-  if (app.followUpAt) pushNotification('medium', `Career follow-up due for ${app.company} (${app.role})`, 'career-followup');
-  saveState(); audit('career_app_added',{id:app.id});
-  return { ok:true, app };
-});
-fastify.patch('/api/career/apps/:id', async (req, reply)=>{
-  const a = state.careerApps.find(x=>x.id===req.params.id);
-  if(!a) return reply.code(404).send({ok:false,error:'app not found'});
-  Object.assign(a, req.body||{});
-  a.fitScore = careerFitScore(a);
-  saveState(); audit('career_app_updated',{id:a.id,status:a.status});
-  return { ok:true, app:a };
-});
-fastify.delete('/api/career/apps/:id', async (req)=>{
-  state.careerApps = state.careerApps.filter(x=>x.id!==req.params.id);
-  saveState(); audit('career_app_deleted',{id:req.params.id});
   return { ok:true };
 });
 
