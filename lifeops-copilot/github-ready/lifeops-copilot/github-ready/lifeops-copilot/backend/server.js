@@ -4,7 +4,6 @@ const path = require('path');
 const crypto = require('crypto');
 const os = require('os');
 
-const BACKUP_DIR = path.join(__dirname, '..', 'data', 'backups');
 const DB_PATH = path.join(__dirname, '..', 'data', 'state.json');
 const SETTINGS_DEFAULT = {
   installProfile: 'core-only', // core-only | local-ai | openclaw
@@ -14,33 +13,15 @@ const SETTINGS_DEFAULT = {
   openclawEnabled: false
 };
 
-function migrateState(st){
-  st.stateVersion = st.stateVersion || '0.3.0';
-  st.items = st.items || []; st.actions = st.actions || []; st.approvals = st.approvals || []; st.audit = st.audit || [];
-  st.settings = { ...SETTINGS_DEFAULT, ...(st.settings||{}) };
-  return st;
-}
-
 function loadState() {
   if (!fs.existsSync(DB_PATH)) {
-    return migrateState({ items: [], actions: [], approvals: [], audit: [], settings: SETTINGS_DEFAULT });
+    return { items: [], actions: [], approvals: [], audit: [], settings: SETTINGS_DEFAULT };
   }
-  try { return migrateState(JSON.parse(fs.readFileSync(DB_PATH, 'utf8'))); }
-  catch { return migrateState({ items: [], actions: [], approvals: [], audit: [], settings: SETTINGS_DEFAULT }); }
+  try { return JSON.parse(fs.readFileSync(DB_PATH, 'utf8')); }
+  catch { return { items: [], actions: [], approvals: [], audit: [], settings: SETTINGS_DEFAULT }; }
 }
-function ensureBackupDir(){ if(!fs.existsSync(BACKUP_DIR)) fs.mkdirSync(BACKUP_DIR,{recursive:true}); }
-function saveBackup(){
-  ensureBackupDir();
-  const ts=new Date().toISOString().replace(/[:.]/g,'-');
-  fs.writeFileSync(path.join(BACKUP_DIR,`state-${ts}.json`), JSON.stringify(state,null,2));
-}
-function saveState() {
-  fs.writeFileSync(DB_PATH, JSON.stringify(state, null, 2));
-  saveCounter += 1;
-  if (saveCounter % 20 === 0) saveBackup();
-}
+function saveState() { fs.writeFileSync(DB_PATH, JSON.stringify(state, null, 2)); }
 const state = loadState();
-let saveCounter = 0;
 state.profile = state.profile || { householdSize:1, income:0, location:'', employment:'unknown' };
 state.opportunities = state.opportunities || [
   { id:'opp-grant-1', type:'grant', name:'Local Utility Relief', deadline:'2026-06-15', rules:{ maxIncome:50000, locations:['PA','NJ'] } },
@@ -53,20 +34,9 @@ state.baseline = state.baseline || { manualMinutesPerTask: 45, assistedMinutesPe
 state.scenarios = state.scenarios || ['household-admin','job-seeker-pipeline','small-business-compliance'];
 state.notifications = state.notifications || [];
 state.settings.scheduler = state.settings.scheduler || { enabled:false, intervalSec:60, quietStart:'23:00', quietEnd:'08:00' };
-state.careerApps = state.careerApps || [];
-state.smbInvoices = state.smbInvoices || [];
-state.smbCompliance = state.smbCompliance || [];
-state.smbVendors = state.smbVendors || [];
-state.healthCases = state.healthCases || [];
-state.modules = state.modules || { career:true, smb:true, health:true };
-state.security = state.security || { lockEnabled:false, passcodeHash:null, redactionDefault:true };
-state.auditPrevHash = state.auditPrevHash || null;
 
 function audit(eventType, detail = {}) {
-  const payload = JSON.stringify({ts:new Date().toISOString(),eventType,detail,prev:state.auditPrevHash||''});
-  const h = crypto.createHash('sha256').update(payload).digest('hex');
-  state.auditPrevHash = h;
-  state.audit.push({ id: crypto.randomUUID(), ts: new Date().toISOString(), eventType, detail, hash:h, prevHash: state.auditPrevHash });
+  state.audit.push({ id: crypto.randomUUID(), ts: new Date().toISOString(), eventType, detail });
   saveState();
 }
 
@@ -185,17 +155,7 @@ function combinedQueue(){
     }
     return { id:a.id, source:'opportunity', title:a.name, status:a.status, deadline:a.deadline, score, nextAction:a.nextStep||'Advance status', reason:`Score ${score} from status/deadline` };
   });
-  
-  const careers = state.modules?.career ? state.careerApps.map(c=>({
-    id:c.id, source:'career', title:`${c.company} - ${c.role}`, status:c.status, deadline:c.followUpAt, score:(c.fitScore||50) + (c.status==='target'?20:0), nextAction:'Follow up or update status', reason:`Fit ${c.fitScore||50}`
-  })) : [];
-  const smb = state.modules?.smb ? [
-    ...state.smbInvoices.filter(i=>i.status!=='paid').map(i=>({id:i.id,source:'smb',title:`Invoice ${i.client} $${i.amount}`,status:i.status,deadline:i.dueDate,score:60,nextAction:'Follow up on invoice',reason:'Open invoice'})),
-    ...state.smbCompliance.filter(c=>c.status!=='done').map(c=>({id:c.id,source:'smb',title:`Compliance ${c.item}`,status:c.status,deadline:c.dueDate,score:55,nextAction:'Complete compliance item',reason:'Open compliance'}))
-  ] : [];
-  const health = state.modules?.health ? state.healthCases.filter(h=>h.status!=='done').map(h=>({id:h.id,source:'health',title:`${h.type} - ${h.payer}`,status:h.status,deadline:h.deadline,score:h.priority==='high'?90:65,nextAction:'Advance case and submit docs',reason:`Priority ${h.priority}`})) : [];
-  return [...items,...opps,...careers,...smb,...health].sort((a,b)=>b.score-a.score);
-
+  return [...items,...opps].sort((a,b)=>b.score-a.score);
 }
 
 
@@ -238,9 +198,6 @@ function restartScheduler(){
   schedulerHandle = setInterval(runSchedulerTick, sec*1000);
 }
 
-
-fastify.get('/api/backups', async ()=>{ ensureBackupDir(); return fs.readdirSync(BACKUP_DIR).filter(x=>x.endsWith('.json')).sort().reverse(); });
-fastify.post('/api/backups/restore', async (req)=>{ ensureBackupDir(); const name=String(req.body?.name||''); const f=path.join(BACKUP_DIR,name); if(!fs.existsSync(f)) return {ok:false,error:'backup not found'}; const loaded = migrateState(JSON.parse(fs.readFileSync(f,'utf8'))); Object.keys(state).forEach(k=>delete state[k]); Object.assign(state, loaded); saveState(); audit('backup_restored',{name}); return {ok:true}; });
 
 fastify.get('/api/config/export', async ()=> ({ ok:true, config: state.settings, profile: state.profile }));
 fastify.post('/api/config/import', async (req)=>{
@@ -288,263 +245,7 @@ fastify.post('/api/datasets/load', async (req)=>{
   return { ok:true };
 });
 
-
-function careerFitScore(app){
-  let score = 50;
-  const role = String(app.role||'').toLowerCase();
-  const notes = String(app.notes||'').toLowerCase();
-  if (/analyst|operations|data/.test(role)) score += 25;
-  if (/remote/.test(role+ ' ' + notes)) score += 15;
-  if (/ai|automation/.test(role+ ' ' + notes)) score += 10;
-  return Math.max(0, Math.min(100, score));
-}
-
-
-fastify.get('/api/career/analytics', async ()=>{
-  const rows = state.careerApps;
-  const total = rows.length;
-  const bySource = {};
-  const byRole = {};
-  let responded = 0;
-  const respDays = [];
-  for (const r of rows){
-    bySource[r.source||'unknown'] = (bySource[r.source||'unknown']||0)+1;
-    byRole[r.role||'unknown'] = (byRole[r.role||'unknown']||0)+1;
-    if (['interview','offer','rejected'].includes(r.status)) responded += 1;
-    if (r.appliedAt && r.status==='interview') {
-      const d1 = new Date(r.appliedAt).getTime();
-      const d2 = new Date().getTime();
-      if (Number.isFinite(d1)) respDays.push((d2-d1)/(1000*60*60*24));
-    }
-  }
-  const responseRate = total ? Math.round((responded/total)*1000)/10 : 0;
-  const medianResponseDays = respDays.length ? respDays.sort((a,b)=>a-b)[Math.floor(respDays.length/2)].toFixed(1) : 'n/a';
-  return { ok:true, total, responded, responseRate, bySource, byRole, medianResponseDays };
-});
-
-fastify.get('/api/career/report/weekly.md', async ()=>{
-  const a = await (async()=>{
-    const rows = state.careerApps;
-    const total = rows.length;
-    const responded = rows.filter(r=>['interview','offer','rejected'].includes(r.status)).length;
-    const rate = total ? ((responded/total)*100).toFixed(1) : '0.0';
-    const top = rows.slice(-10).reverse().map(r=>`- ${r.company} | ${r.role} | ${r.status} | fit ${r.fitScore}`).join('\n');
-    return { total, responded, rate, top };
-  })();
-  const md = `# Weekly Career Report\n\n- Total tracked applications: ${a.total}\n- Responded outcomes: ${a.responded}\n- Response rate: ${a.rate}%\n\n## Latest Applications\n${a.top||'- none'}`;
-  return { ok:true, markdown: md };
-});
-
-fastify.get('/api/career/report/weekly.csv', async (req, reply)=>{
-  const rows = state.careerApps;
-  const cols = ['id','company','role','source','status','appliedAt','followUpAt','fitScore'];
-  const esc=v=>{const s=String(v??''); return /[",\n]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s};
-  const csv = [cols.join(','), ...rows.map(r=>cols.map(c=>esc(r[c])).join(','))].join('\n');
-  reply.header('Content-Type','text/csv');
-  return csv;
-});
-
-fastify.get('/api/career/interview-prep/:id', async (req, reply)=>{
-  const r = state.careerApps.find(x=>x.id===req.params.id);
-  if(!r) return reply.code(404).send({ok:false,error:'app not found'});
-  const md = `# Interview Prep: ${r.company} — ${r.role}\n\n## Positioning\n- Emphasize local-first automation and safety controls\n- Show metrics-driven impact\n\n## Company Questions\n- How does this role define success in 90 days?\n- What operational bottlenecks are highest priority?\n\n## Story Points\n- Built LifeOps Copilot modules for paperwork + opportunities + trust layer\n- Implemented explainable scoring, approvals, rollback, and auditability`;
-  return { ok:true, markdown: md };
-});
-
-
-
-fastify.get('/api/healthcases', async ()=> state.healthCases);
-fastify.post('/api/healthcases', async (req)=>{
-  const b=req.body||{};
-  const c={
-    id: crypto.randomUUID(),
-    type: b.type || 'claim',
-    payer: b.payer || 'Unknown Payer',
-    status: b.status || 'open',
-    deadline: b.deadline || null,
-    priority: b.priority || 'medium',
-    notes: b.notes || '',
-    checklist: b.checklist || ['Collect required documents','Verify member/provider IDs','Submit packet','Track response'],
-    createdAt: new Date().toISOString()
-  };
-  state.healthCases.push(c);
-  if (c.priority==='high') pushNotification('high', `High-priority health case: ${c.type} (${c.payer})`, 'health');
-  saveState(); audit('health_case_added',{id:c.id,type:c.type});
-  return {ok:true,healthCase:c};
-});
-fastify.patch('/api/healthcases/:id', async (req, reply)=>{
-  const c=state.healthCases.find(x=>x.id===req.params.id);
-  if(!c) return reply.code(404).send({ok:false,error:'health case not found'});
-  Object.assign(c, req.body||{});
-  saveState(); audit('health_case_updated',{id:c.id,status:c.status});
-  return {ok:true,healthCase:c};
-});
-
-fastify.get('/api/healthcases/digest', async ()=>{
-  const open = state.healthCases.filter(c=>c.status!=='done').length;
-  const high = state.healthCases.filter(c=>c.priority==='high' && c.status!=='done').length;
-  const overdue = state.healthCases.filter(c=>c.deadline && new Date(c.deadline)<new Date() && c.status!=='done').length;
-  const text = `Health Digest\nOpen cases: ${open}\nHigh-priority open: ${high}\nOverdue: ${overdue}`;
-  return {ok:true,text,open,high,overdue};
-});
-
-fastify.get('/api/smb/invoices', async ()=> state.smbInvoices);
-fastify.post('/api/smb/invoices', async (req)=>{
-  const b=req.body||{};
-  const inv={ id:crypto.randomUUID(), client:b.client||'Unknown', amount:Number(b.amount||0), dueDate:b.dueDate||null, status:b.status||'open', lastFollowUpAt:b.lastFollowUpAt||null, risk:b.risk||'medium', createdAt:new Date().toISOString() };
-  state.smbInvoices.push(inv); saveState(); audit('smb_invoice_added',{id:inv.id});
-  return {ok:true,invoice:inv};
-});
-fastify.patch('/api/smb/invoices/:id', async (req,reply)=>{
-  const x=state.smbInvoices.find(i=>i.id===req.params.id); if(!x) return reply.code(404).send({ok:false,error:'invoice not found'});
-  Object.assign(x, req.body||{}); saveState(); audit('smb_invoice_updated',{id:x.id,status:x.status}); return {ok:true,invoice:x};
-});
-
-fastify.get('/api/smb/compliance', async ()=> state.smbCompliance);
-fastify.post('/api/smb/compliance', async (req)=>{
-  const b=req.body||{};
-  const c={ id:crypto.randomUUID(), item:b.item||'Compliance Item', dueDate:b.dueDate||null, status:b.status||'open', owner:b.owner||'owner', createdAt:new Date().toISOString() };
-  state.smbCompliance.push(c); saveState(); audit('smb_compliance_added',{id:c.id}); return {ok:true,item:c};
-});
-fastify.patch('/api/smb/compliance/:id', async (req,reply)=>{
-  const c=state.smbCompliance.find(i=>i.id===req.params.id); if(!c) return reply.code(404).send({ok:false,error:'compliance not found'});
-  Object.assign(c, req.body||{}); saveState(); audit('smb_compliance_updated',{id:c.id,status:c.status}); return {ok:true,item:c};
-});
-
-fastify.get('/api/smb/vendors', async ()=> state.smbVendors);
-fastify.post('/api/smb/vendors', async (req)=>{
-  const b=req.body||{};
-  const v={ id:crypto.randomUUID(), name:b.name||'Vendor', risk:b.risk||'low', note:b.note||'', createdAt:new Date().toISOString() };
-  state.smbVendors.push(v); saveState(); audit('smb_vendor_added',{id:v.id,risk:v.risk});
-  if (v.risk==='high') pushNotification('high', `High-risk vendor flagged: ${v.name}`, 'vendor-risk');
-  return {ok:true,vendor:v};
-});
-
-fastify.get('/api/smb/weekly-brief', async ()=>{
-  const openInvoices = state.smbInvoices.filter(i=>i.status!=='paid').length;
-  const overdueInvoices = state.smbInvoices.filter(i=>i.dueDate && new Date(i.dueDate)<new Date() && i.status!=='paid').length;
-  const openCompliance = state.smbCompliance.filter(c=>c.status!=='done').length;
-  const highRiskVendors = state.smbVendors.filter(v=>v.risk==='high').length;
-  const text = `SMB Weekly Brief\nOpen invoices: ${openInvoices} (overdue: ${overdueInvoices})\nOpen compliance items: ${openCompliance}\nHigh-risk vendors: ${highRiskVendors}`;
-  return {ok:true,text};
-});
-
-fastify.get('/api/career/apps', async ()=> state.careerApps);
-fastify.post('/api/career/apps', async (req)=>{
-  const b = req.body||{};
-  const app = {
-    id: crypto.randomUUID(),
-    company: b.company || 'Unknown',
-    role: b.role || 'Unknown Role',
-    source: b.source || 'manual',
-    status: b.status || 'target',
-    appliedAt: b.appliedAt || null,
-    followUpAt: b.followUpAt || null,
-    notes: b.notes || '',
-    fitScore: 0,
-    createdAt: new Date().toISOString()
-  };
-  app.fitScore = careerFitScore(app);
-  state.careerApps.push(app);
-  if (app.followUpAt) pushNotification('medium', `Career follow-up due for ${app.company} (${app.role})`, 'career-followup');
-  saveState(); audit('career_app_added',{id:app.id});
-  return { ok:true, app };
-});
-fastify.patch('/api/career/apps/:id', async (req, reply)=>{
-  const a = state.careerApps.find(x=>x.id===req.params.id);
-  if(!a) return reply.code(404).send({ok:false,error:'app not found'});
-  Object.assign(a, req.body||{});
-  a.fitScore = careerFitScore(a);
-  saveState(); audit('career_app_updated',{id:a.id,status:a.status});
-  return { ok:true, app:a };
-});
-fastify.delete('/api/career/apps/:id', async (req)=>{
-  state.careerApps = state.careerApps.filter(x=>x.id!==req.params.id);
-  saveState(); audit('career_app_deleted',{id:req.params.id});
-  return { ok:true };
-});
-
-
-fastify.get('/api/modules', async ()=> state.modules);
-fastify.patch('/api/modules', async (req)=>{
-  state.modules = { ...state.modules, ...(req.body||{}) };
-  saveState(); audit('modules_updated', state.modules);
-  return { ok:true, modules: state.modules };
-});
-
-
-fastify.get('/api/v2/case-studies', async ()=>{
-  const docs = {
-    career: {
-      title: 'Career Copilot Case Study',
-      summary: `Tracked applications: ${state.careerApps.length}; response rate insights available in analytics.`
-    },
-    smb: {
-      title: 'SMB Console Case Study',
-      summary: `Open invoices: ${state.smbInvoices.filter(i=>i.status!=='paid').length}; open compliance: ${state.smbCompliance.filter(c=>c.status!=='done').length}.`
-    },
-    health: {
-      title: 'Health Bureaucracy Case Study',
-      summary: `Open health cases: ${state.healthCases.filter(c=>c.status!=='done').length}; high-priority open: ${state.healthCases.filter(c=>c.priority==='high'&&c.status!=='done').length}.`
-    }
-  };
-  return { ok:true, docs };
-});
-
-fastify.post('/api/v2/demo/activate', async ()=>{
-  state.settings.mode = 'demo';
-  // ensure minimal demo records for each module
-  if (state.careerApps.length===0) state.careerApps.push({id:crypto.randomUUID(),company:'DemoCo',role:'Operations Analyst',source:'demo',status:'target',appliedAt:null,followUpAt:'2026-05-12',notes:'remote',fitScore:85,createdAt:new Date().toISOString()});
-  if (state.smbInvoices.length===0) state.smbInvoices.push({id:crypto.randomUUID(),client:'Acme LLC',amount:1200,dueDate:'2026-05-10',status:'open',risk:'medium',createdAt:new Date().toISOString()});
-  if (state.healthCases.length===0) state.healthCases.push({id:crypto.randomUUID(),type:'claim',payer:'Demo Health',status:'open',deadline:'2026-05-09',priority:'high',notes:'demo',checklist:['Collect docs','Submit claim'],createdAt:new Date().toISOString()});
-  saveState();
-  audit('v2_demo_activated',{});
-  return { ok:true };
-});
-
-fastify.get('/api/v2/release-readiness', async ()=>{
-  const checks = {
-    health: true,
-    queue: Array.isArray(combinedQueue()),
-    modulesConfigured: !!state.modules,
-    careerModule: Array.isArray(state.careerApps),
-    smbModule: Array.isArray(state.smbInvoices) && Array.isArray(state.smbCompliance),
-    healthModule: Array.isArray(state.healthCases),
-    exports: true
-  };
-  const passed = Object.values(checks).every(Boolean);
-  return { ok:true, passed, checks, version:'v0.3.0-v2-demo' };
-});
-
-
-fastify.get('/api/security', async ()=> ({ ...state.security, passcodeHash: state.security.passcodeHash ? 'set' : null }));
-fastify.patch('/api/security', async (req)=>{
-  const b=req.body||{};
-  if (typeof b.lockEnabled==='boolean') state.security.lockEnabled=b.lockEnabled;
-  if (b.passcode) state.security.passcodeHash = crypto.createHash('sha256').update(String(b.passcode)).digest('hex');
-  if (typeof b.redactionDefault==='boolean') state.security.redactionDefault=b.redactionDefault;
-  saveState(); audit('security_updated',{lockEnabled:state.security.lockEnabled,redactionDefault:state.security.redactionDefault});
-  return { ok:true };
-});
-fastify.post('/api/security/unlock', async (req)=>{
-  if(!state.security.lockEnabled) return {ok:true, unlocked:true};
-  const pass = String(req.body?.passcode||'');
-  const hash = crypto.createHash('sha256').update(pass).digest('hex');
-  return { ok:true, unlocked: hash===state.security.passcodeHash };
-});
-
 fastify.get('/api/health', async () => ({ ok: true, app: 'lifeops-copilot' }));
-fastify.get('/api/perf', async ()=>({ ok:true, counts:{items:state.items.length,actions:state.actions.length,audit:state.audit.length,notifications:state.notifications.length}, scheduler: state.settings.scheduler }));
-
-fastify.get('/api/selfcheck', async ()=>{
-  const checks = {
-    stateFileExists: fs.existsSync(DB_PATH),
-    stateVersion: !!state.stateVersion,
-    arraysPresent: Array.isArray(state.items)&&Array.isArray(state.actions)&&Array.isArray(state.audit),
-    modulesPresent: !!state.modules
-  };
-  return { ok:true, passed:Object.values(checks).every(Boolean), checks, stateVersion: state.stateVersion };
-});
 
 
 fastify.get('/api/notifications', async ()=> state.notifications.slice(-200).reverse());
@@ -925,25 +626,6 @@ fastify.post('/api/scenarios/load', async (req)=>{
   }
   saveState(); audit('scenario_loaded',{name});
   return { ok:true, name };
-});
-
-
-fastify.get('/api/export/common', async (req)=>{
-  const redacted = req.query?.redacted === '1' || state.security.redactionDefault;
-  return {
-    ok:true,
-    generatedAt:new Date().toISOString(),
-    modules: state.modules,
-    queue: (redacted ? combinedQueue().map(x=>({ ...x, title: x.source==='health' ? '[redacted]' : x.title })) : combinedQueue()),
-    counts: {
-      paperwork: state.items.length,
-      opportunities: state.opportunityActions.length,
-      career: state.careerApps.length,
-      smbInvoices: state.smbInvoices.length,
-      smbCompliance: state.smbCompliance.length,
-      healthCases: state.healthCases.length
-    }
-  };
 });
 
 fastify.get('/api/audit', async ()=> state.audit.slice(-200).reverse());

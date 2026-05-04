@@ -62,12 +62,32 @@
 <div class='card'><h3>Case Study + Scenarios</h3><button onclick='generateCaseStudy()'>Case Study MD</button><select id='scenarioSel'></select><button onclick='loadScenario()'>Load Scenario</button><button onclick='runDemoScript()'>Demo Script</button><pre id='caseStudy'></pre></div>
 <div class='card'><h3>Daily Digest + Local Metrics</h3><button onclick='loadDigest()'>Refresh Digest</button><div id='digest'></div><div id='metrics'></div></div>
 
+<div class='card'><h3>Final Freeze (Sprint 3.3)</h3><button onclick='runSelfcheck()'>Run Final Selfcheck</button><button onclick='checkV2Readiness()'>Run Release Readiness</button><button onclick='exportBundle()'>Export Final Bundle</button><div class='small'>When all checks pass, freeze and publish.</div></div>
 <div class='card'><h3>V2 Release Prep (Sprint 2.9)</h3>
 <button onclick='activateV2Demo()'>Activate V2 Demo Mode</button>
 <button onclick='checkV2Readiness()'>Check V2 Readiness</button>
 <button onclick='loadV2CaseStudies()'>Load V2 Case Studies</button>
 <div id='v2Readiness'></div>
 <pre id='v2CaseStudies'></pre>
+</div>
+
+
+
+<div class='card'><h3>Security Center (Sprint 3.1)</h3>
+<label><input type='checkbox' id='secLock'> Enable lock</label>
+<input id='secPass' type='password' placeholder='Set passcode'>
+<label><input type='checkbox' id='secRedact'> Redact exports by default</label>
+<button onclick='saveSecurity()'>Save Security</button>
+<input id='unlockPass' type='password' placeholder='Unlock passcode'><button onclick='unlockSession()'>Unlock</button>
+<div id='secMsg'></div>
+</div>
+<div class='card'><h3>UX + Perf (Sprint 3.2)</h3><button onclick='loadPerf()'>Refresh Perf</button><div id='perfOut'></div></div>
+
+<div class='card'><h3>Reliability (Sprint 3.0)</h3>
+<button onclick='runSelfcheck()'>Run Selfcheck</button>
+<button onclick='listBackups()'>List Backups</button>
+<select id='backupSel'></select><button onclick='restoreBackup()'>Restore Backup</button>
+<div id='selfcheckOut'></div>
 </div>
 
 <div class='card'><h3>Release + Config + Datasets</h3><button onclick='showVersion()'>Version</button><button onclick='exportConfig()'>Export Config</button><button onclick='importConfigPrompt()'>Import Config</button><input id='dsName' placeholder='dataset'><button onclick='saveDataset()'>Save Dataset</button><button onclick='loadDatasets()'>List</button><select id='dsList'></select><button onclick='loadDataset()'>Load Dataset</button><button onclick='exportBundle()'>Export Bundle</button><button onclick="setMode('real')">Real</button><button onclick="setMode('demo')">Demo</button><div id='releaseMsg'></div><div id='modeMsg'></div></div>
@@ -82,9 +102,11 @@ async function load(){
  const mods=await j('/modules'); modCareer.checked=!!mods.career; modSmb.checked=!!mods.smb; modHealth.checked=!!mods.health; const models=await j('/model/options'); modelSelect.innerHTML=models.map(m=>`<option value="${m.id}">${m.id} (${m.tier})</option>`).join(''); modelSelect.value=s.aiModel||'phi3:mini';
  const items=await j('/items'); itemsDiv(items); const actions=await j('/actions'); approvals.innerHTML=actions.filter(x=>x.status==='awaiting_approval').map(x=>`<div>[${x.risk||'low'}] ${x.title} <button onclick="approveAction('${x.id}','${x.risk||'low'}')">Approve</button> <button onclick="revertAction('${x.id}')">Undo</button></div>`).join('')||'No pending';
  const pf=await j('/profile'); pfHouse.value=pf.householdSize||1; pfIncome.value=pf.income||0; pfLoc.value=pf.location||''; pfEmp.value=pf.employment||'unknown';
+ await loadSecurity();
  await loadCareerApps();
  await loadSmb();
- await loadHealthCases(); await loadCareerAnalytics(); await loadOpportunities(); await loadQueue(); await loadDigest(); await loadConfirmations(); await loadTimeline(); await loadNotifications(); await loadScenarios(); await loadImpact(); const a=await j('/audit'); audit.innerHTML=a.slice(0,10).map(x=>`<div>${x.ts} - ${x.eventType}</div>`).join('');
+ await loadHealthCases(); await loadCareerAnalytics();
+ await loadPerf(); await loadOpportunities(); await loadQueue(); await loadDigest(); await loadConfirmations(); await loadTimeline(); await loadNotifications(); await loadScenarios(); await loadImpact(); const a=await j('/audit'); audit.innerHTML=a.slice(0,10).map(x=>`<div>${x.ts} - ${x.eventType}</div>`).join('');
 }
 function itemsDiv(items){document.getElementById('items').innerHTML=items.map(i=>`<div><b>${i.priority}</b> | <span class="badge risk-${i.risk}">${i.risk}</span> | <span class="badge st">${i.status}</span> | ${i.deadline||'-'} | ${i.text} <button onclick="inspectItem('${i.id}')">Inspect</button> <button onclick="propose('${i.id}')">Propose</button> <button onclick="advance('${i.id}','parsed')">Parse</button><button onclick="advance('${i.id}','planned')">Plan</button><button onclick="advance('${i.id}','awaiting_approval')">Await</button><button onclick="advance('${i.id}','in_progress')">Start</button><button onclick="advance('${i.id}','done')">Done</button></div>`).join('');}
 async function inspectItem(id){const d=await j('/items/'+id); itemDetail.innerHTML=`<div>Type:${d.docType||'other'} Risk:${d.risk} Priority:${d.priority}</div><div>Confidence:${d.deadlineConfidence||'n/a'} Notes:${d.extractionNotes||''}</div><ul>${(d.checklist||[]).map(x=>`<li>${x}</li>`).join('')}</ul><ul>${(d.actionTemplates||[]).map(x=>`<li>${x}</li>`).join('')}</ul>`;}
