@@ -1,0 +1,8 @@
+[Desktop Entry]
+Categories=
+Exec=lifeops-copilot
+StartupWMClass=lifeops-copilot
+Icon=lifeops-copilot
+Name=LifeOps Copilot
+Terminal=false
+Type=Application

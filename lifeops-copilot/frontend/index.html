@@ -1,7 +1,7 @@
 <!doctype html><html><head><meta charset='utf-8'><title>LifeOps Copilot</title>
 <style>body{font-family:Arial;background:#0f172a;color:#e2e8f0;padding:20px}.card{background:#111827;border:1px solid #334155;border-radius:8px;padding:12px;margin:10px 0}button{margin-left:6px}.badge{padding:2px 8px;border-radius:999px;font-size:12px}.risk-overdue{background:#7f1d1d;color:#fecaca}.risk-due-soon{background:#78350f;color:#fde68a}.risk-stable{background:#14532d;color:#bbf7d0}.st{background:#1e293b;color:#cbd5e1}.small{font-size:12px;color:#93c5fd}.hidden{display:none}.msg{padding:6px 8px;background:#0b1220;border:1px solid #334155;border-radius:6px;display:inline-block}.primary{background:#1d4ed8;color:#fff}.success{background:#065f46;color:#fff}</style></head>
 <body>
-<h1>LifeOps Copilot (v0.3.0-v2-demo-final)</h1>
+<h1>LifeOps Copilot (v0.4.0-sprint4)</h1><div id='setupBanner' class='small'></div>
 
 
 <div class='card'><h3>First-Time Setup (Sprint 3.9)</h3>
@@ -164,7 +164,7 @@ function switchUser(){ LIFEOPS_USER = userSel.value; userMsg.textContent = 'Swit
 
 async function load(){
  await loadUsers();
- const s=await j('/settings'); document.getElementById('beginnerModeChk').checked=!!s.beginnerMode; document.getElementById('setupDoneChk').checked=!!s.setupComplete; document.getElementById('settings').textContent=JSON.stringify(s); document.getElementById('profile').value=s.installProfile||'core-only'; document.getElementById('onboardSummary').textContent=`Profile:${s.installProfile||'core-only'} AI:${s.aiEnabled?'on':'off'} Model:${s.aiModel||'phi3:mini'} OpenClaw:${s.openclawEnabled?'on':'off'}`; const sch=s.scheduler||{}; schEnabled.checked=!!sch.enabled; schInt.value=sch.intervalSec||60; schStart.value=sch.quietStart||'23:00'; schEnd.value=sch.quietEnd||'08:00';
+ const s=await j('/settings'); document.getElementById('beginnerModeChk').checked=!!s.beginnerMode; document.getElementById('setupDoneChk').checked=!!s.setupComplete; document.getElementById('setupBanner').textContent = s.setupComplete ? '' : 'First-run setup is incomplete. Please complete Setup Wizard.'; document.getElementById('settings').textContent=JSON.stringify(s); document.getElementById('profile').value=s.installProfile||'core-only'; document.getElementById('onboardSummary').textContent=`Profile:${s.installProfile||'core-only'} AI:${s.aiEnabled?'on':'off'} Model:${s.aiModel||'phi3:mini'} OpenClaw:${s.openclawEnabled?'on':'off'}`; const sch=s.scheduler||{}; schEnabled.checked=!!sch.enabled; schInt.value=sch.intervalSec||60; schStart.value=sch.quietStart||'23:00'; schEnd.value=sch.quietEnd||'08:00';
  const mods=await j('/modules'); modCareer.checked=!!mods.career; modSmb.checked=!!mods.smb; modHealth.checked=!!mods.health; const models=await j('/model/options'); modelSelect.innerHTML=models.map(m=>`<option value="${m.id}">${m.id} (${m.tier})</option>`).join(''); modelSelect.value=s.aiModel||'phi3:mini';
  const items=await j('/items'); itemsDiv(items); const actions=await j('/actions'); approvals.innerHTML=actions.filter(x=>x.status==='awaiting_approval').map(x=>`<div>[${x.risk||'low'}] ${x.title} <button onclick="approveAction('${x.id}','${x.risk||'low'}')">Approve</button> <button onclick="revertAction('${x.id}')">Undo</button></div>`).join('')||'No pending';
  const pf=await j('/profile'); pfHouse.value=pf.householdSize||1; pfIncome.value=pf.income||0; pfLoc.value=pf.location||''; pfEmp.value=pf.employment||'unknown';

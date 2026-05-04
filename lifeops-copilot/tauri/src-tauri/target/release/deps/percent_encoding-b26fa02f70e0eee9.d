@@ -1,0 +1,8 @@
+/home/james/openclaw-workspace/lifeops-copilot/tauri/src-tauri/target/release/deps/percent_encoding-b26fa02f70e0eee9.d: /home/james/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/percent-encoding-2.3.2/src/lib.rs /home/james/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/percent-encoding-2.3.2/src/ascii_set.rs
+
+/home/james/openclaw-workspace/lifeops-copilot/tauri/src-tauri/target/release/deps/libpercent_encoding-b26fa02f70e0eee9.rlib: /home/james/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/percent-encoding-2.3.2/src/lib.rs /home/james/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/percent-encoding-2.3.2/src/ascii_set.rs
+
+/home/james/openclaw-workspace/lifeops-copilot/tauri/src-tauri/target/release/deps/libpercent_encoding-b26fa02f70e0eee9.rmeta: /home/james/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/percent-encoding-2.3.2/src/lib.rs /home/james/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/percent-encoding-2.3.2/src/ascii_set.rs
+
+/home/james/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/percent-encoding-2.3.2/src/lib.rs:
+/home/james/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/percent-encoding-2.3.2/src/ascii_set.rs:
