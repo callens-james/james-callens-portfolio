@@ -88,3 +88,10 @@ Archived bundle of supporting automation artifacts preserved for reference.
 
 - File: [`archives/AI-Automation-Studio-Suite-Bundle.zip`](./archives/AI-Automation-Studio-Suite-Bundle.zip)
 
+
+
+### 10) LifeOps Copilot
+Local-first life + work autopilot platform that unifies paperwork, opportunities, planning, approvals, background reminders, and impact tracking with optional AI/OpenClaw integrations.
+
+- Folder: [`lifeops-copilot/`](./lifeops-copilot)
+- Highlights: trust layer, opportunity scoring with explanations, quick-start demo mode, export bundle, cross-platform target
