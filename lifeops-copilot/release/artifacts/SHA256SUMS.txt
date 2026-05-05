@@ -1,3 +1,3 @@
-904044eb30b575db9eabb6cbc49c22a847222b5ec720b9f9dba6ca1d2d0fc20b  LifeOps Copilot-0.3.0-1.x86_64.rpm
-36667e857e7a5dab7c9fa85c32507a4bdd7f40664434cf8f7a8b377af8f780fe  LifeOps Copilot_0.3.0_amd64.AppImage
-b5ae9a4c42b9d7f98fbe1467c447b55a8da22e8bb74643b890889f51a5133650  LifeOps Copilot_0.3.0_amd64.deb
+904044eb30b575db9eabb6cbc49c22a847222b5ec720b9f9dba6ca1d2d0fc20b LifeOps Copilot-0.3.0-1.x86_64.rpm
+36667e857e7a5dab7c9fa85c32507a4bdd7f40664434cf8f7a8b377af8f780fe LifeOps Copilot_0.3.0_amd64.AppImage
+b5ae9a4c42b9d7f98fbe1467c447b55a8da22e8bb74643b890889f51a5133650 LifeOps Copilot_0.3.0_amd64.deb

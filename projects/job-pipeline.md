@@ -9,15 +9,15 @@ Manual job searching is noisy and inconsistent. It’s easy to lose track of qua
 ## What I Built
 - Separate jobs workspace/page to avoid disrupting core dashboard UX
 - Structured listings with:
-  - fit score (0–100)
-  - A/B/C priority tier
-  - source attribution
-  - “why fit” rationale
+ - fit score (0–100)
+ - A/B/C priority tier
+ - source attribution
+ - “why fit” rationale
 - Tracking fields:
-  - applied date
-  - follow-up date
-  - interview date
-  - outcome
+ - applied date
+ - follow-up date
+ - interview date
+ - outcome
 - Scheduled sync runs (2x/day)
 - Safe export/publish workflow for public-facing repo content
 

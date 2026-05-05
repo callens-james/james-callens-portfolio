@@ -22,10 +22,10 @@ Ops teams often export CSVs from support/CRM systems and then manually clean, an
 ## Core capabilities
 1. **CSV upload + validation**
 2. **Auto-normalization** from multiple source formats:
-   - normalized metrics CSV
-   - support ticket export
-   - CRM lead export
-   - ops queue export
+ - normalized metrics CSV
+ - support ticket export
+ - CRM lead export
+ - ops queue export
 3. **KPI computation** (avg/min/max/count)
 4. **Anomaly detection** (threshold-based, explainable)
 5. **Recommendation generation** (priority + rationale)
@@ -50,8 +50,8 @@ npm run test:slice7
 ## Demo assets
 - Walkthrough: [`docs/14-demo-walkthrough.md`](./docs/14-demo-walkthrough.md)
 - Screenshots:
-  - ![Dashboard main](./docs/screenshots/01-dashboard-main.jpg)
-  - ![Brief and approvals](./docs/screenshots/02-brief-and-approvals.jpg)
+ - ![Dashboard main](./docs/screenshots/01-dashboard-main.jpg)
+ - ![Brief and approvals](./docs/screenshots/02-brief-and-approvals.jpg)
 
 ## Lifecycle docs (fallback list)
 Use docs/00..11 for full thought-to-finale process and handoff.

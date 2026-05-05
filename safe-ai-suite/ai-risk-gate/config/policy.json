@@ -1,7 +1,7 @@
 {
-  "highRiskKeywords": ["delete","drop table","rm -rf","format disk","reset prod","api key","token","password"],
-  "mediumRiskKeywords": ["install","upgrade","migrate","firewall","systemctl","deploy","network"],
-  "highRiskTools": ["shell","database-admin","prod-deploy"],
-  "mediumRiskTools": ["file-edit","package-manager","service-manager"],
-  "alwaysConfirmActions": ["delete","overwrite","restart-service","rotate-key"]
+ "highRiskKeywords": ["delete","drop table","rm -rf","format disk","reset prod","api key","token","password"],
+ "mediumRiskKeywords": ["install","upgrade","migrate","firewall","systemctl","deploy","network"],
+ "highRiskTools": ["shell","database-admin","prod-deploy"],
+ "mediumRiskTools": ["file-edit","package-manager","service-manager"],
+ "alwaysConfirmActions": ["delete","overwrite","restart-service","rotate-key"]
 }

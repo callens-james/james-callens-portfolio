@@ -1,84 +1,84 @@
 <!doctype html>
 <html>
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Ops Insight Copilot</title>
-  <style>
-    :root {
-      --bg: #0f172a;
-      --panel: #111827;
-      --panel-2: #1f2937;
-      --text: #e5e7eb;
-      --muted: #9ca3af;
-      --line: #334155;
-      --accent: #38bdf8;
-    }
-    body { font-family: Arial, sans-serif; margin: 20px; background: radial-gradient(circle at top, #1e293b 0%, var(--bg) 60%); color: var(--text); }
-    h1 { margin-bottom: 8px; color: #f8fafc; }
-    .row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 16px; }
-    .card { background: linear-gradient(180deg, var(--panel) 0%, var(--panel-2) 100%); border: 1px solid var(--line); border-radius: 10px; padding: 12px; box-shadow: 0 8px 20px rgba(0,0,0,0.25); }
-    .small { color: var(--muted); font-size:12px; }
-    table { width: 100%; border-collapse: collapse; }
-    th, td { border-bottom: 1px solid var(--line); padding: 8px; text-align: left; font-size: 14px; }
-    th { color: #cbd5e1; }
-    button { padding: 6px 10px; margin-right: 6px; border: 1px solid #475569; background: #0b1220; color: #e2e8f0; border-radius: 6px; cursor: pointer; }
-    button:hover { border-color: var(--accent); color: #fff; }
-    input[type="file"] { color: #cbd5e1; }
-    pre { background: #0b1220; border: 1px solid var(--line); border-radius: 8px; padding: 10px; }
-    .p1 { color: #f87171; font-weight: bold; }
-    .p2 { color: #fbbf24; font-weight: bold; }
-    .badge { padding:2px 8px; border-radius:999px; font-size:12px; }
-    .sev-high { background:#7f1d1d; color:#fecaca; }
-    .sev-medium { background:#78350f; color:#fde68a; }
-    .st-approved { background:#14532d; color:#bbf7d0; }
-    .st-proposed { background:#1e3a8a; color:#bfdbfe; }
-  </style>
+ <meta charset="utf-8" />
+ <meta name="viewport" content="width=device-width, initial-scale=1" />
+ <title>Ops Insight Copilot</title>
+ <style>
+ :root {
+ --bg: #0f172a;
+ --panel: #111827;
+ --panel-2: #1f2937;
+ --text: #e5e7eb;
+ --muted: #9ca3af;
+ --line: #334155;
+ --accent: #38bdf8;
+ }
+ body { font-family: Arial, sans-serif; margin: 20px; background: radial-gradient(circle at top, #1e293b 0%, var(--bg) 60%); color: var(--text); }
+ h1 { margin-bottom: 8px; color: #f8fafc; }
+ .row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+ .card { background: linear-gradient(180deg, var(--panel) 0%, var(--panel-2) 100%); border: 1px solid var(--line); border-radius: 10px; padding: 12px; box-shadow: 0 8px 20px rgba(0,0,0,0.25); }
+ .small { color: var(--muted); font-size:12px; }
+ table { width: 100%; border-collapse: collapse; }
+ th, td { border-bottom: 1px solid var(--line); padding: 8px; text-align: left; font-size: 14px; }
+ th { color: #cbd5e1; }
+ button { padding: 6px 10px; margin-right: 6px; border: 1px solid #475569; background: #0b1220; color: #e2e8f0; border-radius: 6px; cursor: pointer; }
+ button:hover { border-color: var(--accent); color: #fff; }
+ input[type="file"] { color: #cbd5e1; }
+ pre { background: #0b1220; border: 1px solid var(--line); border-radius: 8px; padding: 10px; }
+ .p1 { color: #f87171; font-weight: bold; }
+ .p2 { color: #fbbf24; font-weight: bold; }
+ .badge { padding:2px 8px; border-radius:999px; font-size:12px; }
+ .sev-high { background:#7f1d1d; color:#fecaca; }
+ .sev-medium { background:#78350f; color:#fde68a; }
+ .st-approved { background:#14532d; color:#bbf7d0; }
+ .st-proposed { background:#1e3a8a; color:#bfdbfe; }
+ </style>
 </head>
 <body>
-  <h1>Ops Insight Copilot — Analyst Workbench</h1>
-  <div class="small">Slice 6+: Dashboard rendering + quick actions</div>
-  <div class="small" id="lastUpdated">Last updated: --</div>
+ <h1>Ops Insight Copilot — Analyst Workbench</h1>
+ <div class="small">Slice 6+: Dashboard rendering + quick actions</div>
+ <div class="small" id="lastUpdated">Last updated: --</div>
 
-  <div class="card" style="margin:12px 0;">
-    <input type="file" id="fileInput" accept=".csv" />
-    <button onclick="uploadCsv()">Upload CSV</button>
-    <button onclick="generateRecommendations()">Regenerate Recommendations</button>
-    <button onclick="download('/export/kpis.csv')">Export KPIs CSV</button>
-    <button onclick="download('/export/recommendations.csv')">Export Recos CSV</button>
-    <button onclick="loadBrief()">Generate Weekly Brief</button>
-    <span id="status" class="small"></span>
-    <div id="uploadMeta" class="small" style="margin-top:8px;"></div>
-  </div>
+ <div class="card" style="margin:12px 0;">
+ <input type="file" id="fileInput" accept=".csv" />
+ <button onclick="uploadCsv()">Upload CSV</button>
+ <button onclick="generateRecommendations()">Regenerate Recommendations</button>
+ <button onclick="download('/export/kpis.csv')">Export KPIs CSV</button>
+ <button onclick="download('/export/recommendations.csv')">Export Recos CSV</button>
+ <button onclick="loadBrief()">Generate Weekly Brief</button>
+ <span id="status" class="small"></span>
+ <div id="uploadMeta" class="small" style="margin-top:8px;"></div>
+ </div>
 
-  <div class="row">
-    <div class="card"><h3>KPIs</h3><div id="kpiCount">0</div></div>
-    <div class="card"><h3>Anomalies (open)</h3><div id="anomalyCount">0</div></div>
-    <div class="card"><h3>Recommendations</h3><div id="recoCount">0</div></div>
-  </div>
+ <div class="row">
+ <div class="card"><h3>KPIs</h3><div id="kpiCount">0</div></div>
+ <div class="card"><h3>Anomalies (open)</h3><div id="anomalyCount">0</div></div>
+ <div class="card"><h3>Recommendations</h3><div id="recoCount">0</div></div>
+ </div>
 
-  <div class="card">
-    <h3>KPI Table</h3>
-    <table id="kpiTable"><thead><tr><th>Name</th><th>Value</th><th>Count</th><th>Min</th><th>Max</th></tr></thead><tbody></tbody></table>
-  </div>
+ <div class="card">
+ <h3>KPI Table</h3>
+ <table id="kpiTable"><thead><tr><th>Name</th><th>Value</th><th>Count</th><th>Min</th><th>Max</th></tr></thead><tbody></tbody></table>
+ </div>
 
-  <div class="card" style="margin-top:12px;">
-    <h3>Anomaly Queue</h3>
-    <table id="anomalyTable"><thead><tr><th>Severity</th><th>Metric</th><th>Observed</th><th>Reason</th></tr></thead><tbody></tbody></table>
-  </div>
+ <div class="card" style="margin-top:12px;">
+ <h3>Anomaly Queue</h3>
+ <table id="anomalyTable"><thead><tr><th>Severity</th><th>Metric</th><th>Observed</th><th>Reason</th></tr></thead><tbody></tbody></table>
+ </div>
 
-  <div class="card" style="margin-top:12px;">
-    <h3>Recommendation Board</h3>
-    <table id="recoTable"><thead><tr><th>Priority</th><th>Title</th><th>Status</th><th>Rationale</th><th>Action</th></tr></thead><tbody></tbody></table>
-  </div>
+ <div class="card" style="margin-top:12px;">
+ <h3>Recommendation Board</h3>
+ <table id="recoTable"><thead><tr><th>Priority</th><th>Title</th><th>Status</th><th>Rationale</th><th>Action</th></tr></thead><tbody></tbody></table>
+ </div>
 
-  <div class="card" style="margin-top:12px;">
-    <h3>Weekly Brief</h3>
-    <pre id="briefBox" style="white-space:pre-wrap;"></pre>
-  </div>
+ <div class="card" style="margin-top:12px;">
+ <h3>Weekly Brief</h3>
+ <pre id="briefBox" style="white-space:pre-wrap;"></pre>
+ </div>
 
 <script>
-const API = 'http://192.168.1.170:3350/api';
+const API = 'http:// <server-ip> :3350/api';
 
 async function jget(path){ const r=await fetch(API+path); return r.json(); }
 async function jpost(path, body){ const r=await fetch(API+path,{method:'POST',headers:{'Content-Type':'application/json'},body:body?JSON.stringify(body):undefined}); return r.json(); }
@@ -87,68 +87,68 @@ async function jpatch(path, body){ const r=await fetch(API+path,{method:'PATCH',
 function setStatus(msg){ document.getElementById('status').textContent = msg; }
 
 function fillTable(id, rows, mapper){
-  const tb = document.querySelector(`#${id} tbody`);
-  tb.innerHTML = rows.map(mapper).join('');
+ const tb = document.querySelector(`#${id} tbody`);
+ tb.innerHTML = rows.map(mapper).join('');
 }
 
 async function refresh(){
-  const [kpis, anomalies, recos, lastUpload] = await Promise.all([
-    jget('/kpis'), jget('/anomalies'), jget('/recommendations'), jget('/upload/last')
-  ]);
+ const [kpis, anomalies, recos, lastUpload] = await Promise.all([
+ jget('/kpis'), jget('/anomalies'), jget('/recommendations'), jget('/upload/last')
+ ]);
 
-  document.getElementById('kpiCount').textContent = kpis.length;
-  document.getElementById('anomalyCount').textContent = anomalies.filter(a=>a.status==='open').length;
-  document.getElementById('recoCount').textContent = recos.length;
+ document.getElementById('kpiCount').textContent = kpis.length;
+ document.getElementById('anomalyCount').textContent = anomalies.filter(a=>a.status==='open').length;
+ document.getElementById('recoCount').textContent = recos.length;
 
-  document.getElementById('lastUpdated').textContent = `Last updated: ${new Date().toLocaleTimeString()}`;
-  if (lastUpload && lastUpload.formatDetected) {
-    document.getElementById('uploadMeta').textContent = `Detected format: ${lastUpload.formatDetected} | Rows in: ${lastUpload.sourceRows} | Rows normalized: ${lastUpload.rowsAccepted}${lastUpload.duplicate ? ' | duplicate upload ignored' : ''}`;
-  }
+ document.getElementById('lastUpdated').textContent = `Last updated: ${new Date().toLocaleTimeString()}`;
+ if (lastUpload && lastUpload.formatDetected) {
+ document.getElementById('uploadMeta').textContent = `Detected format: ${lastUpload.formatDetected} | Rows in: ${lastUpload.sourceRows} | Rows normalized: ${lastUpload.rowsAccepted}${lastUpload.duplicate ? ' | duplicate upload ignored' : ''}`;
+ }
 
-  fillTable('kpiTable', kpis, r => `<tr><td>${r.kpi_name}</td><td>${r.kpi_value}</td><td>${r.count}</td><td>${r.min}</td><td>${r.max}</td></tr>`);
-  fillTable('anomalyTable', anomalies, a => `<tr><td><span class="badge ${a.severity==='high'?'sev-high':'sev-medium'}">${a.severity}</span></td><td>${a.metric_name}</td><td>${a.observed_value}</td><td>${a.reason}</td></tr>`);
-  fillTable('recoTable', recos, r => `<tr><td class="${r.priority}">${r.priority}</td><td>${r.title}</td><td><span class="badge ${r.status==='approved'?'st-approved':'st-proposed'}">${r.status}</span></td><td>${r.rationale}</td><td>${r.status==='approved' ? `<button onclick="undoApproveReco('${r.id}')">Undo</button>` : `<button onclick="approveReco('${r.id}')">Approve</button>`}</td></tr>`);
+ fillTable('kpiTable', kpis, r => `<tr><td>${r.kpi_name}</td><td>${r.kpi_value}</td><td>${r.count}</td><td>${r.min}</td><td>${r.max}</td></tr>`);
+ fillTable('anomalyTable', anomalies, a => `<tr><td><span class="badge ${a.severity==='high'?'sev-high':'sev-medium'}">${a.severity}</span></td><td>${a.metric_name}</td><td>${a.observed_value}</td><td>${a.reason}</td></tr>`);
+ fillTable('recoTable', recos, r => `<tr><td class="${r.priority}">${r.priority}</td><td>${r.title}</td><td><span class="badge ${r.status==='approved'?'st-approved':'st-proposed'}">${r.status}</span></td><td>${r.rationale}</td><td>${r.status==='approved' ? `<button onclick="undoApproveReco('${r.id}')">Undo</button>` : `<button onclick="approveReco('${r.id}')">Approve</button>`}</td></tr>`);
 }
 
 async function uploadCsv(){
-  const file = document.getElementById('fileInput').files[0];
-  if(!file) return setStatus('Choose a CSV first.');
-  const fd = new FormData(); fd.append('file', file);
-  setStatus('Uploading...');
-  const r = await fetch(API+'/upload',{method:'POST',body:fd});
-  const data = await r.json();
-  if(!data.ok){ setStatus('Upload failed: '+(data.error||'unknown')); return; }
-  if (data.duplicate) setStatus(`Duplicate upload detected; existing metrics retained.`);
-  else setStatus(`Uploaded ${data.upload.filename} (${data.upload.row_count} rows)`);
-  await refresh();
+ const file = document.getElementById('fileInput').files[0];
+ if(!file) return setStatus('Choose a CSV first.');
+ const fd = new FormData(); fd.append('file', file);
+ setStatus('Uploading...');
+ const r = await fetch(API+'/upload',{method:'POST',body:fd});
+ const data = await r.json();
+ if(!data.ok){ setStatus('Upload failed: '+(data.error||'unknown')); return; }
+ if (data.duplicate) setStatus(`Duplicate upload detected; existing metrics retained.`);
+ else setStatus(`Uploaded ${data.upload.filename} (${data.upload.row_count} rows)`);
+ await refresh();
 }
 
 async function generateRecommendations(){
-  const res = await jpost('/recommendations/generate');
-  setStatus(`Generated ${res.count || 0} recommendations`);
-  await refresh();
+ const res = await jpost('/recommendations/generate');
+ setStatus(`Generated ${res.count || 0} recommendations`);
+ await refresh();
 }
 
 async function approveReco(id){
-  await jpatch('/recommendations/'+id, { status: 'approved' });
-  setStatus('Recommendation approved');
-  await refresh();
+ await jpatch('/recommendations/'+id, { status: 'approved' });
+ setStatus('Recommendation approved');
+ await refresh();
 }
 
 async function undoApproveReco(id){
-  await jpatch('/recommendations/'+id, { status: 'proposed' });
-  setStatus('Recommendation reverted to proposed');
-  await refresh();
+ await jpatch('/recommendations/'+id, { status: 'proposed' });
+ setStatus('Recommendation reverted to proposed');
+ await refresh();
 }
 
 function download(path){
-  window.open(API + path, '_blank');
+ window.open(API + path, '_blank');
 }
 
 async function loadBrief(){
-  const data = await jget('/brief/weekly');
-  document.getElementById('briefBox').textContent = data.brief || '';
-  setStatus('Weekly brief generated');
+ const data = await jget('/brief/weekly');
+ document.getElementById('briefBox').textContent = data.brief || '';
+ setStatus('Weekly brief generated');
 }
 
 refresh();

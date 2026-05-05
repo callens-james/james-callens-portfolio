@@ -22,14 +22,14 @@ Open: `http://localhost:3347/health`
 Evaluate request:
 ```bash
 curl -s http://127.0.0.1:3347/guard/evaluate \
-  -H 'content-type: application/json' \
-  -d '{"task":"Delete old logs","action":"delete","tool":"shell"}'
+ -H 'content-type: application/json' \
+ -d '{"task":"Delete old logs","action":"delete","tool":"shell"}'
 ```
 
 Execute risky request (requires confirmation header):
 ```bash
 curl -s http://127.0.0.1:3347/guard/execute \
-  -H 'content-type: application/json' \
-  -H 'x-confirm: yes' \
-  -d '{"task":"Delete old logs","action":"delete","tool":"shell"}'
+ -H 'content-type: application/json' \
+ -H 'x-confirm: yes' \
+ -d '{"task":"Delete old logs","action":"delete","tool":"shell"}'
 ```

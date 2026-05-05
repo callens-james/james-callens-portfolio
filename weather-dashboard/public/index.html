@@ -22,54 +22,54 @@ body.simple .modeCards, body.simple #hourlyChart, body.simple #hourlyText, body.
 </style></head><body>
 <div class='sticky'><div class='wrap'><div class='row'><span class='tag'>Weather Dashboard <b>v0.3.1 ULTRA</b></span><span id='status' class='small'>Idle</span><button class='primary' id='refreshBtn' type='button'>Refresh</button><button id='exportBtn' type='button'>Export CSV</button><button id='icsBtn' type='button'>Export Calendar (.ics)</button><button id='printBtn' type='button'>Print Report</button><label class='small'><input id='dadMode' type='checkbox'> Dad Mode (large text)</label><label class='small'><input id='simpleMode' type='checkbox'> Simple Mode</label></div></div></div>
 <div class='wrap'>
-  <div class='card'><div class='row'>
-    <div class='field' style='min-width:280px'><label>City / State / Zip</label><input id='place' placeholder='e.g., Bethlehem PA or 18017'></div>
-    <div class='field'><label>Lat</label><input id='lat' value='40.6884'></div><div class='field'><label>Lon</label><input id='lon' value='-75.4969'></div>
-    <div class='field'><label>Days</label><select id='days'><option>7</option><option>10</option><option selected>16</option></select></div>
-    <div class='field'><label>Units</label><select id='unit'><option value='F' selected>F</option><option value='C'>C</option></select></div>
-    <div class='field'><label>Start Hour</label><input id='startHour' value='8'></div><div class='field'><label>End Hour</label><input id='endHour' value='17'></div>
-  </div></div>
+ <div class='card'><div class='row'>
+ <div class='field' style='min-width:280px'><label>City / State / Zip</label><input id='place' placeholder='e.g., Bethlehem PA or 18017'></div>
+ <div class='field'><label>Lat</label><input id='lat' value='40.6884'></div><div class='field'><label>Lon</label><input id='lon' value='-75.4969'></div>
+ <div class='field'><label>Days</label><select id='days'><option>7</option><option>10</option><option selected>16</option></select></div>
+ <div class='field'><label>Units</label><select id='unit'><option value='F' selected>F</option><option value='C'>C</option></select></div>
+ <div class='field'><label>Start Hour</label><input id='startHour' value='8'></div><div class='field'><label>End Hour</label><input id='endHour' value='17'></div>
+ </div></div>
 
-  <div class='card'><div class='small' style='margin-bottom:6px'>Project Mode</div><div class='modeCards' id='modeCards'></div></div>
+ <div class='card'><div class='small' style='margin-bottom:6px'>Project Mode</div><div class='modeCards' id='modeCards'></div></div>
 
-  <div class='hero card'>
-    <div>
-      <div class='small'>Today Verdict</div>
-      <div class='score' id='heroScore'>--</div>
-      <div class='label' id='heroLabel'>Waiting for data</div>
-      <div class='small' id='heroBest'></div>
-    </div>
-    <div class='kpi'>
-      <div class='box'><div class='small'>High</div><div id='kpiHigh'>--</div></div>
-      <div class='box'><div class='small'>Rain Risk</div><div id='kpiRain'>--</div></div>
-      <div class='box'><div class='small'>Wind</div><div id='kpiWind'>--</div></div>
-      <div class='box'><div class='small'>Daylight</div><div id='kpiLight'>--</div></div>
-    </div>
-  </div>
+ <div class='hero card'>
+ <div>
+ <div class='small'>Today Verdict</div>
+ <div class='score' id='heroScore'>--</div>
+ <div class='label' id='heroLabel'>Waiting for data</div>
+ <div class='small' id='heroBest'></div>
+ </div>
+ <div class='kpi'>
+ <div class='box'><div class='small'>High</div><div id='kpiHigh'>--</div></div>
+ <div class='box'><div class='small'>Rain Risk</div><div id='kpiRain'>--</div></div>
+ <div class='box'><div class='small'>Wind</div><div id='kpiWind'>--</div></div>
+ <div class='box'><div class='small'>Daylight</div><div id='kpiLight'>--</div></div>
+ </div>
+ </div>
 
-  <div class='card'><div class='small'>Forecast Heatmap (click any day)</div><div class='days' id='heatmap'></div></div>
+ <div class='card'><div class='small'>Forecast Heatmap (click any day)</div><div class='days' id='heatmap'></div></div>
 
-  <div class='grid'>
-    <div class='card'><h3>Selected Day</h3><div id='selected'></div></div>
-    <div class='card'><h3>Week Summary</h3><div id='week'></div></div>
-    <div class='card'><h3>Month Summary</h3><div id='month'></div></div>
-  </div>
+ <div class='grid'>
+ <div class='card'><h3>Selected Day</h3><div id='selected'></div></div>
+ <div class='card'><h3>Week Summary</h3><div id='week'></div></div>
+ <div class='card'><h3>Month Summary</h3><div id='month'></div></div>
+ </div>
 
-  <div class='card'><h3>Severe Weather + Confidence</h3><div id='severeBanner'></div><div id='confidence' class='small' style='margin-top:8px'></div></div>
-  <div class='card'><h3>Hourly Work Window (Today/Tomorrow)</h3><canvas id='hourlyChart' width='1100' height='260'></canvas><div id='hourlyText' class='small' style='margin-top:6px'></div></div>
-  <div class='card'><h3>Hourly Suitability Radar</h3><canvas id='radarChart' width='700' height='280'></canvas></div>
-  <div class='card'><h3>Alerts & Warnings</h3><div id='alerts'></div></div>
-  <div class='card'><h3>Saved Locations</h3><div class='row'><input id='saveName' placeholder='Label (Dad House)'><button type='button' id='saveLocBtn'>Save Current</button><select id='savedLocs'></select><button type='button' id='loadLocBtn'>Load</button></div></div>
+ <div class='card'><h3>Severe Weather + Confidence</h3><div id='severeBanner'></div><div id='confidence' class='small' style='margin-top:8px'></div></div>
+ <div class='card'><h3>Hourly Work Window (Today/Tomorrow)</h3><canvas id='hourlyChart' width='1100' height='260'></canvas><div id='hourlyText' class='small' style='margin-top:6px'></div></div>
+ <div class='card'><h3>Hourly Suitability Radar</h3><canvas id='radarChart' width='700' height='280'></canvas></div>
+ <div class='card'><h3>Alerts & Warnings</h3><div id='alerts'></div></div>
+ <div class='card'><h3>Saved Locations</h3><div class='row'><input id='saveName' placeholder='Label (Dad House)'><button type='button' id='saveLocBtn'>Save Current</button><select id='savedLocs'></select><button type='button' id='loadLocBtn'>Load</button></div></div>
 
-  <div class='card'><h3>Dad Daily Brief</h3><div id='dailyBrief'></div></div>
-  <div class='card'><h3>Project Planner</h3><div class='row'>
-    <div class='field'><label>Project</label><select id='projectType'><option>General</option><option>Gardening</option><option>Painting</option><option>Concrete</option><option>Roofing</option></select></div>
-    <div class='field'><label>Duration (days)</label><input id='projectDuration' value='2'></div>
-    <button type='button' id='planBtn'>Find Best Start Window</button>
-  </div><div id='plannerOut' class='small' style='margin-top:8px'></div></div>
-  <div class='card'><h3>Risk Breakdown</h3><div id='riskBreakdown'></div></div>
+ <div class='card'><h3>Dad Daily Brief</h3><div id='dailyBrief'></div></div>
+ <div class='card'><h3>Project Planner</h3><div class='row'>
+ <div class='field'><label>Project</label><select id='projectType'><option>General</option><option>Gardening</option><option>Painting</option><option>Concrete</option><option>Roofing</option></select></div>
+ <div class='field'><label>Duration (days)</label><input id='projectDuration' value='2'></div>
+ <button type='button' id='planBtn'>Find Best Start Window</button>
+ </div><div id='plannerOut' class='small' style='margin-top:8px'></div></div>
+ <div class='card'><h3>Risk Breakdown</h3><div id='riskBreakdown'></div></div>
 
-  <div class='card'><h3>Source Health</h3><div id='sources'></div></div>
+ <div class='card'><h3>Source Health</h3><div id='sources'></div></div>
 </div>
 <script>
 let lastPayload=null, selectedIdx=0, activeMode='general';
@@ -102,15 +102,15 @@ function renderHourly(){const p=getPrefs(); const h=lastPayload.raw?.openMeteo?.
  if(!rows.length){$('hourlyText').textContent='No hourly data in selected window'; return;} const pad=28, W=c.width-pad*2, H=c.height-pad*2; const tVals=rows.map(r=>r.t), maxT=Math.max(...tVals), minT=Math.min(...tVals), maxPr=100, maxW=Math.max(20,...rows.map(r=>r.w||0));
  const x=i=>pad + (i/(rows.length-1||1))*W, yT=v=>pad+H-( (v-minT)/(maxT-minT||1))*H, yPr=v=>pad+H-(v/maxPr)*H, yW=v=>pad+H-(v/maxW)*H;
  ctx.strokeStyle='#334155'; for(let i=0;i<5;i++){const y=pad+(i/4)*H; ctx.beginPath(); ctx.moveTo(pad,y); ctx.lineTo(pad+W,y); ctx.stroke();
-   ctx.fillStyle='#94a3b8'; ctx.font='11px Arial';
-   const tempTick=(maxT - (i/4)*(maxT-minT)).toFixed(0);
-   ctx.fillText(tempTick, 4, y+4);
+ ctx.fillStyle='#94a3b8'; ctx.font='11px Arial';
+ const tempTick=(maxT - (i/4)*(maxT-minT)).toFixed(0);
+ ctx.fillText(tempTick, 4, y+4);
  }
  // x-axis ticks (time)
  ctx.strokeStyle='#475569'; ctx.beginPath(); ctx.moveTo(pad,pad+H); ctx.lineTo(pad+W,pad+H); ctx.stroke();
  for(let i=0;i<rows.length;i+=Math.max(1,Math.floor(rows.length/6))){
-   const xx=x(i); ctx.beginPath(); ctx.moveTo(xx,pad+H); ctx.lineTo(xx,pad+H+4); ctx.stroke();
-   ctx.fillStyle='#94a3b8'; ctx.font='10px Arial'; ctx.fillText(rows[i].dt.getHours()+':00', xx-12, pad+H+16);
+ const xx=x(i); ctx.beginPath(); ctx.moveTo(xx,pad+H); ctx.lineTo(xx,pad+H+4); ctx.stroke();
+ ctx.fillStyle='#94a3b8'; ctx.font='10px Arial'; ctx.fillText(rows[i].dt.getHours()+':00', xx-12, pad+H+16);
  }
  ctx.strokeStyle='#60a5fa'; ctx.lineWidth=2; ctx.beginPath(); rows.forEach((r,i)=>{const xx=x(i),yy=yT(r.t); if(i===0)ctx.moveTo(xx,yy); else ctx.lineTo(xx,yy);}); ctx.stroke();
  ctx.strokeStyle='#22d3ee'; ctx.beginPath(); rows.forEach((r,i)=>{const xx=x(i),yy=yW(r.w||0); if(i===0)ctx.moveTo(xx,yy); else ctx.lineTo(xx,yy);}); ctx.stroke();
@@ -118,88 +118,88 @@ function renderHourly(){const p=getPrefs(); const h=lastPayload.raw?.openMeteo?.
  ctx.fillStyle='#9fb0dd'; ctx.font='12px Arial'; ctx.fillText(`Temp(${p.unit}) blue · Wind cyan · Rain% orange`, pad, 16);
  $('hourlyText').textContent=`Window ${p.start}:00-${p.end}:00 · ${rows[0].dt.toLocaleDateString()} to ${rows[rows.length-1].dt.toLocaleDateString()}`;}
 function renderConfidence(){
-  const s=lastPayload?.sourceStatus||{};
-  const vals=Object.values(s);
-  const ok=vals.filter(v=>v==='ok').length;
-  const conf = ok>=2?'High':ok===1?'Medium':'Low';
-  $('confidence').innerHTML=`Source confidence: <b>${conf}</b> (${ok}/${vals.length||1} sources healthy)`;
-  const severe=$('alerts')?.textContent?.includes('⚠️');
-  $('severeBanner').innerHTML = severe ? `<div class='alert'>⚠️ Active weather cautions detected. Review Alerts below.</div>` : `<div class='small'>No severe trigger words detected right now.</div>`;
+ const s=lastPayload?.sourceStatus||{};
+ const vals=Object.values(s);
+ const ok=vals.filter(v=>v==='ok').length;
+ const conf = ok>=2?'High':ok===1?'Medium':'Low';
+ $('confidence').innerHTML=`Source confidence: <b>${conf}</b> (${ok}/${vals.length||1} sources healthy)`;
+ const severe=$('alerts')?.textContent?.includes('⚠️');
+ $('severeBanner').innerHTML = severe ? `<div class='alert'>⚠️ Active weather cautions detected. Review Alerts below.</div>` : `<div class='small'>No severe trigger words detected right now.</div>`;
 }
 
 function renderAlerts(){
-  const d=lastPayload?.summary?.days||[]; const alerts=[];
-  d.slice(0,3).forEach(day=>{
-    if((day.precip??0)>=70) alerts.push(`${day.date}: High rain probability (${day.precip}%).`);
-    if((day.wind??0)>=35) alerts.push(`${day.date}: Windy conditions (${day.wind} km/h).`);
-    if((day.tMax??0)>=95) alerts.push(`${day.date}: High heat risk.`);
-    if((day.tMax??100)<=40) alerts.push(`${day.date}: Cold risk for outdoor work.`);
-  });
-  const nwsPeriods=lastPayload?.raw?.nws?.properties?.periods||[];
-  const nwsHaz=nwsPeriods.filter(p=>/storm|thunder|warning|advisory|snow|ice/i.test((p.shortForecast||'')+' '+(p.detailedForecast||''))).slice(0,2);
-  nwsHaz.forEach(p=>alerts.push(`NWS: ${p.name} - ${p.shortForecast}`));
-  $('alerts').innerHTML = alerts.length ? alerts.map(a=>`<div class='alert'>⚠️ ${a}</div>`).join('') : `<div class='small'>No major warnings detected in current horizon.</div>`;
+ const d=lastPayload?.summary?.days||[]; const alerts=[];
+ d.slice(0,3).forEach(day=>{
+ if((day.precip??0)>=70) alerts.push(`${day.date}: High rain probability (${day.precip}%).`);
+ if((day.wind??0)>=35) alerts.push(`${day.date}: Windy conditions (${day.wind} km/h).`);
+ if((day.tMax??0)>=95) alerts.push(`${day.date}: High heat risk.`);
+ if((day.tMax??100)<=40) alerts.push(`${day.date}: Cold risk for outdoor work.`);
+ });
+ const nwsPeriods=lastPayload?.raw?.nws?.properties?.periods||[];
+ const nwsHaz=nwsPeriods.filter(p=>/storm|thunder|warning|advisory|snow|ice/i.test((p.shortForecast||'')+' '+(p.detailedForecast||''))).slice(0,2);
+ nwsHaz.forEach(p=>alerts.push(`NWS: ${p.name} - ${p.shortForecast}`));
+ $('alerts').innerHTML = alerts.length ? alerts.map(a=>`<div class='alert'>⚠️ ${a}</div>`).join('') : `<div class='small'>No major warnings detected in current horizon.</div>`;
 }
 function renderRadar(){
-  const c=$('radarChart'); const ctx=c.getContext('2d'); ctx.clearRect(0,0,c.width,c.height);
-  const p=getPrefs(); const h=lastPayload?.raw?.openMeteo?.hourly; if(!h?.time){ctx.fillText('No radar data',20,20);return;}
-  const now=new Date(); const rows=[];
-  for(let i=0;i<h.time.length;i++){const dt=new Date(h.time[i]); const hr=dt.getHours(); if((dt-now)/(1000*60*60)<24 && hr>=p.start && hr<=p.end){rows.push({t:h.temperature_2m?.[i],pr:h.precipitation_probability?.[i],w:h.windspeed_10m?.[i]});}}
-  if(!rows.length){ctx.fillText('No hourly rows in selected window',20,20);return;}
-  const avg=(arr,k)=>arr.reduce((a,b)=>a+(b[k]||0),0)/arr.length;
-  const temp=avg(rows,'t'); const rain=avg(rows,'pr'); const wind=avg(rows,'w');
-  let tempScore=100-Math.min(100,Math.abs(((p.minTemp+p.maxTemp)/2)-temp)*4);
-  let rainScore=100-Math.min(100,rain);
-  let windScore=100-Math.min(100,(wind/40)*100);
-  tempScore=Math.max(0,tempScore); rainScore=Math.max(0,rainScore); windScore=Math.max(0,windScore);
-  const vals=[tempScore,rainScore,windScore]; const labels=['Temp Fit','Dryness','Low Wind'];
-  const cx=c.width/2, cy=c.height/2+10, R=90;
-  ctx.strokeStyle='#334155'; ctx.fillStyle='#94a3b8'; ctx.font='12px Arial';
-  for(let ring=1; ring<=4; ring++){ctx.beginPath(); for(let i=0;i<3;i++){const a=(-Math.PI/2)+i*2*Math.PI/3; const r=R*ring/4; const x=cx+Math.cos(a)*r, y=cy+Math.sin(a)*r; if(i===0)ctx.moveTo(x,y); else ctx.lineTo(x,y);} ctx.closePath(); ctx.stroke();}
-  for(let i=0;i<3;i++){const a=(-Math.PI/2)+i*2*Math.PI/3; const x=cx+Math.cos(a)*(R+18), y=cy+Math.sin(a)*(R+18); ctx.fillText(labels[i],x-24,y);} 
-  ctx.beginPath(); for(let i=0;i<3;i++){const a=(-Math.PI/2)+i*2*Math.PI/3; const r=R*(vals[i]/100); const x=cx+Math.cos(a)*r, y=cy+Math.sin(a)*r; if(i===0)ctx.moveTo(x,y); else ctx.lineTo(x,y);} ctx.closePath(); ctx.fillStyle='rgba(59,130,246,.35)'; ctx.fill(); ctx.strokeStyle='#60a5fa'; ctx.stroke();
+ const c=$('radarChart'); const ctx=c.getContext('2d'); ctx.clearRect(0,0,c.width,c.height);
+ const p=getPrefs(); const h=lastPayload?.raw?.openMeteo?.hourly; if(!h?.time){ctx.fillText('No radar data',20,20);return;}
+ const now=new Date(); const rows=[];
+ for(let i=0;i<h.time.length;i++){const dt=new Date(h.time[i]); const hr=dt.getHours(); if((dt-now)/(1000*60*60)<24 && hr>=p.start && hr<=p.end){rows.push({t:h.temperature_2m?.[i],pr:h.precipitation_probability?.[i],w:h.windspeed_10m?.[i]});}}
+ if(!rows.length){ctx.fillText('No hourly rows in selected window',20,20);return;}
+ const avg=(arr,k)=>arr.reduce((a,b)=>a+(b[k]||0),0)/arr.length;
+ const temp=avg(rows,'t'); const rain=avg(rows,'pr'); const wind=avg(rows,'w');
+ let tempScore=100-Math.min(100,Math.abs(((p.minTemp+p.maxTemp)/2)-temp)*4);
+ let rainScore=100-Math.min(100,rain);
+ let windScore=100-Math.min(100,(wind/40)*100);
+ tempScore=Math.max(0,tempScore); rainScore=Math.max(0,rainScore); windScore=Math.max(0,windScore);
+ const vals=[tempScore,rainScore,windScore]; const labels=['Temp Fit','Dryness','Low Wind'];
+ const cx=c.width/2, cy=c.height/2+10, R=90;
+ ctx.strokeStyle='#334155'; ctx.fillStyle='#94a3b8'; ctx.font='12px Arial';
+ for(let ring=1; ring<=4; ring++){ctx.beginPath(); for(let i=0;i<3;i++){const a=(-Math.PI/2)+i*2*Math.PI/3; const r=R*ring/4; const x=cx+Math.cos(a)*r, y=cy+Math.sin(a)*r; if(i===0)ctx.moveTo(x,y); else ctx.lineTo(x,y);} ctx.closePath(); ctx.stroke();}
+ for(let i=0;i<3;i++){const a=(-Math.PI/2)+i*2*Math.PI/3; const x=cx+Math.cos(a)*(R+18), y=cy+Math.sin(a)*(R+18); ctx.fillText(labels[i],x-24,y);} 
+ ctx.beginPath(); for(let i=0;i<3;i++){const a=(-Math.PI/2)+i*2*Math.PI/3; const r=R*(vals[i]/100); const x=cx+Math.cos(a)*r, y=cy+Math.sin(a)*r; if(i===0)ctx.moveTo(x,y); else ctx.lineTo(x,y);} ctx.closePath(); ctx.fillStyle='rgba(59,130,246,.35)'; ctx.fill(); ctx.strokeStyle='#60a5fa'; ctx.stroke();
 }
 function exportCSV(){if(!lastPayload)return; const d=lastPayload.summary.days||[]; const rows=['date,tMaxF,tMinF,precipRiskPct,precipAmountIn,windKmh,sunrise,sunset,score,label']; d.forEach(x=>rows.push([x.date,x.tMax,x.tMin,x.precip,x.precipAmount,x.wind,x.sunrise,x.sunset,x.plan?.score,x.plan?.label].join(','))); const b=new Blob([rows.join('\n')],{type:'text/csv'}); const a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download='weather_plan.csv'; a.click(); URL.revokeObjectURL(a.href);} 
 function exportICS(){if(!lastPayload)return; const top=(lastPayload.summary.days||[]).slice(0,7).sort((a,b)=>(b.plan?.score||0)-(a.plan?.score||0)).slice(0,3); const lines=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//WeatherDashboard//EN']; top.forEach(d=>{const dt=d.date.replace(/-/g,''); lines.push('BEGIN:VEVENT'); lines.push(`DTSTART;VALUE=DATE:${dt}`); lines.push(`DTEND;VALUE=DATE:${dt}`); lines.push(`SUMMARY:Best Work Day (${d.plan?.score})`); lines.push(`DESCRIPTION:High ${d.tMax}F, Rain ${d.precip}%`); lines.push('END:VEVENT');}); lines.push('END:VCALENDAR'); const blob=new Blob([lines.join('\n')],{type:'text/calendar'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='weather_best_days.ics'; a.click(); URL.revokeObjectURL(a.href);} 
 
 function renderDailyBrief(){
-  const d=lastPayload?.summary?.days||[]; if(!d.length){$('dailyBrief').textContent='No data yet.'; return;}
-  const best=d.slice(0,7).sort((a,b)=>(b.plan?.score||0)-(a.plan?.score||0))[0];
-  const today=d[0];
-  const lines=[];
-  lines.push(`Today is ${today.plan?.label||'unknown'} for outdoor projects (score ${today.plan?.score||'n/a'}).`);
-  lines.push(`Best upcoming day is ${best.date} with score ${best.plan?.score||'n/a'}.`);
-  if((today.precip??0)>=60) lines.push('Rain risk is high today; consider indoor tasks.');
-  else if((today.wind??0)>=30) lines.push('Wind is elevated today; use caution for ladders/painting.');
-  else lines.push('Conditions are generally workable in your selected window.');
-  $('dailyBrief').innerHTML=lines.map(x=>`<div>• ${x}</div>`).join('');
+ const d=lastPayload?.summary?.days||[]; if(!d.length){$('dailyBrief').textContent='No data yet.'; return;}
+ const best=d.slice(0,7).sort((a,b)=>(b.plan?.score||0)-(a.plan?.score||0))[0];
+ const today=d[0];
+ const lines=[];
+ lines.push(`Today is ${today.plan?.label||'unknown'} for outdoor projects (score ${today.plan?.score||'n/a'}).`);
+ lines.push(`Best upcoming day is ${best.date} with score ${best.plan?.score||'n/a'}.`);
+ if((today.precip??0)>=60) lines.push('Rain risk is high today; consider indoor tasks.');
+ else if((today.wind??0)>=30) lines.push('Wind is elevated today; use caution for ladders/painting.');
+ else lines.push('Conditions are generally workable in your selected window.');
+ $('dailyBrief').innerHTML=lines.map(x=>`<div>• ${x}</div>`).join('');
 }
 function renderRiskBreakdown(){
-  const t=(lastPayload?.summary?.today)||{}; const p=getPrefs();
-  const checks=[
-    ['Rain', (t.precip??0), p.maxPrecip, '%', (t.precip??0)<=p.maxPrecip],
-    ['Wind', (t.wind??0), p.maxWind, ' km/h', (t.wind??0)<=p.maxWind],
-    ['Temp', (t.tMax??0), `[${Math.round(p.minTemp)}-${Math.round(p.maxTemp)}]`, '°F', (t.tMax??0)>=p.minTemp && (t.tMax??0)<=p.maxTemp]
-  ];
-  $('riskBreakdown').innerHTML=checks.map(c=>`<div>${c[0]}: ${c[1]}${typeof c[2]==='number'?' / '+c[2]+c[3]:''} <span class='badge ${c[4]?'go':'bad'}'>${c[4]?'OK':'LIMIT'}</span></div>`).join('');
+ const t=(lastPayload?.summary?.today)||{}; const p=getPrefs();
+ const checks=[
+ ['Rain', (t.precip??0), p.maxPrecip, '%', (t.precip??0)<=p.maxPrecip],
+ ['Wind', (t.wind??0), p.maxWind, ' km/h', (t.wind??0)<=p.maxWind],
+ ['Temp', (t.tMax??0), `[${Math.round(p.minTemp)}-${Math.round(p.maxTemp)}]`, '°F', (t.tMax??0)>=p.minTemp && (t.tMax??0)<=p.maxTemp]
+ ];
+ $('riskBreakdown').innerHTML=checks.map(c=>`<div>${c[0]}: ${c[1]}${typeof c[2]==='number'?' / '+c[2]+c[3]:''} <span class='badge ${c[4]?'go':'bad'}'>${c[4]?'OK':'LIMIT'}</span></div>`).join('');
 }
 function runPlanner(){
-  const days=lastPayload?.summary?.days||[]; const dur=Math.max(1,Number($('projectDuration').value||2));
-  if(days.length<dur){$('plannerOut').textContent='Not enough forecast days.';return;}
-  let best={idx:0,score:-1};
-  for(let i=0;i<=days.length-dur;i++){
-    let s=0; for(let j=0;j<dur;j++) s+=days[i+j].plan?.score||0;
-    s/=dur; if(s>best.score) best={idx:i,score:s};
-  }
-  const start=days[best.idx]?.date, end=days[best.idx+dur-1]?.date;
-  const backup=days[Math.min(best.idx+1,days.length-1)]?.date;
-  $('plannerOut').innerHTML=`Recommended start: <b>${start}</b> (through ${end}) · Avg score <b>${best.score.toFixed(1)}</b><br/>Backup start: <b>${backup}</b>`;
+ const days=lastPayload?.summary?.days||[]; const dur=Math.max(1,Number($('projectDuration').value||2));
+ if(days.length<dur){$('plannerOut').textContent='Not enough forecast days.';return;}
+ let best={idx:0,score:-1};
+ for(let i=0;i<=days.length-dur;i++){
+ let s=0; for(let j=0;j<dur;j++) s+=days[i+j].plan?.score||0;
+ s/=dur; if(s>best.score) best={idx:i,score:s};
+ }
+ const start=days[best.idx]?.date, end=days[best.idx+dur-1]?.date;
+ const backup=days[Math.min(best.idx+1,days.length-1)]?.date;
+ $('plannerOut').innerHTML=`Recommended start: <b>${start}</b> (through ${end}) · Avg score <b>${best.score.toFixed(1)}</b><br/>Backup start: <b>${backup}</b>`;
 }
 function maybeNotify(){
-  if(!('Notification' in window)) return;
-  const best=(lastPayload?.summary?.days||[]).slice(0,7).sort((a,b)=>(b.plan?.score||0)-(a.plan?.score||0))[0];
-  if(!best) return;
-  if(Notification.permission==='granted') new Notification('Weather Dashboard',{body:`Best upcoming day: ${best.date} (score ${best.plan?.score||'n/a'})`});
+ if(!('Notification' in window)) return;
+ const best=(lastPayload?.summary?.days||[]).slice(0,7).sort((a,b)=>(b.plan?.score||0)-(a.plan?.score||0))[0];
+ if(!best) return;
+ if(Notification.permission==='granted') new Notification('Weather Dashboard',{body:`Best upcoming day: ${best.date} (score ${best.plan?.score||'n/a'})`});
 }
 
 window.addEventListener('DOMContentLoaded',()=>{restorePrefs(); try{const cached=localStorage.getItem('wd:lastPayload'); if(cached){lastPayload=JSON.parse(cached);} }catch{} renderModes(); setThresholds(MODES[activeMode]); refreshLocs(); $('refreshBtn').onclick=loadWeather; $('exportBtn').onclick=exportCSV; $('icsBtn').onclick=exportICS; $('printBtn').onclick=()=>window.print(); $('saveLocBtn').onclick=saveLocation; $('loadLocBtn').onclick=loadLocation; $('planBtn').onclick=runPlanner; $('dadMode').onchange=()=>{document.body.classList.toggle('dad',$('dadMode').checked); savePrefs();}; $('simpleMode').onchange=()=>{document.body.classList.toggle('simple',$('simpleMode').checked);}; ['place','lat','lon','days','unit','startHour','endHour'].forEach(id=>$(id).addEventListener('change',()=>{if(id==='unit')setThresholds(MODES[activeMode]); savePrefs(); loadWeather();})); if(lastPayload) renderAll(); if('Notification' in window && Notification.permission==='default'){Notification.requestPermission();} loadWeather();});

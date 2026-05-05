@@ -1,15 +1,15 @@
 {
-  "name": "ops-insight-copilot-analyst-workbench",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "node backend/server.js",
-    "test": "node tests/smoke.test.js",
-    "test:slice7": "node tests/slice7.test.js"
-  },
-  "dependencies": {
-    "@fastify/multipart": "^7.7.3",
-    "csv-parse": "^6.2.1",
-    "fastify": "^4.28.1"
-  }
+ "name": "ops-insight-copilot-analyst-workbench",
+ "version": "0.1.0",
+ "private": true,
+ "scripts": {
+ "dev": "node backend/server.js",
+ "test": "node tests/smoke.test.js",
+ "test:slice7": "node tests/slice7.test.js"
+ },
+ "dependencies": {
+ "@fastify/multipart": "^7.7.3",
+ "csv-parse": "^6.2.1",
+ "fastify": "^4.28.1"
+ }
 }

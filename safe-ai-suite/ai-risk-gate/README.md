@@ -17,9 +17,9 @@ Open: http://localhost:3344
 POST `/api/evaluate`
 ```json
 {
-  "task": "Delete logs and restart service",
-  "tool": "shell",
-  "action": "restart-service"
+ "task": "Delete logs and restart service",
+ "tool": "shell",
+ "action": "restart-service"
 }
 ```
 

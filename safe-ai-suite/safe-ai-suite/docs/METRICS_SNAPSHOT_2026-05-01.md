@@ -13,9 +13,9 @@
 
 ## Artifacts
 - JSON report:
-  - `<workspace-home>/openclaw-workspace/Safe AI/projects/eval-harness/reports/eval-2026-05-01T20-40-48-698Z.json`
+ - `<workspace-home>/openclaw-workspace/Safe AI/projects/eval-harness/reports/eval-2026-05-01T20-40-48-698Z.json`
 - CSV report:
-  - `<workspace-home>/openclaw-workspace/Safe AI/projects/eval-harness/reports/eval-2026-05-01T20-40-48-698Z.csv`
+ - `<workspace-home>/openclaw-workspace/Safe AI/projects/eval-harness/reports/eval-2026-05-01T20-40-48-698Z.csv`
 
 ## Interpretation
 - Policy-based risk labeling matched all expected labels in this starter dataset.

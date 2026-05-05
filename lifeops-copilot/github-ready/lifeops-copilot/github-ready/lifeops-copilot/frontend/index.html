@@ -16,9 +16,9 @@
 <div class='card'><h3>Install Profile / Integrations</h3>
 <div id='onboardSummary' style='margin-bottom:8px;color:#93c5fd;'></div>
 <select id='profile'>
-  <option value='core-only'>LifeOps (Core Only - recommended)</option>
-  <option value='local-ai'>LifeOps + Local AI (optional)</option>
-  <option value='openclaw'>LifeOps + OpenClaw (advanced)</option>
+ <option value='core-only'>LifeOps (Core Only - recommended)</option>
+ <option value='local-ai'>LifeOps + Local AI (optional)</option>
+ <option value='openclaw'>LifeOps + OpenClaw (advanced)</option>
 </select>
 <label style='display:block;margin-top:8px;'><input type='checkbox' id='warnAck'> I understand performance/security tradeoffs for optional integrations.</label>
 <button onclick='saveInstallProfile()'>Save Profile</button>
@@ -112,7 +112,7 @@ Assisted min/task <input id='blAssist' type='number' value='20' style='width:70p
 <div class='card'><h3>Audit (latest)</h3><button onclick='rollbackLast()'>Rollback Last State Change</button><div id='audit'></div></div>
 </details>
 <script>
-const API='http://192.168.1.170:3360/api';
+const API='http:// <server-ip> :3360/api';
 const j=async(u,o)=>{const r=await fetch(API+u,o); const d=await r.json(); if(!r.ok||d.ok===false) throw new Error(d.error||'Something went wrong.'); return d;};
 const showMsg=(t)=>{document.getElementById('msg').textContent=t;};
 async function load(){
@@ -142,15 +142,15 @@ async function resetDemo(){ await j('/demo/reset',{method:'POST'}); showMsg('dem
 async function advance(id,status){ try{ await j('/items/'+id+'/state',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({status})}); } catch(e){ showMsg('Transition blocked: '+e.message); } load(); }
 async function loadBrief(){ const b=await j('/brief/weekly'); document.getElementById('brief').textContent=b.brief||''; }
 async function approveAction(id,risk){
-  try {
-    if(risk==='high'){
-      const phrase = prompt('High-risk action. Type: APPROVE HIGH RISK');
-      await j('/actions/'+id+'/approve',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({confirmPhrase:phrase||''})});
-    } else {
-      await j('/actions/'+id+'/approve',{method:'POST'});
-    }
-  } catch(e){ showMsg(e.message); }
-  load();
+ try {
+ if(risk==='high'){
+ const phrase = prompt('High-risk action. Type: APPROVE HIGH RISK');
+ await j('/actions/'+id+'/approve',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({confirmPhrase:phrase||''})});
+ } else {
+ await j('/actions/'+id+'/approve',{method:'POST'});
+ }
+ } catch(e){ showMsg(e.message); }
+ load();
 }
 async function revertAction(id){ await j('/actions/'+id+'/revert',{method:'POST'}); load(); }
 async function loadReminders(){ const r = await j('/reminders/preview'); document.getElementById('reminders').innerHTML = r.map(x => `<div>${x.daysRemaining}d | ${x.trigger} | ${x.deadline}</div>`).join('') || '<div>No deadline reminders</div>'; }
@@ -159,89 +159,89 @@ async function rollbackLast(){ try{ await j('/rollback/last',{method:'POST'}); s
 async function propose(id){await j('/actions/propose',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({itemId:id,title:'Prepare response and checklist'})}); load();}
 
 async function saveInstallProfile(){
-  const p = document.getElementById('profile').value;
-  const ack = document.getElementById('warnAck').checked;
-  const risky = (p !== 'core-only');
-  if (risky && !ack) {
-    document.getElementById('profileMsg').textContent = 'Please acknowledge performance/security tradeoffs before enabling optional integrations.';
-    return;
-  }
-  const body = {
-    installProfile: p,
-    aiEnabled: p === 'local-ai',
-    openclawEnabled: p === 'openclaw'
-  };
-  await j('/settings',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
-  document.getElementById('profileMsg').textContent = 'Profile saved.';
-  load();
+ const p = document.getElementById('profile').value;
+ const ack = document.getElementById('warnAck').checked;
+ const risky = (p !== 'core-only');
+ if (risky && !ack) {
+ document.getElementById('profileMsg').textContent = 'Please acknowledge performance/security tradeoffs before enabling optional integrations.';
+ return;
+ }
+ const body = {
+ installProfile: p,
+ aiEnabled: p === 'local-ai',
+ openclawEnabled: p === 'openclaw'
+ };
+ await j('/settings',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+ document.getElementById('profileMsg').textContent = 'Profile saved.';
+ load();
 }
 
 async function testModel(){
-  const model = document.getElementById('modelSelect').value;
-  const r = await j('/model/check?model='+encodeURIComponent(model));
-  document.getElementById('modelMsg').textContent = r.compatible
-    ? `Compatible: ${r.model} on ${r.totalRamGb}GB RAM (needs ${r.requiredRamGb}GB).`
-    : `Not recommended: ${r.model} needs ${r.requiredRamGb}GB RAM, system has ${r.totalRamGb}GB. Try Lite model.`;
+ const model = document.getElementById('modelSelect').value;
+ const r = await j('/model/check?model='+encodeURIComponent(model));
+ document.getElementById('modelMsg').textContent = r.compatible
+ ? `Compatible: ${r.model} on ${r.totalRamGb}GB RAM (needs ${r.requiredRamGb}GB).`
+ : `Not recommended: ${r.model} needs ${r.requiredRamGb}GB RAM, system has ${r.totalRamGb}GB. Try Lite model.`;
 }
 
 async function applyModel(){
-  const model = document.getElementById('modelSelect').value;
-  await j('/settings',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({aiModel:model})});
-  document.getElementById('modelMsg').textContent = `Applied model: ${model}`;
-  load();
+ const model = document.getElementById('modelSelect').value;
+ await j('/settings',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({aiModel:model})});
+ document.getElementById('modelMsg').textContent = `Applied model: ${model}`;
+ load();
 }
 
 
 async function saveOpportunityProfile(){
-  await j('/profile',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({
-    householdSize:Number(document.getElementById('pfHouse').value||1),
-    income:Number(document.getElementById('pfIncome').value||0),
-    location:document.getElementById('pfLoc').value||'',
-    employment:document.getElementById('pfEmp').value||'unknown'
-  })});
-  showMsg('Opportunity profile saved');
-  await loadOpportunities();
+ await j('/profile',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({
+ householdSize:Number(document.getElementById('pfHouse').value||1),
+ income:Number(document.getElementById('pfIncome').value||0),
+ location:document.getElementById('pfLoc').value||'',
+ employment:document.getElementById('pfEmp').value||'unknown'
+ })});
+ showMsg('Opportunity profile saved');
+ await loadOpportunities();
 }
 
 async function loadOpportunities(){
-  const opps = await j('/opportunities');
-  document.getElementById('opps').innerHTML = opps.map(o=>`<div><b>${o.score}</b> | ${o.name} (${o.type}) | due ${o.deadline} <button onclick="addOppAction('${o.id}')">Add to Plan</button><div style='color:#93c5fd'>${(o.reasons||[]).join('; ')}</div></div>`).join('');
-  const actions = await j('/opportunity-actions');
-  document.getElementById('oppActions').innerHTML = actions.map(a=>`<div>${a.name} | ${a.status} | due ${a.deadline} <button onclick="setOppStatus('${a.id}','in-progress')">Start</button><button onclick="setOppStatus('${a.id}','submitted')">Submitted</button><button onclick="setOppStatus('${a.id}','blocked')">Blocked</button></div>`).join('') || '<div>No opportunity actions yet</div>';
+ const opps = await j('/opportunities');
+ document.getElementById('opps').innerHTML = opps.map(o=>`<div><b>${o.score}</b> | ${o.name} (${o.type}) | due ${o.deadline} <button onclick="addOppAction('${o.id}')">Add to Plan</button><div style='color:#93c5fd'>${(o.reasons||[]).join('; ')}</div></div>`).join('');
+ const actions = await j('/opportunity-actions');
+ document.getElementById('oppActions').innerHTML = actions.map(a=>`<div>${a.name} | ${a.status} | due ${a.deadline} <button onclick="setOppStatus('${a.id}','in-progress')">Start</button><button onclick="setOppStatus('${a.id}','submitted')">Submitted</button><button onclick="setOppStatus('${a.id}','blocked')">Blocked</button></div>`).join('') || '<div>No opportunity actions yet</div>';
 }
 
 async function addOppAction(id){ await j('/opportunities/'+id+'/add-action',{method:'POST'}); await loadOpportunities(); }
 async function setOppStatus(id,status){ await j('/opportunity-actions/'+id,{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({status})}); await loadOpportunities(); }
 
 async function quickStartDemo(){
-  const steps = [];
-  try { await j('/demo/reset',{method:'POST'}); steps.push('reset'); }
-  catch(e){ steps.push('reset-failed'); }
-  try { const r=await j('/demo/seed',{method:'POST'}); steps.push('seed+'+r.added); }
-  catch(e){ steps.push('seed-failed'); }
-  try { await j('/scenarios/load',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:'job-seeker-pipeline'})}); steps.push('scenario'); }
-  catch(e){ steps.push('scenario-failed'); }
-  try { await loadOpportunities(); steps.push('opps'); } catch(e){ steps.push('opps-failed'); }
-  try { await loadQueue(); steps.push('queue'); } catch(e){ steps.push('queue-failed'); }
-  try { await loadDigest(); steps.push('digest'); } catch(e){ steps.push('digest-failed'); }
-  try { await planDay(); steps.push('plan'); } catch(e){ steps.push('plan-failed'); }
-  showMsg(`Quick Start: ${steps.length}/7 steps | ${steps.join(', ')}`);
-  await load();
+ const steps = [];
+ try { await j('/demo/reset',{method:'POST'}); steps.push('reset'); }
+ catch(e){ steps.push('reset-failed'); }
+ try { const r=await j('/demo/seed',{method:'POST'}); steps.push('seed+'+r.added); }
+ catch(e){ steps.push('seed-failed'); }
+ try { await j('/scenarios/load',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:'job-seeker-pipeline'})}); steps.push('scenario'); }
+ catch(e){ steps.push('scenario-failed'); }
+ try { await loadOpportunities(); steps.push('opps'); } catch(e){ steps.push('opps-failed'); }
+ try { await loadQueue(); steps.push('queue'); } catch(e){ steps.push('queue-failed'); }
+ try { await loadDigest(); steps.push('digest'); } catch(e){ steps.push('digest-failed'); }
+ try { await planDay(); steps.push('plan'); } catch(e){ steps.push('plan-failed'); }
+ showMsg(`Quick Start: ${steps.length}/7 steps | ${steps.join(', ')}`);
+ await load();
 }
 
 async function loadQueue(){
-  const q = await j('/queue/today');
-  document.getElementById('todayQueue').innerHTML = q.slice(0,12).map(x=>`<div><b>${x.score}</b> [${x.source}] ${x.title} | ${x.status} | ${x.deadline||'-'}<br><span style='color:#93c5fd'>Next: ${x.nextAction} — ${x.reason}</span></div>`).join('') || '<div>No queue items</div>';
+ const q = await j('/queue/today');
+ document.getElementById('todayQueue').innerHTML = q.slice(0,12).map(x=>`<div><b>${x.score}</b> [${x.source}] ${x.title} | ${x.status} | ${x.deadline||'-'}<br><span style='color:#93c5fd'>Next: ${x.nextAction} — ${x.reason}</span></div>`).join('') || '<div>No queue items</div>';
 }
 async function planDay(){
-  const p = await j('/plan/day');
-  document.getElementById('dayPlan').textContent = p.text || '';
+ const p = await j('/plan/day');
+ document.getElementById('dayPlan').textContent = p.text || '';
 }
 async function loadDigest(){
-  const d = await j('/digest/daily');
-  document.getElementById('digest').innerHTML = `<div>Overdue: ${d.overdue} | Due soon: ${d.dueSoon} | Blocked: ${d.blocked}</div>` + (d.top3||[]).map(x=>`<div>Top: [${x.source}] ${x.title}</div>`).join('');
-  const m = await j('/metrics/local');
-  document.getElementById('metrics').innerHTML = `<div>Completed items: ${m.completedItems} | Submitted opportunities: ${m.completedOpportunityActions} | Overdue open: ${m.overdueOpenItems} | Audit events: ${m.totalAuditEvents}</div>`;
+ const d = await j('/digest/daily');
+ document.getElementById('digest').innerHTML = `<div>Overdue: ${d.overdue} | Due soon: ${d.dueSoon} | Blocked: ${d.blocked}</div>` + (d.top3||[]).map(x=>`<div>Top: [${x.source}] ${x.title}</div>`).join('');
+ const m = await j('/metrics/local');
+ document.getElementById('metrics').innerHTML = `<div>Completed items: ${m.completedItems} | Submitted opportunities: ${m.completedOpportunityActions} | Overdue open: ${m.overdueOpenItems} | Audit events: ${m.totalAuditEvents}</div>`;
 }
 
 load();

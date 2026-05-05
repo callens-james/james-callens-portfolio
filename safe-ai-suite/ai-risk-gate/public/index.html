@@ -9,9 +9,9 @@
 <script>
 const out=document.getElementById('out');
 document.getElementById('go').onclick=async()=>{
-  const payload={task:task.value,tool:tool.value,action:action.value};
-  const res=await fetch('/api/evaluate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
-  const data=await res.json();
-  out.textContent=JSON.stringify(data,null,2);
+ const payload={task:task.value,tool:tool.value,action:action.value};
+ const res=await fetch('/api/evaluate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+ const data=await res.json();
+ out.textContent=JSON.stringify(data,null,2);
 }
 </script></body></html>

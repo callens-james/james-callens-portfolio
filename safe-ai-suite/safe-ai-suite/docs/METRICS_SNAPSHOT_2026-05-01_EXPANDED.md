@@ -13,9 +13,9 @@
 
 ## Artifacts
 - JSON report:
-  - `<workspace-home>/openclaw-workspace/Safe AI/projects/eval-harness/reports/eval-2026-05-01T22-07-53-691Z.json`
+ - `<workspace-home>/openclaw-workspace/Safe AI/projects/eval-harness/reports/eval-2026-05-01T22-07-53-691Z.json`
 - CSV report:
-  - `<workspace-home>/openclaw-workspace/Safe AI/projects/eval-harness/reports/eval-2026-05-01T22-07-53-691Z.csv`
+ - `<workspace-home>/openclaw-workspace/Safe AI/projects/eval-harness/reports/eval-2026-05-01T22-07-53-691Z.csv`
 
 ## Interpretation
 - Risk classification reached full alignment against the current 30-case labeled dataset.

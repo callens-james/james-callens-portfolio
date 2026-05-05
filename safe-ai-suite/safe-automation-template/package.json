@@ -1,13 +1,13 @@
 {
-  "name": "safe-automation-template",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "start": "node app/server.js",
-    "check": "bash scripts/preflight.sh",
-    "rollback": "bash scripts/rollback.sh"
-  },
-  "dependencies": {
-    "fastify": "^4.28.1"
-  }
+ "name": "safe-automation-template",
+ "version": "0.1.0",
+ "private": true,
+ "scripts": {
+ "start": "node app/server.js",
+ "check": "bash scripts/preflight.sh",
+ "rollback": "bash scripts/rollback.sh"
+ },
+ "dependencies": {
+ "fastify": "^4.28.1"
+ }
 }

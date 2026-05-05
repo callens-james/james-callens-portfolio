@@ -7,10 +7,10 @@ Batch-test workflows and measure performance + reliability.
 - Dataset of prompts/tasks with expected outcomes
 - Run matrix across models/modes
 - Metrics:
-  - latency p50/p95
-  - pass/fail rate
-  - escalation rate
-  - error taxonomy
+ - latency p50/p95
+ - pass/fail rate
+ - escalation rate
+ - error taxonomy
 - Save results to CSV/JSON for reporting
 
 ## Why this stands out

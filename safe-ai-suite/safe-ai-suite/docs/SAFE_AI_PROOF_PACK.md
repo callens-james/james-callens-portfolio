@@ -4,26 +4,26 @@
 This suite demonstrates a local-first, safety-oriented AI workflow stack:
 
 1. **AI Risk Gate**
-   - Policy-based risk classification
-   - Confirmation requirements for risky actions
-   - Blocklist support
-   - JSONL audit logs
+ - Policy-based risk classification
+ - Confirmation requirements for risky actions
+ - Blocklist support
+ - JSONL audit logs
 
 2. **Agent Timeline Viewer**
-   - Traceability of decisions (task/tool/action/risk)
-   - Filtering by risk/tool
-   - Summary counts for governance visibility
+ - Traceability of decisions (task/tool/action/risk)
+ - Filtering by risk/tool
+ - Summary counts for governance visibility
 
 3. **Eval Harness**
-   - Batch evaluation against labeled tasks
-   - Pass/fail reliability scoring
-   - Latency metrics (including p95)
-   - CSV/JSON evidence artifacts
+ - Batch evaluation against labeled tasks
+ - Pass/fail reliability scoring
+ - Latency metrics (including p95)
+ - CSV/JSON evidence artifacts
 
 4. **Safe Automation Template**
-   - Local-first policy defaults
-   - Guard-evaluate / guard-execute pattern
-   - Preflight and rollback script scaffolding
+ - Local-first policy defaults
+ - Guard-evaluate / guard-execute pattern
+ - Preflight and rollback script scaffolding
 
 ---
 
