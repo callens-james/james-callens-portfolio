@@ -95,3 +95,7 @@ Local-first life + work autopilot platform that unifies paperwork, opportunities
 
 - Folder: [`lifeops-copilot/`](./lifeops-copilot)
 - Highlights: trust layer, opportunity scoring with explanations, quick-start demo mode, export bundle, cross-platform target
+
+
+## License
+This portfolio and included projects are licensed under **AGPL-3.0-only** unless otherwise noted. See `LICENSE` and per-project `NOTICE` files.
