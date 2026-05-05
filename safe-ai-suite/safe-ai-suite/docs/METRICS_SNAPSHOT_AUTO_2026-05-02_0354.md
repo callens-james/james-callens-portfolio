@@ -5,4 +5,4 @@
 - Pass Rate: **100.0%**
 - p95 Latency: **2 ms**
 
-Source report: `/home/james/openclaw-workspace/Safe AI/projects/eval-harness/reports/eval-2026-05-02T03-54-47-961Z.json`
+Source report: `<workspace-home>/openclaw-workspace/Safe AI/projects/eval-harness/reports/eval-2026-05-02T03-54-47-961Z.json`

@@ -34,7 +34,7 @@ See:
 
 ## Safety gate before push
 ```bash
-cd "/home/james/openclaw-workspace/Safe AI/github-ready"
+cd "<workspace-home>/openclaw-workspace/Safe AI/github-ready"
 ./prepublish_check.sh
 ```
 

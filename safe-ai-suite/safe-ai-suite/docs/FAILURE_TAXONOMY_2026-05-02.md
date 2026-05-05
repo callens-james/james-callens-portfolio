@@ -1,6 +1,6 @@
 # Failure Taxonomy — 2026-05-02
 
-- Source report: `/home/james/openclaw-workspace/Safe AI/projects/eval-harness/reports/eval-2026-05-02T13-39-20-522Z.json`
+- Source report: `<workspace-home>/openclaw-workspace/Safe AI/projects/eval-harness/reports/eval-2026-05-02T13-39-20-522Z.json`
 - Total cases: **100**
 - Failures: **6**
 

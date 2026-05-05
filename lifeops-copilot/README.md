@@ -165,7 +165,7 @@ Location (Windows build host):
 
 ## Run locally (dev)
 ```bash
-cd /home/james/openclaw-workspace/lifeops-copilot
+cd <workspace-home>/openclaw-workspace/lifeops-copilot
 npm install
 npm run dev
 ```

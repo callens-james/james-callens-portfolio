@@ -35,7 +35,7 @@ Ops teams often export CSVs from support/CRM systems and then manually clean, an
 
 ## Run
 ```bash
-cd /home/james/openclaw-workspace/ops-insight-copilot-analyst-workbench
+cd <workspace-home>/openclaw-workspace/ops-insight-copilot-analyst-workbench
 npm install
 npm run dev
 ```
