@@ -1,0 +1,12 @@
+{
+  "workspaceRoot": "/home/james/openclaw-workspace",
+  "mode": "prompt_enroll",
+  "watchProjects": [],
+  "includeExtensions": [
+    ".js", ".ts", ".py", ".go", ".java", ".c", ".cpp", ".cs", ".rb", ".php", ".rs",
+    ".json", ".yaml", ".yml", ".toml", ".env", "Dockerfile"
+  ],
+  "excludeDirs": [
+    ".git", "node_modules", ".venv", "dist", "build", "target", ".next", "coverage", "__pycache__"
+  ]
+}

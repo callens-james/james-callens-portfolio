@@ -1,0 +1,30 @@
+services:
+  appsec-copilot:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: appsec-copilot
+    ports:
+      - "3480:3480"
+    volumes:
+      - ./backend/data:/app/backend/data
+      - ./backend/watchers:/app/backend/watchers
+      - ./:/workspace:ro
+    environment:
+      - PYTHONUNBUFFERED=1
+    command: ["uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "3480"]
+
+  appsec-watcher:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: appsec-watcher
+    depends_on:
+      - appsec-copilot
+    volumes:
+      - ./backend/watchers:/app/backend/watchers
+      - /home/james/openclaw-workspace:/home/james/openclaw-workspace
+    environment:
+      - PYTHONUNBUFFERED=1
+    working_dir: /app/backend/watchers
+    command: ["python", "watcher.py"]

@@ -1,0 +1,32 @@
+[
+  {
+    "id": "case_sqli_1",
+    "content": "query = \"SELECT * FROM users WHERE name='\" + user_input + \"'\"",
+    "expectedRisk": "medium",
+    "expectedTypes": [
+      "injection_hint"
+    ]
+  },
+  {
+    "id": "case_secret_1",
+    "content": "API_KEY = \"ghp_abcdefghijklmnopqrstuvwxyz123456\"",
+    "expectedRisk": "high",
+    "expectedTypes": [
+      "secret_pattern"
+    ]
+  },
+  {
+    "id": "case_safe_1",
+    "content": "def add(a,b):\n    return a+b",
+    "expectedRisk": "low",
+    "expectedTypes": []
+  },
+  {
+    "id": "case_cmd_1",
+    "content": "os.system(user_supplied)",
+    "expectedRisk": "medium",
+    "expectedTypes": [
+      "injection_hint"
+    ]
+  }
+]

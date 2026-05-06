@@ -1,0 +1,50 @@
+<!doctype html>
+<html><head><meta charset="utf-8"/><title>AppSec Copilot Dashboard</title>
+<style>body{font-family:Arial;margin:24px;background:#0b1220;color:#e5e7eb} .card{background:#111827;border:1px solid #334155;border-radius:10px;padding:14px;margin-bottom:12px} .badge{padding:2px 8px;border-radius:999px} .low{background:#14532d}.medium{background:#92400e}.high{background:#991b1b} button{padding:8px 10px}</style></head>
+<body>
+<h1>AppSec Red Team Copilot — Dashboard</h1>
+<div class="card"><button onclick="refreshAll()">Refresh</button> <button onclick="runEval()">Run Eval</button> <button onclick="refreshAdv()">Refresh Advisories</button><br><br>
+<input id="repoPath" style="width:70%" value="/home/james/openclaw-workspace/appsec-redteam-copilot/backend/api/main.py"/> <button onclick="analyzeRepo()">Analyze Repo Diff</button> <button onclick="analyzeHunks()">Analyze Pre-Change Hunks</button>
+<div id="status"></div></div>
+<div class="card"><h3>Latest Eval</h3><pre id="eval">(none)</pre></div>
+<div class="card"><h3>Recent Reports</h3><div id="reports"></div></div>
+<div class="card"><h3>Selected Report Detail</h3><div id="detailSummary"></div><div id="detailTable"></div><pre id="detail" style="display:none"></pre></div>
+<script>
+async function j(url, opts){const r=await fetch(url,opts); return r.json();}
+function riskBadge(r){const c=(r||'low').toLowerCase(); return `<span class="badge ${c}">${(r||'unknown').toUpperCase()}</span>`;}
+async function loadReports(){const d=await j('/reports?limit=10'); const el=document.getElementById('reports'); el.innerHTML=''; const arr=(d.items||[]).slice().reverse(); arr.forEach((x,i)=>{const div=document.createElement('div'); div.className='card'; div.style.cursor='pointer'; const newest=i===0?'<span class="badge low">NEWEST</span> ':''; div.innerHTML=`${newest}<b>${x.summary||''}</b><br>Risk: ${riskBadge(x.risk)}<br><small>${x.savedAt||''}</small>`; div.onclick=()=>showDetail(x); el.appendChild(div);});}
+async function runEval(){const d=await j('/eval/run',{method:'POST'}); document.getElementById('eval').textContent=JSON.stringify(d,null,2); document.getElementById('status').textContent='Eval complete';}
+async function refreshAdv(){const d=await j('/advisories/refresh?limit=30',{method:'POST'}); document.getElementById('status').textContent=`Advisories refreshed: ${d.count}`;}
+
+function showDetail(x){
+  const sum=document.getElementById('detailSummary');
+  const tbl=document.getElementById('detailTable');
+  sum.innerHTML = `<b>Project:</b> ${x.project||''} &nbsp; | &nbsp; <b>Overall:</b> ${riskBadge(x.risk)} &nbsp; | &nbsp; <b>Verdict:</b> <b>${(x.verdict||'n/a').toUpperCase()}</b> &nbsp; | &nbsp; <b>Summary:</b> ${x.summary||''}`;
+  const rows=(x.findings||[]).map(f=>{
+    const sig=(f.findings||[]).map(z=>`${z.type}:${z.severity}`).join(', ') || '-';
+    const ev=(f.evidence||[]).map(e=>e.id).join(', ') || '-';
+    return `<tr><td style="padding:6px;border-bottom:1px solid #334155">${f.path||''}</td><td style="padding:6px;border-bottom:1px solid #334155">${riskBadge(f.risk)}</td><td style="padding:6px;border-bottom:1px solid #334155">${f.score||0}</td><td style="padding:6px;border-bottom:1px solid #334155">${f.confidence||0}</td><td style="padding:6px;border-bottom:1px solid #334155">${sig}</td><td style="padding:6px;border-bottom:1px solid #334155">${ev}</td></tr>`;
+  }).join('');
+  tbl.innerHTML = `<table style="width:100%;border-collapse:collapse;margin-top:10px"><thead><tr><th align=left>File</th><th align=left>Risk</th><th align=left>Score</th><th align=left>Conf</th><th align=left>Signals</th><th align=left>Evidence IDs</th></tr></thead><tbody>${rows || '<tr><td colspan="6">No findings</td></tr>'}</tbody></table>`;
+}
+async function analyzeHunks(){
+  const p=document.getElementById('repoPath').value.trim();
+  const d=await j('/analyze-diff-hunks?path='+encodeURIComponent(p),{method:'POST'});
+  document.getElementById('status').textContent = d.error ? ('Error: '+d.error) : ('Pre-change analyzed. Risk='+d.risk+' Verdict='+(d.verdict||'n/a'));
+  if(!d.error) showDetail(d);
+  await loadReports();
+}
+
+async function analyzeRepo(){
+  const p=document.getElementById('repoPath').value.trim();
+  if(!p){document.getElementById('status').textContent='Enter repo path'; return;}
+  const d=await j('/analyze-repo-diff?path='+encodeURIComponent(p),{method:'POST'});
+  document.getElementById('status').textContent = d.error ? ('Error: '+d.error) : ('Analyzed. Risk='+d.risk);
+  if(!d.error) showDetail(d);
+  await loadReports();
+}
+
+async function refreshAll(){await loadReports(); document.getElementById('status').textContent='Refreshed';}
+refreshAll();
+</script>
+</body></html>

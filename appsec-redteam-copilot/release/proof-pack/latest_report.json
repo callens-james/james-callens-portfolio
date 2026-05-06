@@ -1,0 +1,9 @@
+{
+  "savedAt": "2026-05-06T21:15:34.374048",
+  "project": "/home/james/openclaw-workspace/appsec-redteam-copilot",
+  "summary": "Analyzed added lines: 0",
+  "risk": "low",
+  "verdict": "allow",
+  "findings": [],
+  "source": "pre-change-diff"
+}

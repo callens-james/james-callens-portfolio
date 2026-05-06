@@ -1,0 +1,6 @@
+[
+  {"id":"CVE-2021-44228","tags":["log4j","rce","jndi"],"summary":"Log4Shell remote code execution via JNDI lookups in log4j.","severity":"critical","ref":"https://nvd.nist.gov/vuln/detail/CVE-2021-44228"},
+  {"id":"CVE-2022-22965","tags":["spring","rce","java"],"summary":"Spring4Shell RCE in certain Spring Framework configurations.","severity":"high","ref":"https://nvd.nist.gov/vuln/detail/CVE-2022-22965"},
+  {"id":"OWASP-SQLI","tags":["sql","injection","database"],"summary":"SQL injection risk when untrusted input is concatenated into SQL queries.","severity":"high","ref":"https://owasp.org/www-community/attacks/SQL_Injection"},
+  {"id":"OWASP-CMDI","tags":["command","injection","os.system","subprocess"],"summary":"Command injection risk when user input reaches shell execution.","severity":"high","ref":"https://owasp.org/www-community/attacks/Command_Injection"}
+]
