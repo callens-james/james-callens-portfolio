@@ -1,0 +1,1 @@
+query = "SELECT * FROM users WHERE name='" + user_input + "'"

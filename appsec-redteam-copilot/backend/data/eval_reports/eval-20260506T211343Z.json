@@ -1,0 +1,64 @@
+{
+  "ranAt": "2026-05-06T21:13:43.173802",
+  "cases": 4,
+  "riskAccuracy": 1.0,
+  "typeCoverage": 1.0,
+  "rows": [
+    {
+      "id": "case_sqli_1",
+      "expectedRisk": "medium",
+      "gotRisk": "medium",
+      "riskPass": true,
+      "expectedTypes": [
+        "injection_hint"
+      ],
+      "gotTypes": [
+        "injection_hint"
+      ],
+      "typePass": true,
+      "score": 20,
+      "confidence": 0.65
+    },
+    {
+      "id": "case_secret_1",
+      "expectedRisk": "high",
+      "gotRisk": "high",
+      "riskPass": true,
+      "expectedTypes": [
+        "secret_pattern"
+      ],
+      "gotTypes": [
+        "secret_pattern"
+      ],
+      "typePass": true,
+      "score": 100,
+      "confidence": 0.7
+    },
+    {
+      "id": "case_safe_1",
+      "expectedRisk": "low",
+      "gotRisk": "low",
+      "riskPass": true,
+      "expectedTypes": [],
+      "gotTypes": [],
+      "typePass": true,
+      "score": 0,
+      "confidence": 0.6
+    },
+    {
+      "id": "case_cmd_1",
+      "expectedRisk": "medium",
+      "gotRisk": "medium",
+      "riskPass": true,
+      "expectedTypes": [
+        "injection_hint"
+      ],
+      "gotTypes": [
+        "injection_hint"
+      ],
+      "typePass": true,
+      "score": 20,
+      "confidence": 0.65
+    }
+  ]
+}
