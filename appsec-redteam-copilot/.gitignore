@@ -1,0 +1,13 @@
+# Python env
+backend/.venv/
+
+# Runtime/generated data
+backend/data_reports.jsonl
+backend/watchers/change_queue.jsonl
+backend/data/eval_tmp/
+backend/data/eval_reports/
+backend/data/advisories_cache.json
+
+# Python cache
+__pycache__/
+*.pyc
