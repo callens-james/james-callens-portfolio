@@ -29,8 +29,8 @@ This portfolio version intentionally excludes:
 
 ```bash
 # clone repo
-git clone <REPO_URL>
-cd <PROJECT_FOLDER>
+git clone https://github.com/callens-james/james-callens-portfolio.git
+cd workflow-studio
 
 # preferred: Docker
 docker compose up --build

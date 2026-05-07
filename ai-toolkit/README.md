@@ -18,8 +18,8 @@ This public version removes secrets and runtime artifacts. ## Suggested improvem
 
 ```bash
 # clone repo
-git clone <REPO_URL>
-cd <PROJECT_FOLDER>
+git clone https://github.com/callens-james/james-callens-portfolio.git
+cd ai-toolkit
 
 # preferred: Docker
 docker compose up --build

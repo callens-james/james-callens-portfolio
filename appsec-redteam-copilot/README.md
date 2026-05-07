@@ -150,8 +150,8 @@ docker compose down
 
 ```bash
 # clone repo
-git clone <REPO_URL>
-cd <PROJECT_FOLDER>
+git clone https://github.com/callens-james/james-callens-portfolio.git
+cd appsec-redteam-copilot
 
 # preferred: Docker
 docker compose up --build

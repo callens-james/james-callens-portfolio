@@ -61,8 +61,8 @@ Use docs/00..11 for full thought-to-finale process and handoff.
 
 ```bash
 # clone repo
-git clone <REPO_URL>
-cd <PROJECT_FOLDER>
+git clone https://github.com/callens-james/james-callens-portfolio.git
+cd ops-insight-copilot-analyst-workbench
 
 # preferred: Docker
 docker compose up --build

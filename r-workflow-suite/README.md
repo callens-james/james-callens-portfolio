@@ -21,8 +21,8 @@ This portfolio version excludes runtime state files (`.RData`, `.Rhistory`) and 
 
 ```bash
 # clone repo
-git clone <REPO_URL>
-cd <PROJECT_FOLDER>
+git clone https://github.com/callens-james/james-callens-portfolio.git
+cd r-workflow-suite
 
 # preferred: Docker
 docker compose up --build

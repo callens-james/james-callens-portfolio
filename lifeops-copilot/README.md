@@ -196,8 +196,8 @@ Open: `http://<server-ip>:3360/`
 
 ```bash
 # clone repo
-git clone <REPO_URL>
-cd <PROJECT_FOLDER>
+git clone https://github.com/callens-james/james-callens-portfolio.git
+cd lifeops-copilot
 
 # preferred: Docker
 docker compose up --build

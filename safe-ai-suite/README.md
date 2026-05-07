@@ -46,8 +46,8 @@ This folder contains only sanitized artifacts intended for public sharing.
 
 ```bash
 # clone repo
-git clone <REPO_URL>
-cd <PROJECT_FOLDER>
+git clone https://github.com/callens-james/james-callens-portfolio.git
+cd safe-ai-suite
 
 # preferred: Docker
 docker compose up --build

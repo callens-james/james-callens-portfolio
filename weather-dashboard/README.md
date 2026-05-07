@@ -36,8 +36,8 @@ We will use `electron-builder` to produce a portable Windows executable.
 
 ```bash
 # clone repo
-git clone <REPO_URL>
-cd <PROJECT_FOLDER>
+git clone https://github.com/callens-james/james-callens-portfolio.git
+cd weather-dashboard
 
 # preferred: Docker
 docker compose up --build
