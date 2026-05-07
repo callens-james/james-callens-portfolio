@@ -2,23 +2,21 @@
 
 Local-first AI safety guard for coding workflows.
 
-
-## START HERE (explicit install steps)
+## START HERE (explicit install)
 
 ### Linux/macOS
-
-1) Open terminal and clone:
+1) Clone and enter repo:
 ```bash
 git clone https://github.com/callens-james/appsec-redteam-copilot.git
 cd appsec-redteam-copilot
 ```
 
-2) Run preflight (optional but recommended):
+2) Preflight check (recommended):
 ```bash
 bash scripts/preflight_check.sh
 ```
 
-If Docker is missing, install it first (Ubuntu example):
+If Docker is missing (Ubuntu):
 ```bash
 sudo apt update
 sudo apt install -y docker.io docker-compose-v2
@@ -32,15 +30,58 @@ newgrp docker
 bash scripts/quickstart.sh
 ```
 
-4) Open dashboard in browser:
+4) Open dashboard:
 - http://127.0.0.1:3480/dashboard
-- or your server IP from another machine
+- or server IP from another machine
 
-5) First-Run Setup in dashboard:
-- choose project/workspace folder to watch
-- save
+5) In dashboard, run **First-Run Setup** and select your project/workspace folder.
 
-6) (Optional) Telegram alerts
+6) Verify install:
+```bash
+bash scripts/verify_install.sh
+```
+
+### Windows (PowerShell)
+```powershell
+git clone https://github.com/callens-james/appsec-redteam-copilot.git
+cd appsec-redteam-copilot
+./scripts/preflight_check.ps1
+./scripts/quickstart.ps1
+./scripts/verify_install.ps1
+```
+
+---
+
+## What this proves
+- AI-assisted **risk gating** with `allow/warn/block`
+- **Pre-change** and post-change analysis patterns
+- **Eval-driven** quality checks + CI threshold enforcement
+- **Operational deployment** (Docker + systemd)
+- **Secret hygiene** with local-only environment config
+
+## 30-Second Demo
+1. Open `/dashboard`
+2. Run pre-change analysis
+3. Show verdict + findings
+4. Run eval
+5. Generate markdown report
+
+## Core Endpoints
+- `/dashboard`
+- `/analyze-diff-hunks` (pre-change)
+- `/analyze-repo-diff` (repo diff)
+- `/preview/diff` (impact + line preview)
+- `/preview/test-run` (suggested test commands)
+- `/eval/run`
+- `/advisories/refresh`
+- `/reports`
+
+## Screenshots
+![Dashboard Overview](docs/screenshots/dashboard-overview.jpg)
+![Pre-change Findings](docs/screenshots/prechange-findings.jpg)
+![Findings Table](docs/screenshots/prechange-table.jpg)
+
+## Optional Telegram Alerts
 Create local-only file `backend/.env.local`:
 ```env
 TELEGRAM_BOT_TOKEN=...
@@ -51,157 +92,19 @@ Then restart:
 ```bash
 docker compose up --build -d
 ```
+Details: `docs/ALERTS_SETUP.md`
 
-7) Verify install:
+## Optional Shell Guard
+Quickstart installs shell trap **enabled by default** for interactive shells.
+Toggle anytime:
 ```bash
-bash scripts/verify_install.sh
+bash scripts/toggle_shell_trap.sh off
+bash scripts/toggle_shell_trap.sh on
+bash scripts/toggle_shell_trap.sh status
 ```
+Details: `docs/SHELL_TRAP_SETUP.md`
 
----
-
-### Windows (PowerShell)
-
-```powershell
-git clone https://github.com/callens-james/appsec-redteam-copilot.git
-cd appsec-redteam-copilot
-./scripts/preflight_check.ps1
-./scripts/quickstart.ps1
-./scripts/verify_install.ps1
-```
-
-
-## START HERE (non-coder quickstart)
-
-### Linux/macOS
-```bash
-bash scripts/quickstart.sh
-```
-
-### Windows (PowerShell)
-```powershell
-./scripts/quickstart.ps1
-```
-
-Then open:
-- `http://127.0.0.1:3480/dashboard`
-
-In dashboard:
-1. Run **First-Run Setup** (choose your project folder)
-2. (Optional) configure Telegram alerts in `backend/.env.local`
-3. Use `runsafe "your command"` for verified command execution
-
-## What this proves
-- AI-assisted **risk gating** with allow/warn/block controls
-- **Pre-change** and post-change analysis patterns
-- **Eval-driven** quality checks and CI threshold enforcement
-- **Operational deployment** (Docker + systemd)
-- **Secret hygiene** with local-only environment config
-
-
-Background security copilot for coding workflows.
-
-## MVP v0.3.0 (Demo-Ready)
-- Watch selected project folders for code/config/dependency changes
-- Build change-set/diff summary
-- Run triage (rules + LLM-ready hook)
-- Retrieve security evidence (RAG stub)
-- Output PR-style security report
-- Human-approval only
-
-## Run
-```bash
-cd backend
-python3 -m venv .venv && source .venv/bin/activate
-pip install -r requirements.txt
-uvicorn api.main:app --reload --port 3480
-```
-
-## Watcher config
-Edit `backend/watchers/watch_config.json`.
-
-
-## Step 9: Pre-commit Gate + Demo
-
-### Install hooks
-```bash
-cd <PROJECT_ROOT>
-bash scripts/install_hooks.sh
-```
-
-### Pre-commit scan (manual)
-```bash
-python3 scripts/precommit_scan.py
-```
-
-### 2-minute demo
-```bash
-bash scripts/demo_run.sh
-```
-
-Behavior:
-- `allow` => exit 0
-- `warn` => exit 0 with warning
-- `block` => exit 1 (commit blocked)
-
-
-## Docker Quick Start
-
-```bash
-cd <PROJECT_ROOT>
-docker compose up --build
-```
-
-Open dashboard:
-- http://127.0.0.1:3480/dashboard
-- http://<server-ip>:3480/dashboard
-
-Stop:
-```bash
-docker compose down
-```
-
-
-## Why This Matters (AI Engineering Recruiter View)
-
-AppSec Red Team Copilot demonstrates production-oriented AI engineering patterns beyond API wrapping:
-- **Pre-change security analysis** on git diff hunks (added lines) with merge-gate verdicts (`allow`/`warn`/`block`)
-- **Post-change analysis** and persisted report history
-- **Evidence-backed findings** via seeded + live advisory ingestion cache
-- **Evaluation harness** with measurable metrics (`riskAccuracy`, `typeCoverage`)
-- **Operational deployment** via Docker Compose with separate API + watcher services
-
-### Core Endpoints
-- `/analyze-diff-hunks` (pre-change)
-- `/analyze-repo-diff` (repo diff)
-- `/reports` (history)
-- `/advisories/refresh` (evidence cache)
-- `/eval/run` (quality benchmark)
-- `/dashboard` (operator UI)
-
-
-## Screenshots
-
-### Dashboard Overview
-![Dashboard Overview](docs/screenshots/dashboard-overview.jpg)
-
-### Pre-change Findings (Verdict + Signals)
-![Pre-change Findings](docs/screenshots/prechange-findings.jpg)
-
-### Findings Table Detail
-![Findings Table](docs/screenshots/prechange-table.jpg)
-
-
-## Alerts Setup
-See `docs/ALERTS_SETUP.md` for Telegram alert configuration and troubleshooting.
-
-
-## Optional Auto-Guard Shell Trap
-For automatic interactive command interception through AppSec, see `docs/SHELL_TRAP_SETUP.md`.
-
-
-## Enable on Boot
-
-### Linux (systemd wrapper)
+## Enable on Boot (Linux)
 ```bash
 sudo tee /etc/systemd/system/appsec-copilot.service > /dev/null <<'EOF'
 [Unit]
@@ -226,37 +129,21 @@ sudo systemctl daemon-reload
 sudo systemctl enable --now appsec-copilot.service
 ```
 
-
 ## Installer Hardening Checks
-
-### Linux/macOS
 ```bash
 bash scripts/preflight_check.sh
 bash scripts/quickstart.sh
 bash scripts/verify_install.sh
 ```
-
-### Windows PowerShell
-```powershell
-./scripts/preflight_check.ps1
-./scripts/quickstart.ps1
-./scripts/verify_install.ps1
-```
-
-If Docker permission fails on Linux, run:
+If Docker permission fails:
 ```bash
 newgrp docker
 ```
 
+## Developer Notes
+- Watcher config: `backend/watchers/watch_config.json`
+- Project registry: `backend/watchers/project_registry.json`
+- Portability defaults use `/workspace`; users can change paths in dashboard or CLI.
 
-## Change Preview
-Use dashboard **Preview Changes** to view git diff preview, file/line impact summary, and suggested test commands before executing or merging changes.
-
-
-### Shell trap default behavior
-- Quickstart installs the shell trap **enabled by default** for interactive shells.
-- Toggle anytime:
-```bash
-bash scripts/toggle_shell_trap.sh off
-bash scripts/toggle_shell_trap.sh on
-```
+## License
+AGPL-3.0-only. See `LICENSE` and `NOTICE`.
