@@ -1,0 +1,45 @@
+name: appsec-ci-gate
+
+on:
+  pull_request:
+  push:
+    branches: [ master, main ]
+
+jobs:
+  eval-and-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r backend/requirements.txt
+
+      - name: Run eval harness
+        run: |
+          cd backend
+          python evaluators/run_eval.py > /tmp/eval_summary.json
+          cat /tmp/eval_summary.json
+
+      - name: Enforce eval thresholds
+        run: |
+          python - <<'PY'
+import json,glob,sys
+from pathlib import Path
+reports=sorted(glob.glob('backend/data/eval_reports/eval-*.json'))
+if not reports:
+    print('No eval report found'); sys.exit(1)
+j=json.loads(Path(reports[-1]).read_text())
+risk=j.get('riskAccuracy',0)
+typecov=j.get('typeCoverage',0)
+print('riskAccuracy=',risk,'typeCoverage=',typecov)
+if risk < 0.75 or typecov < 0.75:
+    print('CI gate failed: thresholds not met')
+    sys.exit(2)
+print('CI gate pass')
+PY

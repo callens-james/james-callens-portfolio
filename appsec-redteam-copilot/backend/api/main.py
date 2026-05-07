@@ -183,3 +183,18 @@ def analyze_diff_hunks(path:str):
 def alerts_test(msg:str='AppSec test alert ✅'):
     result = send_telegram_alert(msg)
     return {'ok': True, 'result': result}
+
+
+@app.post('/analyze-command')
+def analyze_command(cmd:str):
+    r = triage_snippet('/local/command', 1, cmd)
+    verdict='allow'
+    if r.get('risk') == 'high':
+        verdict='block'
+    elif r.get('risk') == 'medium':
+        verdict='warn'
+    payload={'project':'local-shell','summary':'Analyzed command string','risk':r.get('risk','low'),'verdict':verdict,'findings':[r],'source':'command-string'}
+    saved = save_report(payload)
+    if should_alert(saved.get('verdict','allow')):
+        send_telegram_alert(build_alert(saved))
+    return saved
