@@ -1,8 +1,17 @@
 # AppSec Red Team Copilot
 
+
+## What this proves
+- AI-assisted **risk gating** with allow/warn/block controls
+- **Pre-change** and post-change analysis patterns
+- **Eval-driven** quality checks and CI threshold enforcement
+- **Operational deployment** (Docker + systemd)
+- **Secret hygiene** with local-only environment config
+
+
 Background security copilot for coding workflows.
 
-## MVP v1
+## MVP v0.3.0 (Demo-Ready)
 - Watch selected project folders for code/config/dependency changes
 - Build change-set/diff summary
 - Run triage (rules + LLM-ready hook)
