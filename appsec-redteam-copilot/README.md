@@ -183,3 +183,12 @@ newgrp docker
 
 ## Change Preview
 Use dashboard **Preview Changes** to view git diff preview, file/line impact summary, and suggested test commands before executing or merging changes.
+
+
+### Shell trap default behavior
+- Quickstart installs the shell trap **enabled by default** for interactive shells.
+- Toggle anytime:
+```bash
+bash scripts/toggle_shell_trap.sh off
+bash scripts/toggle_shell_trap.sh on
+```
