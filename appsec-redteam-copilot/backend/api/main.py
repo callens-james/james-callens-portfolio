@@ -14,6 +14,7 @@ from rag.advisory_ingest import refresh_cache
 from rag.diff_hunks import get_unified_diff, parse_added_hunks
 from evaluators.run_eval import run_eval
 from evaluators.render_report import render_markdown
+from watchers.config_manager import get_config, set_workspace_root, add_project, remove_project
 
 app = FastAPI(title="AppSec Red Team Copilot", version="0.1.1")
 CFG = Path(__file__).resolve().parents[1] / 'watchers' / 'watch_config.json'
@@ -198,3 +199,20 @@ def analyze_command(cmd:str):
     if should_alert(saved.get('verdict','allow')):
         send_telegram_alert(build_alert(saved))
     return saved
+
+
+@app.get('/config/watch')
+def config_watch():
+    return get_config()
+
+@app.post('/config/workspace-root')
+def config_workspace_root(path:str):
+    return set_workspace_root(path)
+
+@app.post('/config/projects/add')
+def config_projects_add(path:str):
+    return add_project(path)
+
+@app.post('/config/projects/remove')
+def config_projects_remove(path:str):
+    return remove_project(path)

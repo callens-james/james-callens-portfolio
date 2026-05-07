@@ -7,6 +7,7 @@
 <input id="repoPath" style="width:70%" value="/home/james/openclaw-workspace/appsec-redteam-copilot/backend/api/main.py"/> <button onclick="analyzeRepo()">Analyze Repo Diff</button> <button onclick="analyzeHunks()">Analyze Pre-Change Hunks</button>
 <div id="status"></div></div>
 <div class="card"><h3>Latest Eval</h3><pre id="eval">(none)</pre></div>
+<div class="card"><h3>Watch Config</h3><div id="watchInfo"></div><input id="newPath" style="width:70%" placeholder="/path/to/project"/> <button onclick="addProjectPath()">Add Project Path</button> <button onclick="setWorkspaceRoot()">Set Workspace Root</button></div>
 <div class="card"><h3>Recent Reports</h3><div id="reports"></div></div>
 <div class="card"><h3>Selected Report Detail</h3><div id="detailSummary"></div><div id="detailTable"></div><pre id="detail" style="display:none"></pre></div>
 <script>
@@ -45,6 +46,33 @@ async function analyzeRepo(){
 }
 
 async function refreshAll(){await loadReports(); document.getElementById('status').textContent='Refreshed';}
+
+async function loadWatchConfig(){
+  const d=await j('/config/watch');
+  const r=d.registry||{};
+  const w=d.watch||{};
+  const ap=(r.approvedProjects||[]).map(x=>`<li>${x} <button onclick="removeProjectPath('`+x+`')">remove</button></li>`).join('');
+  document.getElementById('watchInfo').innerHTML = `<b>workspaceRoot:</b> ${w.workspaceRoot||''}<br><b>approvedProjects:</b><ul>${ap}</ul>`;
+}
+async function addProjectPath(){
+  const p=document.getElementById('newPath').value.trim(); if(!p) return;
+  await j('/config/projects/add?path='+encodeURIComponent(p),{method:'POST'});
+  document.getElementById('status').textContent='Project path added';
+  await loadWatchConfig();
+}
+async function removeProjectPath(p){
+  await j('/config/projects/remove?path='+encodeURIComponent(p),{method:'POST'});
+  document.getElementById('status').textContent='Project path removed';
+  await loadWatchConfig();
+}
+async function setWorkspaceRoot(){
+  const p=document.getElementById('newPath').value.trim(); if(!p) return;
+  await j('/config/workspace-root?path='+encodeURIComponent(p),{method:'POST'});
+  document.getElementById('status').textContent='workspaceRoot updated';
+  await loadWatchConfig();
+}
+
 refreshAll();
+loadWatchConfig();
 </script>
 </body></html>
