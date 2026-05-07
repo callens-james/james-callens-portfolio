@@ -3,6 +3,7 @@
 <style>body{font-family:Arial;margin:24px;background:#0b1220;color:#e5e7eb} .card{background:#111827;border:1px solid #334155;border-radius:10px;padding:14px;margin-bottom:12px} .badge{padding:2px 8px;border-radius:999px} .low{background:#14532d}.medium{background:#92400e}.high{background:#991b1b} button{padding:8px 10px}</style></head>
 <body>
 <h1>AppSec Red Team Copilot — Dashboard</h1>
+<div class="card" id="setupCard" style="display:none"><h3>First-Run Setup</h3><p>Set your project/workspace path to monitor.</p><input id="setupPath" style="width:70%" placeholder="/absolute/path"/> <button onclick="runFirstSetup()">Initialize</button><div id="setupMsg"></div></div>
 <div class="card"><button onclick="refreshAll()">Refresh</button> <button onclick="runEval()">Run Eval</button> <button onclick="refreshAdv()">Refresh Advisories</button><br><br>
 <input id="repoPath" style="width:70%" value="/workspace/backend/api/main.py"/> <button onclick="analyzeRepo()">Analyze Repo Diff</button> <button onclick="analyzeHunks()">Analyze Pre-Change Hunks</button>
 <div id="status"></div></div>
@@ -94,8 +95,29 @@ function pickerUp(){ if(window._pickerParent){ loadPicker(window._pickerParent);
 function selectPicker(p){ document.getElementById('newPath').value=p; }
 function pickerUseCurrent(){ document.getElementById('newPath').value=pickerCurrent; }
 
+
+async function loadSetupStatus(){
+  const d=await j('/setup/status');
+  const card=document.getElementById('setupCard');
+  if(!d.setupComplete){
+    card.style.display='block';
+    document.getElementById('setupPath').value=d.workspaceRoot||'/workspace';
+  } else {
+    card.style.display='none';
+  }
+}
+async function runFirstSetup(){
+  const p=document.getElementById('setupPath').value.trim();
+  if(!p){document.getElementById('setupMsg').textContent='Enter a path'; return;}
+  await j('/setup/init?path='+encodeURIComponent(p),{method:'POST'});
+  document.getElementById('setupMsg').textContent='Saved. Refreshing config...';
+  await loadWatchConfig();
+  await loadSetupStatus();
+}
+
 refreshAll();
 loadWatchConfig();
 loadPicker(pickerCurrent);
+loadSetupStatus();
 </script>
 </body></html>

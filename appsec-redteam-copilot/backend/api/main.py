@@ -234,3 +234,18 @@ def fs_list(path:str='/'):
         return {'error': str(e), 'path': str(p)}
     parent = str(p.parent) if p.parent != p else str(p)
     return {'path': str(p), 'parent': parent, 'dirs': dirs[:500]}
+
+
+@app.get('/setup/status')
+def setup_status():
+    cfg = get_config()
+    reg = cfg.get('registry', {})
+    approved = reg.get('approvedProjects', [])
+    done = bool(approved and approved != ['/workspace'])
+    return {'setupComplete': done, 'workspaceRoot': cfg.get('watch',{}).get('workspaceRoot','/workspace'), 'approvedProjects': approved}
+
+@app.post('/setup/init')
+def setup_init(path:str):
+    set_workspace_root(path)
+    add_project(path)
+    return {'ok': True, 'path': path}
