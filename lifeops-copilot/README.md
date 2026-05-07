@@ -190,3 +190,23 @@ Open: `http://<server-ip>:3360/`
 5. Use queue + plan daily
 6. Export reports/metrics weekly
 7. Backup and integrity check periodically
+
+
+## Quick Install / Run
+
+```bash
+# clone repo
+git clone <REPO_URL>
+cd <PROJECT_FOLDER>
+
+# preferred: Docker
+docker compose up --build
+```
+
+If Docker is not available, see project-specific local run instructions in this README.
+
+
+## Legal
+
+Licensed under **AGPL-3.0-only** unless otherwise noted.
+See `LICENSE` and `NOTICE`.

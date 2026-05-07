@@ -40,3 +40,23 @@ cd "<workspace-home>/openclaw-workspace/Safe AI/github-ready"
 
 ## Notes
 This folder contains only sanitized artifacts intended for public sharing.
+
+
+## Quick Install / Run
+
+```bash
+# clone repo
+git clone <REPO_URL>
+cd <PROJECT_FOLDER>
+
+# preferred: Docker
+docker compose up --build
+```
+
+If Docker is not available, see project-specific local run instructions in this README.
+
+
+## Legal
+
+Licensed under **AGPL-3.0-only** unless otherwise noted.
+See `LICENSE` and `NOTICE`.

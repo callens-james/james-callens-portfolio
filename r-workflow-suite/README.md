@@ -15,3 +15,23 @@ This portfolio version excludes runtime state files (`.RData`, `.Rhistory`) and 
 - Replace hard-coded file paths with `config.yml` + CLI args
 - Add reproducible test fixtures and expected outputs
 - Add unit tests for parsing/transform helper functions
+
+
+## Quick Install / Run
+
+```bash
+# clone repo
+git clone <REPO_URL>
+cd <PROJECT_FOLDER>
+
+# preferred: Docker
+docker compose up --build
+```
+
+If Docker is not available, see project-specific local run instructions in this README.
+
+
+## Legal
+
+Licensed under **AGPL-3.0-only** unless otherwise noted.
+See `LICENSE` and `NOTICE`.

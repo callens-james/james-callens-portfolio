@@ -144,3 +144,17 @@ Stop services:
 ```bash
 docker compose down
 ```
+
+
+## Quick Install / Run
+
+```bash
+# clone repo
+git clone <REPO_URL>
+cd <PROJECT_FOLDER>
+
+# preferred: Docker
+docker compose up --build
+```
+
+If Docker is not available, see project-specific local run instructions in this README.

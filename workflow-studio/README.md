@@ -23,3 +23,23 @@ This portfolio version intentionally excludes:
 - Add tests for `engine/` and `r_scripts/`
 - Replace file-based config with `.env` + validation
 - Add containerized runtime (Docker)
+
+
+## Quick Install / Run
+
+```bash
+# clone repo
+git clone <REPO_URL>
+cd <PROJECT_FOLDER>
+
+# preferred: Docker
+docker compose up --build
+```
+
+If Docker is not available, see project-specific local run instructions in this README.
+
+
+## Legal
+
+Licensed under **AGPL-3.0-only** unless otherwise noted.
+See `LICENSE` and `NOTICE`.

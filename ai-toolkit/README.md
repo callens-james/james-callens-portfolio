@@ -12,3 +12,23 @@ This public version removes secrets and runtime artifacts. ## Suggested improvem
 - Convert docs to Markdown for easier review/version control
 - Add examples with anonymized before/after outcomes
 - Add a lightweight website/docs index for browsing
+
+
+## Quick Install / Run
+
+```bash
+# clone repo
+git clone <REPO_URL>
+cd <PROJECT_FOLDER>
+
+# preferred: Docker
+docker compose up --build
+```
+
+If Docker is not available, see project-specific local run instructions in this README.
+
+
+## Legal
+
+Licensed under **AGPL-3.0-only** unless otherwise noted.
+See `LICENSE` and `NOTICE`.
