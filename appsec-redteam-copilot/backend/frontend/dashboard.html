@@ -23,6 +23,22 @@
 <div id="status"></div><div id="buttonHelp" style="margin-top:8px;font-size:13px;color:#93c5fd">Tip: hover buttons for what/when guidance.</div></div>
 <div class="card"><h3>Latest Eval</h3><pre id="eval">(none)</pre></div>
 <div class="card"><h3>Watch Config</h3><div id="watchInfo"></div><input id="newPath" style="width:70%" placeholder="/path/to/project"/> <button title="Add this path to approved monitored projects" onclick="addProjectPath()">Add Project Path</button> <button title="Set workspace root used by watcher" onclick="setWorkspaceRoot()">Set Workspace Root</button></div>
+
+<div class="card">
+  <h3>Shell Guard (Optional)</h3>
+  <p>Shell Guard routes interactive commands through AppSec checks before execution.</p>
+  <ul>
+    <li><b>allow</b>: command runs</li>
+    <li><b>warn</b>: asks you to type <code>YES</code> in terminal</li>
+    <li><b>block</b>: command is not executed</li>
+  </ul>
+  <p><b>Default:</b> OFF (opt-in).</p>
+  <button onclick="copyEnableGuard()">Copy Enable Command</button>
+  <button onclick="copyDisableGuard()">Copy Disable Command</button>
+  <button onclick="copyGuardStatus()">Copy Status Command</button>
+  <pre id="guardCmdOut">(click a button to copy command)</pre>
+</div>
+
 <div class="card"><h3>Directory Picker</h3><div>Current: <code id="pickerPath">/workspace</code></div><button title="Go to parent directory" onclick="pickerUp()">Up</button> <button title="Use current picker directory in path input" onclick="pickerUseCurrent()">Use Current Path</button><div id="pickerDirs" style="max-height:220px;overflow:auto;margin-top:8px"></div></div>
 <div class="card advanced"><h3>Preview Changes</h3><button title="Preview changed files, line deltas, and human impact summary" onclick="previewDiff()">Preview Diff/Impact</button> <button title="Suggest test commands you can run before merge" onclick="previewTests()">Preview Test Commands</button> <button title="Copy formatted change summary for external LLM review" onclick="copyLLMPrompt()">Copy LLM Prompt</button><pre id="previewOut">(none)</pre></div>
 <div class="card advanced"><h3>Recent Reports</h3><div id="reports"></div></div>
@@ -95,6 +111,24 @@ async function setWorkspaceRoot(){
 }
 
 
+
+
+function copyText(t){ navigator.clipboard.writeText(t); document.getElementById('status').textContent='Copied to clipboard'; }
+function copyEnableGuard(){
+  const cmd = "bash scripts/install_shell_trap.sh ~/.bashrc && source ~/.bashrc";
+  copyText(cmd);
+  document.getElementById('guardCmdOut').textContent = cmd;
+}
+function copyDisableGuard(){
+  const cmd = "bash scripts/toggle_shell_trap.sh off && source ~/.bashrc";
+  copyText(cmd);
+  document.getElementById('guardCmdOut').textContent = cmd;
+}
+function copyGuardStatus(){
+  const cmd = "bash scripts/toggle_shell_trap.sh status";
+  copyText(cmd);
+  document.getElementById('guardCmdOut').textContent = cmd;
+}
 
 let beginnerMode=true;
 function toggleMode(){
