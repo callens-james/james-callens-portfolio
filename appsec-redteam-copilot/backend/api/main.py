@@ -216,3 +216,21 @@ def config_projects_add(path:str):
 @app.post('/config/projects/remove')
 def config_projects_remove(path:str):
     return remove_project(path)
+
+
+@app.get('/fs/list')
+def fs_list(path:str='/'):
+    from pathlib import Path
+    p = Path(path).expanduser().resolve()
+    if not p.exists() or not p.is_dir():
+        return {'error':'invalid directory', 'path': str(p)}
+    # keep listing local filesystem dirs only
+    dirs=[]
+    try:
+        for c in sorted(p.iterdir(), key=lambda x: x.name.lower()):
+            if c.is_dir():
+                dirs.append({'name': c.name, 'path': str(c)})
+    except Exception as e:
+        return {'error': str(e), 'path': str(p)}
+    parent = str(p.parent) if p.parent != p else str(p)
+    return {'path': str(p), 'parent': parent, 'dirs': dirs[:500]}

@@ -8,6 +8,7 @@
 <div id="status"></div></div>
 <div class="card"><h3>Latest Eval</h3><pre id="eval">(none)</pre></div>
 <div class="card"><h3>Watch Config</h3><div id="watchInfo"></div><input id="newPath" style="width:70%" placeholder="/path/to/project"/> <button onclick="addProjectPath()">Add Project Path</button> <button onclick="setWorkspaceRoot()">Set Workspace Root</button></div>
+<div class="card"><h3>Directory Picker</h3><div>Current: <code id="pickerPath">/home/james/openclaw-workspace</code></div><button onclick="pickerUp()">Up</button> <button onclick="pickerUseCurrent()">Use Current Path</button><div id="pickerDirs" style="max-height:220px;overflow:auto;margin-top:8px"></div></div>
 <div class="card"><h3>Recent Reports</h3><div id="reports"></div></div>
 <div class="card"><h3>Selected Report Detail</h3><div id="detailSummary"></div><div id="detailTable"></div><pre id="detail" style="display:none"></pre></div>
 <script>
@@ -72,7 +73,29 @@ async function setWorkspaceRoot(){
   await loadWatchConfig();
 }
 
+
+let pickerCurrent='/home/james/openclaw-workspace';
+async function loadPicker(path){
+  const d=await j('/fs/list?path='+encodeURIComponent(path));
+  if(d.error){document.getElementById('status').textContent='Picker error: '+d.error; return;}
+  pickerCurrent=d.path;
+  document.getElementById('pickerPath').textContent=pickerCurrent;
+  const el=document.getElementById('pickerDirs');
+  el.innerHTML='';
+  (d.dirs||[]).forEach(x=>{
+    const row=document.createElement('div');
+    row.style.padding='4px';
+    row.innerHTML=`<button onclick="loadPicker('${x.path.replace(/'/g,"\'")}')">Open</button> <button onclick="selectPicker('${x.path.replace(/'/g,"\'")}')">Select</button> ${x.name}`;
+    el.appendChild(row);
+  });
+  window._pickerParent=d.parent;
+}
+function pickerUp(){ if(window._pickerParent){ loadPicker(window._pickerParent); } }
+function selectPicker(p){ document.getElementById('newPath').value=p; }
+function pickerUseCurrent(){ document.getElementById('newPath').value=pickerCurrent; }
+
 refreshAll();
 loadWatchConfig();
+loadPicker(pickerCurrent);
 </script>
 </body></html>
