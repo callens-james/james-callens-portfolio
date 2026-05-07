@@ -36,6 +36,47 @@ bash scripts/quickstart.sh
 - http://127.0.0.1:3480/dashboard
 - or server IP from another machine
 
+## Quick Self-Test (after `bash scripts/quickstart.sh`)
+
+Use this to confirm AppSec catches risky changes.
+
+### 1) Create a test folder + file
+```bash
+mkdir -p ~/appsec-demo-test/backend
+cat > ~/appsec-demo-test/backend/test_api.py <<'PY'
+def greet(name):
+    return f"Hello, {name}"
+PY
+```
+
+### 2) Add a harmless change (should usually be `allow`)
+```bash
+echo "# harmless comment" >> ~/appsec-demo-test/backend/test_api.py
+```
+
+### 3) Add risky command execution pattern (should be `warn`/`block`)
+```bash
+echo "os.system(user_input)" >> ~/appsec-demo-test/backend/test_api.py
+```
+
+### 4) Add risky SQL pattern (should be `warn`/`block`)
+```bash
+echo "query = \"SELECT * FROM users WHERE name='\" + user_input + \"'\"" >> ~/appsec-demo-test/backend/test_api.py
+```
+
+### 5) In dashboard, run these buttons
+- **Preview Diff/Impact**
+- **Analyze Pre-Change Hunks**
+- **Analyze Repo Diff**
+- **Run Eval**
+- **System Check**
+
+Expected:
+- benign edit => allow/low
+- risky edits => warn/block + findings
+- Telegram alerts for warn/block if alert env is configured
+
+
 5) In dashboard, run **First-Run Setup** and select your project/workspace folder.
 
 6) Verify install:
