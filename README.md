@@ -2,6 +2,12 @@
 
 Practical, local-first AI engineering projects focused on real workflows, safety, and production readiness.
 
+## Start Here
+- **Flagship:** `appsec-redteam-copilot`
+- Open this first: `appsec-redteam-copilot/README.md`
+- Quick demo path: dashboard -> pre-change verdict -> eval -> markdown report
+
+
 ## Featured Projects
 
 - **AppSec Red Team Copilot** — pre-change and post-change code-risk triage with verdict gates (`allow/warn/block`), advisory-backed evidence, eval harness, and Docker + service-mode ops.
@@ -45,3 +51,28 @@ Practical, local-first AI engineering projects focused on real workflows, safety
 ## License
 
 This portfolio and included projects are licensed under **AGPL-3.0-only** unless otherwise noted. See `LICENSE` and per-project `NOTICE` files.
+
+
+## Flagship Preview (AppSec Red Team Copilot)
+
+![AppSec Dashboard](assets/screenshots/appsec-dashboard-overview.jpg)
+
+![Pre-change Findings](assets/screenshots/appsec-prechange-findings.jpg)
+
+![Findings Table](assets/screenshots/appsec-prechange-table.jpg)
+
+## 30-Second Demo Script
+1. Open dashboard
+2. Run pre-change analysis
+3. Show verdict + findings
+4. Run eval
+5. Generate markdown report
+
+## What this portfolio proves
+- I build **governed AI systems**, not wrapper demos
+- I use **evals + CI gates** to control quality
+- I can operate services with **Docker/systemd**
+- I apply **risk controls** and secret hygiene in production-like workflows
+
+## Licensing note
+Code is provided for portfolio demonstration and learning under project licenses (AGPL where specified).
