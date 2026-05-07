@@ -1,5 +1,26 @@
 # AppSec Red Team Copilot
 
+Local-first AI safety guard for coding workflows.
+
+## START HERE (non-coder quickstart)
+
+### Linux/macOS
+```bash
+bash scripts/quickstart.sh
+```
+
+### Windows (PowerShell)
+```powershell
+./scripts/quickstart.ps1
+```
+
+Then open:
+- `http://127.0.0.1:3480/dashboard`
+
+In dashboard:
+1. Run **First-Run Setup** (choose your project folder)
+2. (Optional) configure Telegram alerts in `backend/.env.local`
+3. Use `runsafe "your command"` for verified command execution
 
 ## What this proves
 - AI-assisted **risk gating** with allow/warn/block controls
@@ -108,3 +129,31 @@ See `docs/ALERTS_SETUP.md` for Telegram alert configuration and troubleshooting.
 
 ## Optional Auto-Guard Shell Trap
 For automatic interactive command interception through AppSec, see `docs/SHELL_TRAP_SETUP.md`.
+
+
+## Enable on Boot
+
+### Linux (systemd wrapper)
+```bash
+sudo tee /etc/systemd/system/appsec-copilot.service > /dev/null <<'EOF'
+[Unit]
+Description=AppSec Red Team Copilot (Docker Compose)
+After=docker.service
+Requires=docker.service
+
+[Service]
+Type=oneshot
+WorkingDirectory=<PROJECT_ROOT>
+ExecStart=/usr/bin/docker compose up -d
+ExecStop=/usr/bin/docker compose down
+RemainAfterExit=yes
+User=$USER
+Group=docker
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+sudo systemctl daemon-reload
+sudo systemctl enable --now appsec-copilot.service
+```
