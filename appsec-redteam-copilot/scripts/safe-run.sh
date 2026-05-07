@@ -9,7 +9,7 @@ TMP_FILE="/tmp/appsec_safe_run_$$.sh"
 echo "$CMD" > "$TMP_FILE"
 
 # stage file in repo so analyzer can inspect added line
-REPO='/home/james/openclaw-workspace/appsec-redteam-copilot'
+REPO="$(cd "$(dirname "$0")/.." && pwd)"
 mkdir -p "$REPO/backend/tmp"
 cp "$TMP_FILE" "$REPO/backend/tmp/safe_run_candidate.sh"
 

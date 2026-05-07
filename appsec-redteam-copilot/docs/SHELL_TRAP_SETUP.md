@@ -10,7 +10,7 @@ This guide explains how to enable an **optional shell trap** so interactive comm
 
 With trap enabled, your shell intercepts interactive commands and sends them to:
 
-`/home/james/openclaw-workspace/appsec-redteam-copilot/scripts/safe-run.sh`
+`<PROJECT_ROOT>/scripts/safe-run.sh`
 
 Behavior:
 - `allow` → command executes
@@ -26,7 +26,7 @@ Behavior:
 2. `safe-run.sh` exists and works:
 
 ```bash
-bash /home/james/openclaw-workspace/appsec-redteam-copilot/scripts/safe-run.sh "ls -lah"
+bash <PROJECT_ROOT>/scripts/safe-run.sh "ls -lah"
 ```
 
 3. Optional Telegram alerts configured in `backend/.env.local`
@@ -36,7 +36,7 @@ bash /home/james/openclaw-workspace/appsec-redteam-copilot/scripts/safe-run.sh "
 ## Install (Bash)
 
 ```bash
-cd /home/james/openclaw-workspace/appsec-redteam-copilot
+cd <PROJECT_ROOT>
 bash scripts/install_shell_trap.sh ~/.bashrc
 source ~/.bashrc
 ```

@@ -3,7 +3,7 @@
 ## Status
 ```bash
 sudo systemctl status appsec-copilot.service --no-pager -l
-docker compose -f /home/james/openclaw-workspace/appsec-redteam-copilot/docker-compose.yml ps
+docker compose -f <PROJECT_ROOT>/docker-compose.yml ps
 curl -s http://127.0.0.1:3480/health
 ```
 
@@ -35,13 +35,13 @@ sudo systemctl disable appsec-copilot.service
 ## Logs
 ```bash
 sudo journalctl -u appsec-copilot.service -n 100 --no-pager
-docker compose -f /home/james/openclaw-workspace/appsec-redteam-copilot/docker-compose.yml logs -f appsec-copilot
-docker compose -f /home/james/openclaw-workspace/appsec-redteam-copilot/docker-compose.yml logs -f appsec-watcher
+docker compose -f <PROJECT_ROOT>/docker-compose.yml logs -f appsec-copilot
+docker compose -f <PROJECT_ROOT>/docker-compose.yml logs -f appsec-watcher
 ```
 
 ## Rebuild after code changes
 ```bash
-cd /home/james/openclaw-workspace/appsec-redteam-copilot
+cd <PROJECT_ROOT>
 docker compose down
 docker compose up --build -d
 sudo systemctl restart appsec-copilot.service

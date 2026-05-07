@@ -26,9 +26,10 @@ if [ -z "${APPSEC_TRAP_ENABLED+x}" ]; then
 fi
 
 # Avoid recursion / non-interactive shells
+export APPSEC_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 if [[ $- == *i* ]]; then
   runsafe() {
-    bash /home/james/openclaw-workspace/appsec-redteam-copilot/scripts/safe-run.sh "$*"
+    bash "$APPSEC_ROOT/scripts/safe-run.sh" "$*"
   }
 
   appsec_guard() {
@@ -52,7 +53,7 @@ if [[ $- == *i* ]]; then
 
     export APPSEC_GUARD_ACTIVE=1
     # Ask runsafe to evaluate command; if blocked/warn cancelled, abort by SIGINT
-    bash /home/james/openclaw-workspace/appsec-redteam-copilot/scripts/safe-run.sh "$cmd" || {
+    bash "$APPSEC_ROOT/scripts/safe-run.sh" "$cmd" || {
       unset APPSEC_GUARD_ACTIVE
       kill -INT $$
       return 130

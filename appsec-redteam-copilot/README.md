@@ -35,7 +35,7 @@ Edit `backend/watchers/watch_config.json`.
 
 ### Install hooks
 ```bash
-cd /home/james/openclaw-workspace/appsec-redteam-copilot
+cd <PROJECT_ROOT>
 bash scripts/install_hooks.sh
 ```
 
@@ -58,7 +58,7 @@ Behavior:
 ## Docker Quick Start
 
 ```bash
-cd /home/james/openclaw-workspace/appsec-redteam-copilot
+cd <PROJECT_ROOT>
 docker compose up --build
 ```
 

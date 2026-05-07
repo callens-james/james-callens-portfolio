@@ -18,7 +18,7 @@ ALERT_MIN_VERDICT=warn
 
 ## 2) Reload services
 ```bash
-cd /home/james/openclaw-workspace/appsec-redteam-copilot
+cd <PROJECT_ROOT>
 docker compose down
 docker compose up --build -d
 ```
