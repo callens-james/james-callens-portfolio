@@ -7,6 +7,7 @@ import json
 
 from watchers.change_queue import list_items
 from agents.triage_rules import triage_file, triage_snippet
+from agents.alerts import should_alert, send_telegram_alert, build_alert
 from evaluators.report_store import save_report, list_reports
 from rag.git_diff import find_repo_root, changed_files
 from rag.advisory_ingest import refresh_cache
@@ -176,3 +177,9 @@ def analyze_diff_hunks(path:str):
         verdict='warn'
     payload={'project':str(root),'summary':f'Analyzed added lines: {len(added)}','risk':overall,'verdict':verdict,'findings':analyzed,'source':'pre-change-diff'}
     return save_report(payload)
+
+
+@app.post('/alerts/test')
+def alerts_test(msg:str='AppSec test alert ✅'):
+    result = send_telegram_alert(msg)
+    return {'ok': True, 'result': result}

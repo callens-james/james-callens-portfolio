@@ -91,3 +91,7 @@ AppSec Red Team Copilot demonstrates production-oriented AI engineering patterns
 
 ### Findings Table Detail
 ![Findings Table](docs/screenshots/prechange-table.jpg)
+
+
+## Alerts Setup
+See `docs/ALERTS_SETUP.md` for Telegram alert configuration and troubleshooting.

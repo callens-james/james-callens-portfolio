@@ -12,6 +12,8 @@ services:
       - ./:/workspace:ro
     environment:
       - PYTHONUNBUFFERED=1
+    env_file:
+      - ./backend/.env.local
     command: ["uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "3480"]
 
   appsec-watcher:
@@ -26,5 +28,7 @@ services:
       - /home/james/openclaw-workspace:/home/james/openclaw-workspace
     environment:
       - PYTHONUNBUFFERED=1
+    env_file:
+      - ./backend/.env.local
     working_dir: /app/backend/watchers
     command: ["python", "watcher.py"]
