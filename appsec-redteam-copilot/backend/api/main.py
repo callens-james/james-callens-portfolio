@@ -142,7 +142,7 @@ def report_markdown(path:str):
       'source':'git-diff'
     }
     md = render_markdown(payload)
-    out = root / 'SECURITY_REPORT.md'
+    out = Path('/app/backend/data/SECURITY_REPORT.md')
     out.write_text(md)
     return {'path': str(out), 'risk': overall, 'filesAnalyzed': len(files)}
 # safe comment

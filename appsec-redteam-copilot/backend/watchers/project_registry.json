@@ -2,8 +2,7 @@
   "workspaceRoot": "/home/james/openclaw-workspace",
   "mode": "multi_project_approved",
   "approvedProjects": [
-    "/home/james/openclaw-workspace/appsec-redteam-copilot",
-    "/workspace"
+    "/home/james/openclaw-workspace/appsec-redteam-copilot"
   ],
   "autoDetect": true,
   "promptEnroll": true

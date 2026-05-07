@@ -2,3 +2,6 @@
 # local secrets
 backend/.env.local
 backend/tmp/
+backend/data/SECURITY_REPORT.md
+backend/data/eval_reports/
+backend/data/eval_tmp/
