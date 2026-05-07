@@ -9,6 +9,17 @@ if ! command -v docker >/dev/null 2>&1; then
 fi
 
 echo "Starting AppSec Copilot..."
+
+# Auto-create local env file for first-time users
+if [ ! -f backend/.env.local ]; then
+  if [ -f backend/.env.example ]; then
+    cp backend/.env.example backend/.env.local
+    echo "Created backend/.env.local from .env.example (edit for real alerts if desired)."
+  else
+    touch backend/.env.local
+    echo "Created empty backend/.env.local"
+  fi
+fi
 docker compose up --build -d
 
 echo "Waiting for health..."

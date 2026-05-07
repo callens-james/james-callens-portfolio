@@ -29,6 +29,8 @@ newgrp docker
 ```bash
 bash scripts/quickstart.sh
 ```
+> Note: `quickstart.sh` auto-creates `backend/.env.local` on first run.
+
 
 4) Open dashboard:
 - http://127.0.0.1:3480/dashboard
