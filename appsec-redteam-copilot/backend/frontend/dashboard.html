@@ -3,17 +3,29 @@
 <style>body{font-family:Arial;margin:24px;background:#0b1220;color:#e5e7eb} .card{background:#111827;border:1px solid #334155;border-radius:10px;padding:14px;margin-bottom:12px} .badge{padding:2px 8px;border-radius:999px} .low{background:#14532d}.medium{background:#92400e}.high{background:#991b1b} button{padding:8px 10px}</style></head>
 <body>
 <h1>AppSec Red Team Copilot — Dashboard</h1>
+<div class="card" id="onboardCard">
+  <h3>Guided Onboarding (Start Here)</h3>
+  <ol>
+    <li><b>Set your project path</b> in First-Run Setup / Directory Picker, then click <b>Initialize</b>.</li>
+    <li><b>Run System Check</b> to confirm core services are healthy.</li>
+    <li><b>Run Quick Self-Test</b> from README commands to confirm warn/block behavior.</li>
+    <li><b>Choose guard mode</b>: keep shell trap ON (default) or toggle OFF with script.</li>
+    <li><b>(Optional) Enable Telegram alerts</b> via <code>backend/.env.local</code>.</li>
+  </ol>
+  <div><b>Recommended next action:</b> <span id="nextAction">Loading...</span></div>
+</div>
+<div class="card"><h3>Status</h3><div id="statusBadges">Loading...</div></div>
 <div class="card"><h3>Quick Setup Helpers</h3><ul><li>Use First-Run Setup below to set your project path.</li><li>Enable command guard: <code>alias runsafe='bash &lt;PROJECT_ROOT&gt;/scripts/safe-run.sh'</code></li><li>Enable on boot: see README section <b>Enable on Boot</b>.</li></ul></div>
 <div class="card" id="setupCard" style="display:none"><h3>First-Run Setup</h3><p>Set your project/workspace path to monitor.</p><input id="setupPath" style="width:70%" placeholder="/absolute/path"/> <button onclick="runFirstSetup()">Initialize</button><div id="setupMsg"></div></div>
-<div class="card"><button onclick="refreshAll()">Refresh</button> <button onclick="runEval()">Run Eval</button> <button onclick="refreshAdv()">Refresh Advisories</button> <button onclick="runSystemCheck()">System Check</button><br><br>
+<div class="card"><button onclick="refreshAll()">Refresh</button> <button onclick="toggleMode()">Toggle Beginner/Advanced</button> <button onclick="runEval()">Run Eval</button> <button onclick="refreshAdv()">Refresh Advisories</button> <button onclick="runSystemCheck()">System Check</button><br><br>
 <input id="repoPath" style="width:70%" value="/workspace/backend/api/main.py"/> <button onclick="analyzeRepo()">Analyze Repo Diff</button> <button onclick="analyzeHunks()">Analyze Pre-Change Hunks</button>
 <div id="status"></div></div>
 <div class="card"><h3>Latest Eval</h3><pre id="eval">(none)</pre></div>
 <div class="card"><h3>Watch Config</h3><div id="watchInfo"></div><input id="newPath" style="width:70%" placeholder="/path/to/project"/> <button onclick="addProjectPath()">Add Project Path</button> <button onclick="setWorkspaceRoot()">Set Workspace Root</button></div>
 <div class="card"><h3>Directory Picker</h3><div>Current: <code id="pickerPath">/workspace</code></div><button onclick="pickerUp()">Up</button> <button onclick="pickerUseCurrent()">Use Current Path</button><div id="pickerDirs" style="max-height:220px;overflow:auto;margin-top:8px"></div></div>
-<div class="card"><h3>Preview Changes</h3><button onclick="previewDiff()">Preview Diff/Impact</button> <button onclick="previewTests()">Preview Test Commands</button> <button onclick="copyLLMPrompt()">Copy LLM Prompt</button><pre id="previewOut">(none)</pre></div>
-<div class="card"><h3>Recent Reports</h3><div id="reports"></div></div>
-<div class="card"><h3>Selected Report Detail</h3><div id="detailSummary"></div><div id="detailTable"></div><pre id="detail" style="display:none"></pre></div>
+<div class="card advanced"><h3>Preview Changes</h3><button onclick="previewDiff()">Preview Diff/Impact</button> <button onclick="previewTests()">Preview Test Commands</button> <button onclick="copyLLMPrompt()">Copy LLM Prompt</button><pre id="previewOut">(none)</pre></div>
+<div class="card advanced"><h3>Recent Reports</h3><div id="reports"></div></div>
+<div class="card advanced"><h3>Selected Report Detail</h3><div id="detailSummary"></div><div id="detailTable"></div><pre id="detail" style="display:none"></pre></div>
 <script>
 async function j(url, opts){const r=await fetch(url,opts); return r.json();}
 function riskBadge(r){const c=(r||'low').toLowerCase(); return `<span class="badge ${c}">${(r||'unknown').toUpperCase()}</span>`;}
@@ -82,6 +94,28 @@ async function setWorkspaceRoot(){
 }
 
 
+
+let beginnerMode=true;
+function toggleMode(){
+  beginnerMode=!beginnerMode;
+  document.querySelectorAll('.advanced').forEach(e=>e.style.display=beginnerMode?'none':'block');
+  document.getElementById('status').textContent = beginnerMode ? 'Beginner mode' : 'Advanced mode';
+}
+async function refreshGuidance(){
+  const setup=await j('/setup/status');
+  const sys=await j('/system/check');
+  const badges=[];
+  badges.push(`Setup: ${setup.setupComplete ? '✅ complete' : '⚠ incomplete'}`);
+  badges.push(`System: ${sys.ok ? '✅ healthy' : '⚠ check needed'}`);
+  badges.push(`Alerts env: ${sys.envFilePresent ? '✅ present' : 'optional/not set'}`);
+  document.getElementById('statusBadges').textContent = badges.join(' | ');
+  let next='Run System Check';
+  if(!setup.setupComplete) next='Set your project path and click Initialize';
+  else if(!sys.ok) next='Review System Check and fix missing items';
+  else next='Run Preview Diff/Impact or Analyze Pre-Change Hunks';
+  document.getElementById('nextAction').textContent = next;
+}
+
 let pickerCurrent='/workspace';
 async function loadPicker(path){
   const d=await j('/fs/list?path='+encodeURIComponent(path));
@@ -120,11 +154,15 @@ async function runFirstSetup(){
   document.getElementById('setupMsg').textContent='Saved. Refreshing config...';
   await loadWatchConfig();
   await loadSetupStatus();
+refreshGuidance();
+toggleMode();
 }
 
 refreshAll();
 loadWatchConfig();
 loadPicker(pickerCurrent);
 loadSetupStatus();
+refreshGuidance();
+toggleMode();
 </script>
 </body></html>
