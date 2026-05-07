@@ -17,6 +17,36 @@ from evaluators.render_report import render_markdown
 from watchers.config_manager import get_config, set_workspace_root, add_project, remove_project
 
 app = FastAPI(title="AppSec Red Team Copilot", version="0.1.1")
+
+def _human_impact_summary(files, added, removed):
+    if not files:
+        return "No code changes detected in current diff."
+    frontend_ext={'.html','.css','.js','.ts','.tsx','.jsx'}
+    backend_ext={'.py','.go','.java','.cs','.php','.rb','.rs'}
+    frontend=[f for f in files if any(f['file'].endswith(x) for x in frontend_ext)]
+    backend=[f for f in files if any(f['file'].endswith(x) for x in backend_ext)]
+
+    notes=[]
+    if backend and not frontend:
+        notes.append("This appears to be backend-focused work. Users may not see immediate UI changes, but behavior/API logic may change.")
+    if frontend and not backend:
+        notes.append("This appears to be frontend-focused work. Visible UI/UX changes are likely.")
+    if backend and frontend:
+        notes.append("This includes both backend and frontend changes; behavior and UI may both be affected.")
+
+    text = ' '.join([f['file'] for f in files[:40]]).lower()
+    if any(k in text for k in ['api','server','route','controller']):
+        notes.append("Potential impact: request handling or API responses may change.")
+    if any(k in text for k in ['auth','token','jwt','session']):
+        notes.append("Potential impact: authentication/authorization behavior may change.")
+    if any(k in text for k in ['db','model','schema','migration','sql']):
+        notes.append("Potential impact: data model/query behavior may change.")
+    if any(k in text for k in ['docker','compose','deploy','service']):
+        notes.append("Potential impact: deployment/runtime behavior may change.")
+
+    notes.append(f"Diff magnitude: {len(files)} files, +{added}/-{removed} lines.")
+    return ' '.join(notes)
+
 CFG = Path(__file__).resolve().parents[1] / 'watchers' / 'watch_config.json'
 
 class AnalyzeRequest(BaseModel):
@@ -287,12 +317,24 @@ def preview_diff(path:str):
             if files: files[-1]['removed'] += 1
     frontend = [f for f in files if any(f['file'].endswith(x) for x in ['.html','.css','.js','.ts'])]
     backend = [f for f in files if any(f['file'].endswith(x) for x in ['.py','.go','.java','.cs','.php','.rb'])]
+    added_lines=[]
+    removed_lines=[]
+    for ln in diff.splitlines():
+        if ln.startswith('+') and not ln.startswith('+++'):
+            added_lines.append(ln[1:])
+        elif ln.startswith('-') and not ln.startswith('---'):
+            removed_lines.append(ln[1:])
+    llmPrompt = 'Review this code change for risk/safety.\n\nADDED LINES:\n' + '\n'.join(added_lines[:300]) + '\n\nREMOVED LINES:\n' + '\n'.join(removed_lines[:300])
     return {
       'project': str(root),
       'summary': {'filesChanged': len(files), 'linesAdded': added, 'linesRemoved': removed},
       'impact': {'frontendFiles': len(frontend), 'backendFiles': len(backend)},
+      'humanSummary': _human_impact_summary(files, added, removed),
       'files': files[:200],
-      'diffPreview': diff[:20000]
+      'diffPreview': diff[:20000],
+      'addedLines': added_lines[:300],
+      'removedLines': removed_lines[:300],
+      'llmReviewPrompt': llmPrompt[:30000]
     }
 
 @app.post('/preview/test-run')

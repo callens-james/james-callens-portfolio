@@ -11,7 +11,7 @@
 <div class="card"><h3>Latest Eval</h3><pre id="eval">(none)</pre></div>
 <div class="card"><h3>Watch Config</h3><div id="watchInfo"></div><input id="newPath" style="width:70%" placeholder="/path/to/project"/> <button onclick="addProjectPath()">Add Project Path</button> <button onclick="setWorkspaceRoot()">Set Workspace Root</button></div>
 <div class="card"><h3>Directory Picker</h3><div>Current: <code id="pickerPath">/workspace</code></div><button onclick="pickerUp()">Up</button> <button onclick="pickerUseCurrent()">Use Current Path</button><div id="pickerDirs" style="max-height:220px;overflow:auto;margin-top:8px"></div></div>
-<div class="card"><h3>Preview Changes</h3><button onclick="previewDiff()">Preview Diff/Impact</button> <button onclick="previewTests()">Preview Test Commands</button><pre id="previewOut">(none)</pre></div>
+<div class="card"><h3>Preview Changes</h3><button onclick="previewDiff()">Preview Diff/Impact</button> <button onclick="previewTests()">Preview Test Commands</button> <button onclick="copyLLMPrompt()">Copy LLM Prompt</button><pre id="previewOut">(none)</pre></div>
 <div class="card"><h3>Recent Reports</h3><div id="reports"></div></div>
 <div class="card"><h3>Selected Report Detail</h3><div id="detailSummary"></div><div id="detailTable"></div><pre id="detail" style="display:none"></pre></div>
 <script>
@@ -20,8 +20,10 @@ function riskBadge(r){const c=(r||'low').toLowerCase(); return `<span class="bad
 async function loadReports(){const d=await j('/reports?limit=10'); const el=document.getElementById('reports'); el.innerHTML=''; const arr=(d.items||[]).slice().reverse(); arr.forEach((x,i)=>{const div=document.createElement('div'); div.className='card'; div.style.cursor='pointer'; const newest=i===0?'<span class="badge low">NEWEST</span> ':''; div.innerHTML=`${newest}<b>${x.summary||''}</b><br>Risk: ${riskBadge(x.risk)}<br><small>${x.savedAt||''}</small>`; div.onclick=()=>showDetail(x); el.appendChild(div);});}
 async function runEval(){const d=await j('/eval/run',{method:'POST'}); document.getElementById('eval').textContent=JSON.stringify(d,null,2); document.getElementById('status').textContent='Eval complete';}
 async function runSystemCheck(){ const d=await j('/system/check'); document.getElementById('status').textContent='System check: '+JSON.stringify(d); }
-async function previewDiff(){ const p=document.getElementById('repoPath').value.trim(); const d=await j('/preview/diff?path='+encodeURIComponent(p),{method:'POST'}); document.getElementById('previewOut').textContent=JSON.stringify(d,null,2);}
+function renderPreview(d){ const el=document.getElementById('previewOut'); const add=(d.addedLines||[]).slice(0,80).map(x=>'+ '+x).join('\n'); const rem=(d.removedLines||[]).slice(0,80).map(x=>'- '+x).join('\n'); const head='Human Summary:\n'+(d.humanSummary||'')+'\n\nImpact: files='+(d.summary?.filesChanged||0)+' +'+(d.summary?.linesAdded||0)+' / -'+(d.summary?.linesRemoved||0)+'\nFrontend files: '+(d.impact?.frontendFiles||0)+' | Backend files: '+(d.impact?.backendFiles||0)+'\n\n'; const llm='\n\nLLM Review Prompt (copy/paste):\n'+(d.llmReviewPrompt||''); el.textContent=head+'ADDED LINES:\n'+add+'\n\nREMOVED LINES:\n'+rem+llm; }
+async function previewDiff(){ const p=document.getElementById('repoPath').value.trim(); const d=await j('/preview/diff?path='+encodeURIComponent(p),{method:'POST'}); renderPreview(d);}
 async function previewTests(){ const p=document.getElementById('repoPath').value.trim(); const d=await j('/preview/test-run?path='+encodeURIComponent(p),{method:'POST'}); document.getElementById('previewOut').textContent=JSON.stringify(d,null,2);}
+function copyLLMPrompt(){ const t=document.getElementById('previewOut').textContent||''; navigator.clipboard.writeText(t); document.getElementById('status').textContent='Preview copied to clipboard'; }
 async function refreshAdv(){const d=await j('/advisories/refresh?limit=30',{method:'POST'}); document.getElementById('status').textContent=`Advisories refreshed: ${d.count}`;}
 
 function showDetail(x){
