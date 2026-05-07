@@ -2,7 +2,10 @@
 import sys, requests
 
 API='http://127.0.0.1:3480'
-PATH='/home/james/openclaw-workspace/appsec-redteam-copilot/backend/api/main.py'
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+PATH=str(ROOT / 'backend' / 'api' / 'main.py')
 
 def main():
     try:
