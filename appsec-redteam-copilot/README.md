@@ -95,3 +95,7 @@ AppSec Red Team Copilot demonstrates production-oriented AI engineering patterns
 
 ## Alerts Setup
 See `docs/ALERTS_SETUP.md` for Telegram alert configuration and troubleshooting.
+
+
+## Optional Auto-Guard Shell Trap
+For automatic interactive command interception through AppSec, see `docs/SHELL_TRAP_SETUP.md`.
