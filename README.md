@@ -1,101 +1,47 @@
 # James Callens — AI Systems & Operations Portfolio
 
-A practical portfolio focused on local-first AI systems, operational tooling, and production-minded execution.
-
-## Who I Am
-I build systems that connect AI reasoning with real operational workflows — safely, transparently, and iteratively.
-
-## Core Strengths
-- AI-assisted system design and integration
-- Full-stack dashboard + API implementation
-- Stability/debugging under real runtime constraints
-- Security-aware workflow design
-- Fast iteration with controlled risk
+Practical, local-first AI engineering projects focused on real workflows, safety, and production readiness.
 
 ## Featured Projects
 
-### 1) Safe AI Suite
-Practical AI safety engineering suite with risk gating, decision traceability, eval harnesses, and publish-safe evidence artifacts.
+- **AppSec Red Team Copilot** — pre-change and post-change code-risk triage with verdict gates (`allow/warn/block`), advisory-backed evidence, eval harness, and Docker + service-mode ops.
+  - Folder: [`appsec-redteam-copilot/`](./appsec-redteam-copilot)
 
-- Folder: [`safe-ai-suite/`](./safe-ai-suite)
-- Highlights: policy controls, eval trend progression, runbooks, failure taxonomy, screenshots
+- **LifeOps Copilot** — local-first life/work operations platform (paperwork, planning, approvals, reporting, exports, privacy controls).
+  - Folder: [`lifeops-copilot/`](./lifeops-copilot)
 
-### 2) Ops Insight Copilot (Analyst Workbench)
-Local-first analyst workbench that transforms raw support/CRM exports into KPIs, anomaly alerts, prioritized actions, and weekly briefs.
+- **Ops Insight Copilot (Analyst Workbench)** — analyst workflow system for KPI extraction, anomaly review, and action-oriented weekly briefs.
+  - Folder: [`ops-insight-copilot-analyst-workbench/`](./ops-insight-copilot-analyst-workbench)
 
-- Folder: [`ops-insight-copilot-analyst-workbench/`](./ops-insight-copilot-analyst-workbench)
-- Highlights: multi-format CSV normalization, human-in-the-loop approve/undo, explainable thresholds
+- **Safe AI Suite** — safety engineering toolkit with risk gating, traceability, and evaluation workflows.
+  - Folder: [`safe-ai-suite/`](./safe-ai-suite)
 
-### 3) AI Mission Control Dashboard
-A local-first control plane for conversational AI + execution workflows.
+## Additional Projects
 
-- Project page: [`projects/ai-mission-control.md`](./projects/ai-mission-control.md)
-- Focus areas: architecture, stability, execution safety, modular growth
+- [`ai-toolkit/`](./ai-toolkit)
+- [`workflow-studio/`](./workflow-studio)
+- [`r-workflow-suite/`](./r-workflow-suite)
+- [`weather-dashboard/`](./weather-dashboard)
 
-![Mission Control Main Interface](./assets/mission-control-main.jpg)
+## Project Pages / Docs
 
-### 4) Job Application Pipeline Automation
-A structured pipeline for sourcing, scoring, and tracking remote opportunities.
-
-- Project page: [`projects/job-pipeline.md`](./projects/job-pipeline.md)
-- Focus areas: fit scoring, priority tiers, follow-up workflow, data hygiene
-
-## Additional Docs
+- Project index: [`projects/PROJECT_INDEX.md`](./projects/PROJECT_INDEX.md)
+- Mission Control write-up: [`projects/ai-mission-control.md`](./projects/ai-mission-control.md)
+- Job pipeline write-up: [`projects/job-pipeline.md`](./projects/job-pipeline.md)
 - About: [`docs/ABOUT.md`](./docs/ABOUT.md)
 - Architecture snapshot: [`docs/ARCHITECTURE.md`](./docs/ARCHITECTURE.md)
-- Project index: [`projects/PROJECT_INDEX.md`](./projects/PROJECT_INDEX.md)
-
-## Hiring Links
-- LinkedIn: https://www.linkedin.com/in/james-callens-373a3087/
 
 ## Security & Publish Workflow
-This repo scaffold includes fail-closed prepublish checks:
 
 ```bash
 ./scripts/prepublish_check.sh
 ./scripts/make_public_bundle.sh
 ```
 
-These scripts are designed to help prevent accidental publication of sensitive data.
+## Hiring
 
-## Notes
-- Continuously updated with new project evidence, screenshots, and implementation refinements.
-
-## New Portfolio Uploads (May 2026)
-
-### 3) Workflow Studio
-Local-first workflow automation toolkit for orchestrating analysis and operational tasks across scripts, prompts, and process steps.
-
-- Folder: [`workflow-studio/`](./workflow-studio)
-
-### 4) AI Toolkit
-Applied AI enablement toolkit with templates, frameworks, and operational guides for safe, practical adoption.
-
-- Folder: [`ai-toolkit/`](./ai-toolkit)
-
-### 5) R Workflow Suite
-Reproducible R-based data processing and analysis workflows for structured research and operational reporting.
-
-- Folder: [`r-workflow-suite/`](./r-workflow-suite)
-
-### 6) Weather Dashboard (Desktop, local-first)
-Local-first weather planning dashboard focused on actionable day-level decisions using multi-source forecast inputs.
-
-- Folder: [`weather-dashboard/`](./weather-dashboard)
-
-### 7) AI Automation Studio Suite Bundle
-Archived bundle of supporting automation artifacts preserved for reference.
-
-- File: [`archives/AI-Automation-Studio-Suite-Bundle.zip`](./archives/AI-Automation-Studio-Suite-Bundle.zip)
-
-
-
-### 10) LifeOps Copilot
-Local-first life + work autopilot platform that unifies paperwork, opportunities, planning, approvals, background reminders, and impact tracking with optional AI/OpenClaw integrations.
-
-- Folder: [`lifeops-copilot/`](./lifeops-copilot)
-- Highlights: trust layer, opportunity scoring with explanations, quick-start demo mode, export bundle, cross-platform target
-
+- LinkedIn: <https://www.linkedin.com/in/james-callens-373a3087/>
 
 ## License
+
 This portfolio and included projects are licensed under **AGPL-3.0-only** unless otherwise noted. See `LICENSE` and per-project `NOTICE` files.
