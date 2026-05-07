@@ -16,6 +16,18 @@ cd appsec-redteam-copilot
 bash scripts/preflight_check.sh
 ```
 
+If preflight shows:
+`FAIL: no docker daemon access (try: newgrp docker)`
+run:
+```bash
+newgrp docker
+```
+Then re-run preflight. If it still fails:
+```bash
+sudo usermod -aG docker $USER
+```
+Log out/in and retry.
+
 If Docker is missing (Ubuntu):
 ```bash
 sudo apt update
