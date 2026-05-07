@@ -81,7 +81,13 @@ AppSec Red Team Copilot demonstrates production-oriented AI engineering patterns
 - `/dashboard` (operator UI)
 
 
-## Screenshots (recommended)
-- Dashboard overview (reports + controls)
-- Pre-change verdict example (`warn`/`block`) with findings table
-- Eval output (`riskAccuracy`, `typeCoverage`)
+## Screenshots
+
+### Dashboard Overview
+![Dashboard Overview](docs/screenshots/dashboard-overview.jpg)
+
+### Pre-change Findings (Verdict + Signals)
+![Pre-change Findings](docs/screenshots/prechange-findings.jpg)
+
+### Findings Table Detail
+![Findings Table](docs/screenshots/prechange-table.jpg)
