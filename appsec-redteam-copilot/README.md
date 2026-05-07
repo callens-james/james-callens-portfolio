@@ -29,53 +29,12 @@ newgrp docker
 ```bash
 bash scripts/quickstart.sh
 ```
-> Note: `quickstart.sh` auto-creates `backend/.env.local` on first run.
 
+> `quickstart.sh` auto-creates `backend/.env.local` on first run.
 
 4) Open dashboard:
 - http://127.0.0.1:3480/dashboard
 - or server IP from another machine
-
-## Quick Self-Test (after `bash scripts/quickstart.sh`)
-
-Use this to confirm AppSec catches risky changes.
-
-### 1) Create a test folder + file
-```bash
-mkdir -p ~/appsec-demo-test/backend
-cat > ~/appsec-demo-test/backend/test_api.py <<'PY'
-def greet(name):
-    return f"Hello, {name}"
-PY
-```
-
-### 2) Add a harmless change (should usually be `allow`)
-```bash
-echo "# harmless comment" >> ~/appsec-demo-test/backend/test_api.py
-```
-
-### 3) Add risky command execution pattern (should be `warn`/`block`)
-```bash
-echo "os.system(user_input)" >> ~/appsec-demo-test/backend/test_api.py
-```
-
-### 4) Add risky SQL pattern (should be `warn`/`block`)
-```bash
-echo "query = \"SELECT * FROM users WHERE name='\" + user_input + \"'\"" >> ~/appsec-demo-test/backend/test_api.py
-```
-
-### 5) In dashboard, run these buttons
-- **Preview Diff/Impact**
-- **Analyze Pre-Change Hunks**
-- **Analyze Repo Diff**
-- **Run Eval**
-- **System Check**
-
-Expected:
-- benign edit => allow/low
-- risky edits => warn/block + findings
-- Telegram alerts for warn/block if alert env is configured
-
 
 5) In dashboard, run **First-Run Setup** and select your project/workspace folder.
 
@@ -95,6 +54,48 @@ cd appsec-redteam-copilot
 
 ---
 
+## Quick Self-Test (after quickstart)
+
+Use this to confirm AppSec catches risky changes.
+
+### 1) Create a test folder + file
+```bash
+mkdir -p ~/appsec-demo-test/backend
+cat > ~/appsec-demo-test/backend/test_api.py <<'PY'
+def greet(name):
+    return f"Hello, {name}"
+PY
+```
+
+### 2) Add a harmless change (should usually be `allow`)
+```bash
+echo "# harmless comment" >> ~/appsec-demo-test/backend/test_api.py
+```
+
+### 3) Add risky command pattern (should be `warn`/`block`)
+```bash
+echo "os.system(user_input)" >> ~/appsec-demo-test/backend/test_api.py
+```
+
+### 4) Add risky SQL pattern (should be `warn`/`block`)
+```bash
+echo "query = \"SELECT * FROM users WHERE name='\" + user_input + \"'\"" >> ~/appsec-demo-test/backend/test_api.py
+```
+
+### 5) In dashboard, run:
+- **Preview Diff/Impact**
+- **Analyze Pre-Change Hunks**
+- **Analyze Repo Diff**
+- **Run Eval**
+- **System Check**
+
+Expected:
+- benign edit => allow/low
+- risky edits => warn/block + findings
+- Telegram alerts for warn/block if alert env is configured
+
+---
+
 ## What this proves
 - AI-assisted **risk gating** with `allow/warn/block`
 - **Pre-change** and post-change analysis patterns
@@ -109,6 +110,13 @@ cd appsec-redteam-copilot
 4. Run eval
 5. Generate markdown report
 
+## Screenshots
+![Dashboard Overview](docs/screenshots/dashboard-overview.jpg)
+![Pre-change Findings](docs/screenshots/prechange-findings.jpg)
+![Findings Table](docs/screenshots/prechange-table.jpg)
+
+---
+
 ## Core Endpoints
 - `/dashboard`
 - `/analyze-diff-hunks` (pre-change)
@@ -118,11 +126,6 @@ cd appsec-redteam-copilot
 - `/eval/run`
 - `/advisories/refresh`
 - `/reports`
-
-## Screenshots
-![Dashboard Overview](docs/screenshots/dashboard-overview.jpg)
-![Pre-change Findings](docs/screenshots/prechange-findings.jpg)
-![Findings Table](docs/screenshots/prechange-table.jpg)
 
 ## Optional Telegram Alerts
 Create local-only file `backend/.env.local`:
