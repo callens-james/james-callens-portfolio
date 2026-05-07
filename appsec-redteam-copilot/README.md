@@ -2,6 +2,74 @@
 
 Local-first AI safety guard for coding workflows.
 
+
+## START HERE (explicit install steps)
+
+### Linux/macOS
+
+1) Open terminal and clone:
+```bash
+git clone https://github.com/callens-james/appsec-redteam-copilot.git
+cd appsec-redteam-copilot
+```
+
+2) Run preflight (optional but recommended):
+```bash
+bash scripts/preflight_check.sh
+```
+
+If Docker is missing, install it first (Ubuntu example):
+```bash
+sudo apt update
+sudo apt install -y docker.io docker-compose-v2
+sudo systemctl enable --now docker
+sudo usermod -aG docker $USER
+newgrp docker
+```
+
+3) Start app:
+```bash
+bash scripts/quickstart.sh
+```
+
+4) Open dashboard in browser:
+- http://127.0.0.1:3480/dashboard
+- or your server IP from another machine
+
+5) First-Run Setup in dashboard:
+- choose project/workspace folder to watch
+- save
+
+6) (Optional) Telegram alerts
+Create local-only file `backend/.env.local`:
+```env
+TELEGRAM_BOT_TOKEN=...
+TELEGRAM_CHAT_ID=...
+ALERT_MIN_VERDICT=warn
+```
+Then restart:
+```bash
+docker compose up --build -d
+```
+
+7) Verify install:
+```bash
+bash scripts/verify_install.sh
+```
+
+---
+
+### Windows (PowerShell)
+
+```powershell
+git clone https://github.com/callens-james/appsec-redteam-copilot.git
+cd appsec-redteam-copilot
+./scripts/preflight_check.ps1
+./scripts/quickstart.ps1
+./scripts/verify_install.ps1
+```
+
+
 ## START HERE (non-coder quickstart)
 
 ### Linux/macOS
