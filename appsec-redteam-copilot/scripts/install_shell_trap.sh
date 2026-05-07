@@ -33,6 +33,12 @@ if [[ $- == *i* ]]; then
   }
 
   appsec_guard() {
+    # failsafe: if guard script missing, disable trap and continue shell
+    if [ ! -x "$APPSEC_ROOT/scripts/safe-run.sh" ]; then
+      export APPSEC_TRAP_ENABLED=0
+      trap - DEBUG
+      return 0
+    fi
     [ "${APPSEC_TRAP_ENABLED}" = "1" ] || return 0
     local cmd="$BASH_COMMAND"
 

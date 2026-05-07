@@ -8,7 +8,7 @@ This guide explains how to enable an **optional shell trap** so interactive comm
 
 ## What this does
 
-With trap enabled, your shell intercepts interactive commands and sends them to:
+With trap enabled (opt-in), your shell intercepts interactive commands and sends them to:
 
 `<PROJECT_ROOT>/scripts/safe-run.sh`
 
@@ -128,3 +128,10 @@ See `docs/SHELL_TRAP_SETUP.md` for enabling automatic command interception throu
 - Verify `backend/.env.local` and run:
   - `curl -s -X POST http://127.0.0.1:3480/alerts/test | jq`
 
+
+
+## Emergency disable
+```bash
+bash scripts/panic_disable_shell_trap.sh
+```
+Then open a new terminal.

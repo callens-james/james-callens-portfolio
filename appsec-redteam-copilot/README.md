@@ -141,7 +141,7 @@ docker compose up --build -d
 Details: `docs/ALERTS_SETUP.md`
 
 ## Optional Shell Guard
-Quickstart installs shell trap **enabled by default** for interactive shells.
+Shell trap is **optional (opt-in)** and disabled by default for safety.
 Toggle anytime:
 ```bash
 bash scripts/toggle_shell_trap.sh off
@@ -193,3 +193,11 @@ newgrp docker
 
 ## License
 AGPL-3.0-only. See `LICENSE` and `NOTICE`.
+
+
+### Emergency trap disable
+If shell trap ever causes issues, run:
+```bash
+bash scripts/panic_disable_shell_trap.sh
+```
+Then open a new terminal.
