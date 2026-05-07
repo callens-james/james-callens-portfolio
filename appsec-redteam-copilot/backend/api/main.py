@@ -262,3 +262,47 @@ def system_check():
     }
     checks['ok'] = all([checks['health'], checks['watchConfigPresent'], checks['registryPresent']])
     return checks
+
+
+@app.post('/preview/diff')
+def preview_diff(path:str):
+    root = find_repo_root(path)
+    if not root:
+        return {'error':'no git repo root found', 'path': path}
+    import subprocess
+    diff = subprocess.check_output(['git','-C',str(root),'diff','-U3'], text=True, errors='ignore')
+    files=[]
+    cur=None
+    added=removed=0
+    for ln in diff.splitlines():
+        if ln.startswith('diff --git '):
+            parts=ln.split(' ')
+            cur=parts[-1].replace('b/','') if parts else None
+            if cur: files.append({'file':cur,'added':0,'removed':0})
+        elif ln.startswith('+') and not ln.startswith('+++'):
+            added += 1
+            if files: files[-1]['added'] += 1
+        elif ln.startswith('-') and not ln.startswith('---'):
+            removed += 1
+            if files: files[-1]['removed'] += 1
+    frontend = [f for f in files if any(f['file'].endswith(x) for x in ['.html','.css','.js','.ts'])]
+    backend = [f for f in files if any(f['file'].endswith(x) for x in ['.py','.go','.java','.cs','.php','.rb'])]
+    return {
+      'project': str(root),
+      'summary': {'filesChanged': len(files), 'linesAdded': added, 'linesRemoved': removed},
+      'impact': {'frontendFiles': len(frontend), 'backendFiles': len(backend)},
+      'files': files[:200],
+      'diffPreview': diff[:20000]
+    }
+
+@app.post('/preview/test-run')
+def preview_test_run(path:str):
+    root = find_repo_root(path)
+    if not root:
+        return {'error':'no git repo root found', 'path': path}
+    import subprocess
+    # safe lightweight probe: detect test command candidates only
+    cmds=[]
+    if (root/'package.json').exists(): cmds.append('npm test -- --help')
+    if (root/'pytest.ini').exists() or any((root/x).exists() for x in ['tests','test']): cmds.append('pytest -q --collect-only')
+    return {'project':str(root),'suggestedCommands':cmds,'note':'No tests executed automatically in preview mode.'}

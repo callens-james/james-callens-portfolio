@@ -179,3 +179,7 @@ If Docker permission fails on Linux, run:
 ```bash
 newgrp docker
 ```
+
+
+## Change Preview
+Use dashboard **Preview Changes** to view git diff preview, file/line impact summary, and suggested test commands before executing or merging changes.
