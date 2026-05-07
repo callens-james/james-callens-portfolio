@@ -249,3 +249,16 @@ def setup_init(path:str):
     set_workspace_root(path)
     add_project(path)
     return {'ok': True, 'path': path}
+
+
+@app.get('/system/check')
+def system_check():
+    import os
+    checks = {
+      'health': True,
+      'envFilePresent': os.path.exists('/app/backend/.env.local'),
+      'watchConfigPresent': os.path.exists('/app/backend/watchers/watch_config.json'),
+      'registryPresent': os.path.exists('/app/backend/watchers/project_registry.json')
+    }
+    checks['ok'] = all([checks['health'], checks['watchConfigPresent'], checks['registryPresent']])
+    return checks

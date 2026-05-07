@@ -157,3 +157,25 @@ EOF
 sudo systemctl daemon-reload
 sudo systemctl enable --now appsec-copilot.service
 ```
+
+
+## Installer Hardening Checks
+
+### Linux/macOS
+```bash
+bash scripts/preflight_check.sh
+bash scripts/quickstart.sh
+bash scripts/verify_install.sh
+```
+
+### Windows PowerShell
+```powershell
+./scripts/preflight_check.ps1
+./scripts/quickstart.ps1
+./scripts/verify_install.ps1
+```
+
+If Docker permission fails on Linux, run:
+```bash
+newgrp docker
+```

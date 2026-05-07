@@ -5,7 +5,7 @@
 <h1>AppSec Red Team Copilot — Dashboard</h1>
 <div class="card"><h3>Quick Setup Helpers</h3><ul><li>Use First-Run Setup below to set your project path.</li><li>Enable command guard: <code>alias runsafe='bash &lt;PROJECT_ROOT&gt;/scripts/safe-run.sh'</code></li><li>Enable on boot: see README section <b>Enable on Boot</b>.</li></ul></div>
 <div class="card" id="setupCard" style="display:none"><h3>First-Run Setup</h3><p>Set your project/workspace path to monitor.</p><input id="setupPath" style="width:70%" placeholder="/absolute/path"/> <button onclick="runFirstSetup()">Initialize</button><div id="setupMsg"></div></div>
-<div class="card"><button onclick="refreshAll()">Refresh</button> <button onclick="runEval()">Run Eval</button> <button onclick="refreshAdv()">Refresh Advisories</button><br><br>
+<div class="card"><button onclick="refreshAll()">Refresh</button> <button onclick="runEval()">Run Eval</button> <button onclick="refreshAdv()">Refresh Advisories</button> <button onclick="runSystemCheck()">System Check</button><br><br>
 <input id="repoPath" style="width:70%" value="/workspace/backend/api/main.py"/> <button onclick="analyzeRepo()">Analyze Repo Diff</button> <button onclick="analyzeHunks()">Analyze Pre-Change Hunks</button>
 <div id="status"></div></div>
 <div class="card"><h3>Latest Eval</h3><pre id="eval">(none)</pre></div>
@@ -18,6 +18,7 @@ async function j(url, opts){const r=await fetch(url,opts); return r.json();}
 function riskBadge(r){const c=(r||'low').toLowerCase(); return `<span class="badge ${c}">${(r||'unknown').toUpperCase()}</span>`;}
 async function loadReports(){const d=await j('/reports?limit=10'); const el=document.getElementById('reports'); el.innerHTML=''; const arr=(d.items||[]).slice().reverse(); arr.forEach((x,i)=>{const div=document.createElement('div'); div.className='card'; div.style.cursor='pointer'; const newest=i===0?'<span class="badge low">NEWEST</span> ':''; div.innerHTML=`${newest}<b>${x.summary||''}</b><br>Risk: ${riskBadge(x.risk)}<br><small>${x.savedAt||''}</small>`; div.onclick=()=>showDetail(x); el.appendChild(div);});}
 async function runEval(){const d=await j('/eval/run',{method:'POST'}); document.getElementById('eval').textContent=JSON.stringify(d,null,2); document.getElementById('status').textContent='Eval complete';}
+async function runSystemCheck(){ const d=await j('/system/check'); document.getElementById('status').textContent='System check: '+JSON.stringify(d); }
 async function refreshAdv(){const d=await j('/advisories/refresh?limit=30',{method:'POST'}); document.getElementById('status').textContent=`Advisories refreshed: ${d.count}`;}
 
 function showDetail(x){
