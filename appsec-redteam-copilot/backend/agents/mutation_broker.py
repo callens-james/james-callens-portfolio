@@ -9,11 +9,24 @@ PROTECTED_PREFIXES = [
     '/etc', '/boot', '/root', '/var/lib', '/usr', '/bin', '/sbin', '/lib', '/lib64',
 ]
 PROTECTED_NAMES = {'.env', '.env.local', 'id_rsa', 'id_ed25519', 'authorized_keys'}
+WORKSPACE_ROOT = '/workspace'
+
+def _within(root:str, path:str)->bool:
+    try:
+        rr=Path(root).resolve()
+        rp=Path(path).resolve()
+        return rp == rr or rr in rp.parents
+    except Exception:
+        return False
 
 
 def _real(p:str)->str:
     try:
-        return str(Path(p).expanduser().resolve())
+        pp=Path(p).expanduser()
+        if pp.exists():
+            return str(pp.resolve())
+        parent = pp.parent if str(pp.parent) else Path('.')
+        return str((parent.resolve()/pp.name))
     except Exception:
         return p
 
@@ -37,7 +50,16 @@ def _is_protected(path:str)->bool:
 def check_mutation(cmd:str):
     gate = evaluate_global_action('command', cmd)
     paths = _paths_from_cmd(cmd)
+    outside = [p for p in paths if not _within(WORKSPACE_ROOT, p)]
     protected = [p for p in paths if _is_protected(p)]
+    if outside:
+        gate['allowed'] = False
+        gate['needsPrompt'] = True
+        gate['typedConfirm'] = True
+        gate['policy']['verdict'] = 'block'
+        gate['policy']['risk'] = 'high'
+        gate['policy']['reason'] = 'workspace-containment-fail'
+        gate['outsideScopePaths'] = outside
     if protected:
         gate['allowed'] = False
         gate['needsPrompt'] = True
