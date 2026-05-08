@@ -324,16 +324,16 @@ def safety_gate_check(action:str='command', cmd:str=''):
     return res
 
 @app.post('/safety/gate/approve')
-def safety_gate_approve(token:str, cmd:str, ttl:int=600):
-    return approve(token, cmd=cmd, ttl_seconds=ttl)
+def safety_gate_approve(token:str, cmd:str, ttl:int=600, action:str='command', workspace:str='/workspace', actor:str='local'):
+    return approve(token, cmd=cmd, action=action, workspace=workspace, actor=actor, ttl_seconds=ttl)
 
 @app.post('/broker/check')
 def broker_check(cmd:str):
     return check_mutation(cmd)
 
 @app.post('/broker/exec')
-def broker_exec(cmd:str, token:str=''):
-    return exec_with_token(cmd, token=token)
+def broker_exec(cmd:str, token:str='', actor:str='local'):
+    return exec_with_token(cmd, token=token, actor=actor)
 
 @app.post('/config/workspace-root')
 def config_workspace_root(path:str):

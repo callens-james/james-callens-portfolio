@@ -72,11 +72,11 @@ def check_mutation(cmd:str):
     return gate
 
 
-def grant(token:str, cmd:str, ttl:int=300):
-    return approve(token, cmd=cmd, ttl_seconds=ttl)
+def grant(token:str, cmd:str, action:str='command', workspace:str=WORKSPACE_ROOT, actor:str='local', ttl:int=300):
+    return approve(token, cmd=cmd, action=action, workspace=workspace, actor=actor, ttl_seconds=ttl)
 
 
-def exec_with_token(cmd:str, token:str=''):
+def exec_with_token(cmd:str, token:str='', actor:str='local'):
     decision = check_mutation(cmd)
     required = decision.get('needsPrompt', False) or not decision.get('allowed', False)
     expected = decision.get('approvalToken', '')
@@ -84,7 +84,7 @@ def exec_with_token(cmd:str, token:str=''):
         if token != expected:
             audit({'type':'broker-deny','cmd':cmd,'reason':'approval-required','tokenExpected':expected})
             return {'ok': False, 'error': 'approval required', 'decision': decision}
-        c = consume_approval(token, cmd)
+        c = consume_approval(token, cmd, action='command', workspace=WORKSPACE_ROOT, actor=actor)
         if not c.get('ok'):
             audit({'type':'broker-deny','cmd':cmd,'reason':c.get('reason','token-invalid')})
             return {'ok': False, 'error': f'approval token invalid: {c.get("reason")}', 'decision': decision}

@@ -146,7 +146,10 @@ def verify_audit_chain(limit:int=5000):
             checked+=1
         except Exception:
             errors.append({'line':i,'type':'parse_error'})
-    return {'ok': len(errors)==0, 'checked': checked, 'errors': errors}
+    genesis_count=sum(1 for ln in lines if '"prevHash": "GENESIS"' in ln)
+    if checked>1 and genesis_count>1:
+        errors.append({'line':0,'type':'multiple_genesis_possible_truncation'})
+    return {'ok': len(errors)==0, 'checked': checked, 'errors': errors, 'genesisCount': genesis_count, 'lastHash': prev}
 
 
 def _extract_paths(cmd:str):
