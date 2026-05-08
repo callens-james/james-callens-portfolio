@@ -250,6 +250,9 @@ def alerts_test(msg:str='AppSec test alert ✅'):
 
 @app.post('/analyze-command')
 def analyze_command(cmd:str):
+    p = load_policy()
+    if p.get('brokerOnlyMode', True):
+        return {'ok': False, 'error': 'broker-only mode enabled; use /broker/check and /broker/exec'}
     r = triage_snippet('/local/command', 1, cmd)
     triage_verdict='allow'
     if r.get('risk') == 'high':
