@@ -83,6 +83,21 @@ def evaluate_command(cmd: str, triage_verdict='allow', triage_risk='low'):
         out['risk'] = 'high'
         out['reason'] = 'guard-off-safety-floor'
 
+    scope = enforce_scope_and_batch(cmd)
+    out['scope'] = scope
+    if scope.get('outsideScope'):
+        out['needsConfirm'] = True
+        out['typedConfirm'] = True
+        out['verdict'] = 'warn' if out['verdict'] != 'block' else out['verdict']
+        out['risk'] = 'high'
+        out['reason'] = 'workspace-scope-lock'
+    if scope.get('batchExceeded'):
+        out['needsConfirm'] = True
+        out['typedConfirm'] = True
+        if out['verdict'] != 'block':
+            out['verdict'] = 'warn'
+        out['reason'] = 'batch-limit'
+
     return out
 
 
@@ -91,3 +106,27 @@ def audit(event: dict):
     row = {'ts': int(time.time()), **event}
     with AUDIT_PATH.open('a') as f:
         f.write(json.dumps(row) + '\n')
+
+
+def _extract_paths(cmd:str):
+    toks = cmd.split()
+    out=[]
+    for t in toks:
+        if t.startswith('/') or t.startswith('./') or t.startswith('../') or t.startswith('~'):
+            out.append(t)
+    return out
+
+def enforce_scope_and_batch(cmd:str):
+    p = load_policy()
+    paths = _extract_paths(cmd)
+    out = {'outsideScope': False, 'pathCount': len(paths), 'batchExceeded': False, 'paths': paths}
+    root = p.get('workspaceRoot','/workspace')
+    if p.get('workspaceScopeLock', True):
+        for x in paths:
+            xp = x.replace('~','/home/james')
+            if not xp.startswith(root):
+                out['outsideScope']=True
+                break
+    if len(paths) > int(p.get('batchFileLimit',100)):
+        out['batchExceeded']=True
+    return out
