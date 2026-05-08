@@ -138,6 +138,7 @@ Expected:
 - `/eval/run`
 - `/advisories/refresh`
 - `/reports`
+- `/report/pr-comment` (ready-to-paste PR comment markdown)
 
 ## Optional Telegram Alerts
 Create local-only file `backend/.env.local`:
@@ -161,6 +162,11 @@ bash scripts/toggle_shell_trap.sh on
 bash scripts/toggle_shell_trap.sh status
 ```
 Details: `docs/SHELL_TRAP_SETUP.md`
+
+Health check:
+```bash
+bash scripts/shell_trap_doctor.sh
+```
 
 ## Enable on Boot (Linux)
 ```bash
