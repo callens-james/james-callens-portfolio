@@ -18,6 +18,7 @@
 
 <div class="card">
   <h3>Safety Policy (Primary Guardrail)</h3>
+  <label><input type="checkbox" id="masterSafeMode" onchange="applyMasterSafeMode()"> Master Safe Mode (recommended)</label><br>
   <label><input type="checkbox" id="polAgentSafeMode"> Agent Safe Mode (default ON)</label><br>
   <label><input type="checkbox" id="polCommandGuard"> Command Guard allow/warn/block (secondary)</label><br>
   <label><input type="checkbox" id="polAlwaysConfirm"> Always confirm high-impact actions</label><br>
@@ -155,6 +156,7 @@ async function loadPolicy(){
   document.getElementById('polScopeLock').checked=!!p.workspaceScopeLock;
   document.getElementById('polBatchLimit').value=p.batchFileLimit||100;
   document.getElementById('polBrokerOnly').checked=!!p.brokerOnlyMode;
+  document.getElementById('masterSafeMode').checked=!!(p.agentSafeMode && p.brokerOnlyMode && p.commandGuard && p.alwaysConfirmHighImpact);
   document.getElementById('polWorkspaceRoot').value=p.workspaceRoot||'/workspace';
   document.getElementById('policyOut').textContent=JSON.stringify(p,null,2);
 }
@@ -181,6 +183,21 @@ async function savePolicy(){
   document.getElementById('status').textContent='Safety policy saved';
 }
 
+
+
+function applyMasterSafeMode(){
+  const on=document.getElementById('masterSafeMode').checked;
+  document.getElementById('polAgentSafeMode').checked=on;
+  document.getElementById('polBrokerOnly').checked=on;
+  document.getElementById('polCommandGuard').checked=on;
+  document.getElementById('polAlwaysConfirm').checked=on;
+  if(on){
+    document.getElementById('status').textContent='Master Safe Mode ON';
+  }else{
+    document.getElementById('status').textContent='Master Safe Mode OFF (high risk)';
+    alert('Warning: Turning off Master Safe Mode increases risk. High-impact actions may still require confirmation.');
+  }
+}
 
 let gateToken='';
 async function gateCheck(){
