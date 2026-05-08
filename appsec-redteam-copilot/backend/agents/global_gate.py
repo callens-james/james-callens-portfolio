@@ -53,6 +53,18 @@ def evaluate_global_action(action:str, cmd:str):
     }
 
 
-def approve(token:str, ttl_seconds:int=600):
-    _APPROVAL_CACHE[token] = {'exp': int(time.time()) + max(60, ttl_seconds)}
+def approve(token:str, cmd:str, ttl_seconds:int=600):
+    _APPROVAL_CACHE[token] = {'exp': int(time.time()) + max(60, ttl_seconds), 'cmdHash': _fingerprint(cmd), 'used': False}
     return {'ok': True, 'token': token, 'ttl': ttl_seconds}
+
+
+def consume_approval(token:str, cmd:str):
+    now=int(time.time())
+    ent=_APPROVAL_CACHE.get(token)
+    if not ent: return {'ok':False,'reason':'missing'}
+    if ent.get('used'): return {'ok':False,'reason':'used'}
+    if ent.get('exp',0) < now: return {'ok':False,'reason':'expired'}
+    if ent.get('cmdHash') != _fingerprint(cmd): return {'ok':False,'reason':'cmd-mismatch'}
+    ent['used']=True
+    _APPROVAL_CACHE[token]=ent
+    return {'ok':True}

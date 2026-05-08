@@ -2,9 +2,10 @@ from __future__ import annotations
 import hashlib, os, shlex, subprocess, time
 from pathlib import Path
 from agents.safety_policy import evaluate_command, audit
-from agents.global_gate import evaluate_global_action, approve
+from agents.global_gate import evaluate_global_action, approve, consume_approval
 
 PROTECTED_PREFIXES = [
+    '/home/james/.ssh',
     '/etc', '/boot', '/root', '/var/lib', '/usr', '/bin', '/sbin', '/lib', '/lib64',
 ]
 PROTECTED_NAMES = {'.env', '.env.local', 'id_rsa', 'id_ed25519', 'authorized_keys'}
@@ -49,21 +50,22 @@ def check_mutation(cmd:str):
     return gate
 
 
-def grant(token:str, ttl:int=300):
-    return approve(token, ttl_seconds=ttl)
+def grant(token:str, cmd:str, ttl:int=300):
+    return approve(token, cmd=cmd, ttl_seconds=ttl)
 
 
 def exec_with_token(cmd:str, token:str=''):
     decision = check_mutation(cmd)
     required = decision.get('needsPrompt', False) or not decision.get('allowed', False)
     expected = decision.get('approvalToken', '')
-    if required and token != expected:
-        audit({'type':'broker-deny','cmd':cmd,'reason':'approval-required','tokenExpected':expected})
-        return {'ok': False, 'error': 'approval required', 'decision': decision}
-
-    # if token passed, cache approval shortly
-    if token:
-        grant(token, ttl=300)
+    if required:
+        if token != expected:
+            audit({'type':'broker-deny','cmd':cmd,'reason':'approval-required','tokenExpected':expected})
+            return {'ok': False, 'error': 'approval required', 'decision': decision}
+        c = consume_approval(token, cmd)
+        if not c.get('ok'):
+            audit({'type':'broker-deny','cmd':cmd,'reason':c.get('reason','token-invalid')})
+            return {'ok': False, 'error': f'approval token invalid: {c.get("reason")}', 'decision': decision}
 
     audit({'type':'broker-exec','cmd':cmd,'decision':decision.get('policy',{}).get('reason','')})
     p = subprocess.run(['bash','-lc',cmd], capture_output=True, text=True)

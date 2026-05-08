@@ -308,8 +308,8 @@ def safety_gate_check(action:str='command', cmd:str=''):
     return res
 
 @app.post('/safety/gate/approve')
-def safety_gate_approve(token:str, ttl:int=600):
-    return approve(token, ttl_seconds=ttl)
+def safety_gate_approve(token:str, cmd:str, ttl:int=600):
+    return approve(token, cmd=cmd, ttl_seconds=ttl)
 
 @app.post('/broker/check')
 def broker_check(cmd:str):

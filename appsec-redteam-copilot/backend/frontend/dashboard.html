@@ -184,7 +184,8 @@ async function gateCheck(){
 }
 async function gateApprove(){
   if(!gateToken){ document.getElementById('gateOut').textContent='Run Check Gate first to get token.'; return; }
-  const r=await fetch('/safety/gate/approve?token='+encodeURIComponent(gateToken)+'&ttl=600',{method:'POST'});
+  const cmd=document.getElementById('gateCmd').value||'';
+  const r=await fetch('/safety/gate/approve?token='+encodeURIComponent(gateToken)+'&cmd='+encodeURIComponent(cmd)+'&ttl=600',{method:'POST'});
   const d=await r.json();
   document.getElementById('gateOut').textContent=JSON.stringify(d,null,2);
 }
