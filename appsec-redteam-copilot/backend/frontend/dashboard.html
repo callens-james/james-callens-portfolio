@@ -27,7 +27,7 @@
   <label>Batch file limit: <input id="polBatchLimit" type="number" min="1" value="100" style="width:90px"></label><br>
   <label>Workspace root: <input id="polWorkspaceRoot" placeholder="/workspace" style="width:320px"></label><br><label>Admin confirm phrase: <input id="polAdminConfirm" placeholder="CONFIRM POLICY CHANGE" style="width:320px"></label><br>
   <button onclick="loadPolicy()">Reload Policy</button>
-  <button onclick="savePolicy()">Save Policy</button> <button onclick="verifyAudit()">Verify Audit Integrity</button>
+  <button onclick="savePolicy()">Save Policy</button> <button onclick="verifyAudit()">Verify Audit Integrity</button> <button onclick="loadSafetyMetrics()">Safety Metrics</button>
   <pre id="policyOut"></pre>
 </div>
 
@@ -175,6 +175,11 @@ async function loadPolicy(){
   document.getElementById('polWorkspaceRoot').value=p.workspaceRoot||'/workspace';
   document.getElementById('policyOut').textContent=JSON.stringify(p,null,2);
 }
+async function loadSafetyMetrics(){
+  const d=await j('/safety/metrics');
+  document.getElementById('policyOut').textContent=JSON.stringify(d,null,2);
+}
+
 async function verifyAudit(){
   const d=await j('/safety/audit/verify');
   document.getElementById('policyOut').textContent=JSON.stringify(d,null,2);

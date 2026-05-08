@@ -315,6 +315,29 @@ def safety_audit(limit:int=Query(200, ge=1, le=5000)):
             continue
     return {'items': items}
 
+
+@app.get('/safety/metrics')
+def safety_metrics(limit:int=5000):
+    p = Path('/app/backend/data/safety_audit.jsonl')
+    if not p.exists():
+        return {'events':0,'brokerCoverageRate':0.0,'counts':{}}
+    lines=p.read_text(errors='ignore').splitlines()[-limit:]
+    counts={}
+    total=0
+    brokered=0
+    for ln in lines:
+        try:
+            j=json.loads(ln)
+            t=j.get('type','unknown')
+            counts[t]=counts.get(t,0)+1
+            total+=1
+            if t in ('broker-exec','broker-deny','global-gate-check'):
+                brokered+=1
+        except Exception:
+            continue
+    rate=(brokered/total) if total else 0.0
+    return {'events':total,'brokerCoverageRate':round(rate,4),'counts':counts}
+
 @app.get('/safety/audit/verify')
 def safety_audit_verify(limit:int=Query(5000, ge=1, le=50000)):
     return verify_audit_chain(limit=limit)
