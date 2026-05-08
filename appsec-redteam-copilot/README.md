@@ -219,3 +219,12 @@ If shell trap ever causes issues, run:
 bash scripts/panic_disable_shell_trap.sh
 ```
 Then open a new terminal.
+
+
+## Safety Regression Check
+```bash
+bash scripts/safety_regression_check.sh
+```
+
+## Threat Model & Guarantees
+See: `docs/THREAT_MODEL_AND_GUARANTEES.md`
