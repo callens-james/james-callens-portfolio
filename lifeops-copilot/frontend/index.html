@@ -44,7 +44,7 @@
 
 <div class='card'><h3>Setup Wizard (Sprint 3.5)</h3>
 <div id='wizStep'>Step 1: Choose install profile</div>
-<select id='wizProfile'></select><span id='wizProfileStatus' class='small'></span>
+<select id='wizProfile'><option value='core-only'>LifeOps (Core Only)</option><option value='local-ai'>LifeOps + Local AI</option><option value='openclaw'>LifeOps + OpenClaw</option></select><span id='wizProfileStatus' class='small'>Static defaults loaded</span>
 <label><input type='checkbox' id='wizAck'> I acknowledge performance/security warnings for optional profiles</label>
 <button onclick='wizardLoadProfiles()'>Load Profiles</button>
 <button onclick='wizardApplyProfile()'>Apply Selected Profile</button>
