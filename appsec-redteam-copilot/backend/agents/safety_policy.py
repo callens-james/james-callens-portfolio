@@ -14,6 +14,9 @@ DEFAULT_POLICY = {
   'workspaceScopeLock': True,
   'workspaceRoot': '/workspace',
   'batchFileLimit': 100,
+  'brokerOnlyMode': True,
+  'requirePolicyAdminConfirm': True,
+  'policyAdminPhrase': 'CONFIRM POLICY CHANGE',
 }
 
 DESTRUCTIVE = [

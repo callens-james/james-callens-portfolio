@@ -22,9 +22,9 @@
   <label><input type="checkbox" id="polCommandGuard"> Command Guard allow/warn/block (secondary)</label><br>
   <label><input type="checkbox" id="polAlwaysConfirm"> Always confirm high-impact actions</label><br>
   <label><input type="checkbox" id="polTypedConfirm"> Require typed confirmation for destructive actions</label><br>
-  <label><input type="checkbox" id="polScopeLock"> Workspace scope lock</label><br>
+  <label><input type="checkbox" id="polScopeLock"> Workspace scope lock</label><br><label><input type="checkbox" id="polBrokerOnly"> Broker-only mode (default ON)</label><br>
   <label>Batch file limit: <input id="polBatchLimit" type="number" min="1" value="100" style="width:90px"></label><br>
-  <label>Workspace root: <input id="polWorkspaceRoot" placeholder="/workspace" style="width:320px"></label><br>
+  <label>Workspace root: <input id="polWorkspaceRoot" placeholder="/workspace" style="width:320px"></label><br><label>Admin confirm phrase: <input id="polAdminConfirm" placeholder="CONFIRM POLICY CHANGE" style="width:320px"></label><br>
   <button onclick="loadPolicy()">Reload Policy</button>
   <button onclick="savePolicy()">Save Policy</button> <button onclick="verifyAudit()">Verify Audit Integrity</button>
   <pre id="policyOut"></pre>
@@ -154,6 +154,7 @@ async function loadPolicy(){
   document.getElementById('polTypedConfirm').checked=!!p.requireTypedConfirmForDestructive;
   document.getElementById('polScopeLock').checked=!!p.workspaceScopeLock;
   document.getElementById('polBatchLimit').value=p.batchFileLimit||100;
+  document.getElementById('polBrokerOnly').checked=!!p.brokerOnlyMode;
   document.getElementById('polWorkspaceRoot').value=p.workspaceRoot||'/workspace';
   document.getElementById('policyOut').textContent=JSON.stringify(p,null,2);
 }
@@ -170,9 +171,11 @@ async function savePolicy(){
     requireTypedConfirmForDestructive:document.getElementById('polTypedConfirm').checked,
     workspaceScopeLock:document.getElementById('polScopeLock').checked,
     batchFileLimit:Number(document.getElementById('polBatchLimit').value||100),
-    workspaceRoot:document.getElementById('polWorkspaceRoot').value||'/workspace'
+    workspaceRoot:document.getElementById('polWorkspaceRoot').value||'/workspace',
+    brokerOnlyMode:document.getElementById('polBrokerOnly').checked
   };
-  const r=await fetch('/safety/policy',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+  const adminConfirm = document.getElementById('polAdminConfirm').value||'';
+  const r=await fetch('/safety/policy?adminConfirm='+encodeURIComponent(adminConfirm),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
   const data=await r.json();
   document.getElementById('policyOut').textContent=JSON.stringify(data,null,2);
   document.getElementById('status').textContent='Safety policy saved';

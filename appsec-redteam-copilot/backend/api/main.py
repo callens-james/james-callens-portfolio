@@ -284,8 +284,17 @@ def safety_policy_get():
     return load_policy()
 
 @app.post('/safety/policy')
-def safety_policy_set(body: dict):
+def safety_policy_set(body: dict, adminConfirm:str=''):
+    cur = load_policy()
+    if cur.get('requirePolicyAdminConfirm', True) and adminConfirm != cur.get('policyAdminPhrase','CONFIRM POLICY CHANGE'):
+        return {'ok': False, 'error': 'admin confirmation required', 'requiredPhrase': cur.get('policyAdminPhrase','CONFIRM POLICY CHANGE')}
     return save_policy(body)
+
+
+@app.get('/safety/mode')
+def safety_mode():
+    p = load_policy()
+    return {'brokerOnlyMode': p.get('brokerOnlyMode', True), 'commandGuard': p.get('commandGuard', True), 'agentSafeMode': p.get('agentSafeMode', True)}
 
 @app.get('/safety/audit')
 def safety_audit(limit:int=Query(200, ge=1, le=5000)):
