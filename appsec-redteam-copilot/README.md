@@ -228,3 +228,7 @@ bash scripts/safety_regression_check.sh
 
 ## Threat Model & Guarantees
 See: `docs/THREAT_MODEL_AND_GUARANTEES.md`
+
+
+## Security Guarantees & Limits
+See: `docs/SECURITY_GUARANTEES_AND_LIMITS.md`

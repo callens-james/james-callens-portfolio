@@ -11,7 +11,7 @@ from agents.alerts import should_alert, send_telegram_alert, build_alert
 from agents.safety_policy import load_policy, save_policy, evaluate_command, audit, verify_audit_chain
 from agents.global_gate import evaluate_global_action, approve
 from agents.mutation_broker import check_mutation, exec_with_token
-from agents.capability_broker import issue_capability, inherit_capability, validate_capability
+from agents.capability_broker import issue_capability, inherit_capability, validate_capability, list_capabilities
 from evaluators.report_store import save_report, list_reports
 from rag.git_diff import find_repo_root, changed_files
 from rag.advisory_ingest import refresh_cache
@@ -331,6 +331,10 @@ def safety_gate_approve(token:str, cmd:str, ttl:int=600, action:str='command', w
 @app.post('/capability/issue')
 def capability_issue(actor:str='local', workspace:str='/workspace', actionClass:str='modify_files', ttl:int=600):
     return issue_capability(actor=actor, workspace=workspace, actionClass=actionClass, ttl=ttl)
+
+@app.get('/capability/list')
+def capability_list(limit:int=200):
+    return list_capabilities(limit=limit)
 
 @app.post('/capability/inherit')
 def capability_inherit(parentToken:str, actor:str='worker', ttl:int=300):

@@ -42,3 +42,12 @@ def validate_capability(token:str, actor:str, workspace:str):
     c['usedCount']=c.get('usedCount',0)+1
     _CAPS[token]=c
     return {'ok':True,'capability':c}
+
+
+def list_capabilities(limit:int=200):
+    now=int(time.time())
+    items=[]
+    for t,c in list(_CAPS.items())[-limit:]:
+        row={'token':t,'actor':c.get('actor'),'workspace':c.get('workspace'),'actionClass':c.get('actionClass'),'exp':c.get('exp'),'expired':c.get('exp',0)<now,'usedCount':c.get('usedCount',0),'parent':c.get('parent')}
+        items.append(row)
+    return {'items': items}
