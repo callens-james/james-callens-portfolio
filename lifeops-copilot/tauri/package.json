@@ -1,12 +1,12 @@
 {
- "name": "lifeops-copilot-tauri",
- "private": true,
- "version": "0.4.0",
- "scripts": {
- "tauri:dev": "echo 'Run: cargo tauri dev (when tauri deps installed)'",
- "tauri:build": "echo 'Run: cargo tauri build (when tauri deps installed)'",
- "build:windows": "bash scripts/build-windows.sh",
- "build:mac": "bash scripts/build-mac.sh",
- "build:linux": "bash scripts/build-linux.sh"
- }
+  "name": "lifeops-copilot-tauri",
+  "private": true,
+  "version": "0.4.0",
+  "scripts": {
+    "tauri:dev": "echo 'Run: cargo tauri dev (when tauri deps installed)'",
+    "tauri:build": "echo 'Run: cargo tauri build (when tauri deps installed)'",
+    "build:windows": "bash scripts/build-windows.sh",
+    "build:mac": "bash scripts/build-mac.sh",
+    "build:linux": "bash scripts/build-linux.sh"
+  }
 }

@@ -2,7 +2,7 @@
 
 Local-first autopilot for life + work operations.
 
-Version: **v0.4.0-sprint4** (app) 
+Version: **v0.4.0-sprint4** (app)  
 Release milestone: **v0.3.0-v2-demo-final**
 
 ---
@@ -25,14 +25,14 @@ It is designed to run locally and stay usable on lower-resource machines.
 1. Launch the app.
 2. Click **Run Quick Start Demo**.
 3. Review:
- - Unified Today Queue
- - Plan My Day
- - Confirmation Center
- - Digest + Impact
+   - Unified Today Queue
+   - Plan My Day
+   - Confirmation Center
+   - Digest + Impact
 4. Use Setup Wizard to choose profile:
- - Core only
- - Core + Local AI
- - Core + OpenClaw integration
+   - Core only
+   - Core + Local AI
+   - Core + OpenClaw integration
 5. Save onboarding settings.
 
 ---
@@ -82,10 +82,10 @@ It is designed to run locally and stay usable on lower-resource machines.
 - Unified paperwork/task list with risk and priority.
 - State transitions (inbox -> parsed -> planned -> awaiting approval -> in progress -> done).
 - Detail view shows:
- - detected type,
- - extraction confidence,
- - checklist,
- - recommended actions.
+  - detected type,
+  - extraction confidence,
+  - checklist,
+  - recommended actions.
 
 ## 9) Approval / Trust Layer
 - Pending approval center.
@@ -165,7 +165,7 @@ Location (Windows build host):
 
 ## Run locally (dev)
 ```bash
-cd <workspace-home>/openclaw-workspace/lifeops-copilot
+cd /home/james/openclaw-workspace/lifeops-copilot
 npm install
 npm run dev
 ```
@@ -190,23 +190,3 @@ Open: `http://<server-ip>:3360/`
 5. Use queue + plan daily
 6. Export reports/metrics weekly
 7. Backup and integrity check periodically
-
-
-## Quick Install / Run
-
-```bash
-# clone repo
-git clone https://github.com/callens-james/james-callens-portfolio.git
-cd lifeops-copilot
-
-# preferred: Docker
-docker compose up --build
-```
-
-If Docker is not available, see project-specific local run instructions in this README.
-
-
-## Legal
-
-Licensed under **AGPL-3.0-only** unless otherwise noted.
-See `LICENSE` and `NOTICE`.

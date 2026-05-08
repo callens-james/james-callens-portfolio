@@ -1,402 +1,402 @@
 {
- "items": [
- {
- "id": "ecc6b9e0-e1d2-4a64-9bfd-a57c23db765e",
- "createdAt": "2026-05-04T01:55:43.395Z",
- "type": "note",
- "docType": "bill",
- "text": "Utility bill final notice due 2026-05-08",
- "deadline": "2026-05-08",
- "deadlineConfidence": "explicit",
- "extractionNotes": "Seeded demo deadline",
- "checklist": [
- "Verify account and amount",
- "Check due date",
- "Choose pay/dispute plan",
- "Save confirmation"
- ],
- "actionTemplates": [
- "Verify amount and due date",
- "Prepare payment or dispute action"
- ],
- "status": "planned"
- },
- {
- "id": "0861e28c-52ed-4143-ae2a-f4d4748f6fd0",
- "createdAt": "2026-05-04T01:55:43.395Z",
- "type": "note",
- "docType": "application",
- "text": "Submit aid application by 2026-05-06",
- "deadline": "2026-05-06",
- "deadlineConfidence": "explicit",
- "extractionNotes": "Seeded demo deadline",
- "checklist": [
- "Collect required documents",
- "Complete form fields",
- "Review eligibility notes",
- "Submit and track confirmation"
- ],
- "actionTemplates": [
- "Collect docs checklist",
- "Prepare submission package"
- ],
- "status": "awaiting_approval"
- },
- {
- "id": "93c895c6-476c-43e8-aa88-a2b62d018c0c",
- "createdAt": "2026-05-04T01:55:43.395Z",
- "type": "note",
- "docType": "other",
- "text": "Renew license before 2026-05-20",
- "deadline": "2026-05-20",
- "deadlineConfidence": "explicit",
- "extractionNotes": "Seeded demo deadline",
- "checklist": [
- "Clarify task intent",
- "Set deadline",
- "Create action plan"
- ],
- "actionTemplates": [
- "Create next-step plan"
- ],
- "status": "inbox"
- }
- ],
- "actions": [
- {
- "id": "bb9a0651-14e8-497e-aac7-c0e578d636b5",
- "itemId": "0861e28c-52ed-4143-ae2a-f4d4748f6fd0",
- "title": "Prepare docs and submit",
- "risk": "high",
- "status": "awaiting_approval",
- "createdAt": "2026-05-04T01:55:43.395Z"
- }
- ],
- "approvals": [
- {
- "id": "25be4337-c7ba-4a42-88b6-dd825672e0f9",
- "actionId": "bb9a0651-14e8-497e-aac7-c0e578d636b5",
- "status": "pending",
- "createdAt": "2026-05-04T01:55:43.395Z"
- }
- ],
- "audit": [
- {
- "id": "3aa44b47-111a-4e66-9ae7-ceff2f996fc5",
- "ts": "2026-05-03T22:14:18.761Z",
- "eventType": "weekly_brief_generated",
- "detail": {
- "total": 0,
- "overdue": 0,
- "soon": 0,
- "awaiting": 0,
- "approved": 0
- }
- },
- {
- "id": "695b5569-e3a7-4a5d-b85c-44a5d1d0a55c",
- "ts": "2026-05-04T00:40:12.408Z",
- "eventType": "inbox_item_added",
- "detail": {
- "id": "1eb3bdf7-d557-434f-aa9c-3f8ec88581b0",
- "deadline": "2026-05-06"
- }
- },
- {
- "id": "69cc05f9-c87c-4b1e-b397-b52f2499b7af",
- "ts": "2026-05-04T00:40:12.411Z",
- "eventType": "item_state_changed",
- "detail": {
- "id": "1eb3bdf7-d557-434f-aa9c-3f8ec88581b0",
- "from": "inbox",
- "to": "parsed"
- }
- },
- {
- "id": "16e051b2-8f8e-42a1-b9ed-30b33dfc200a",
- "ts": "2026-05-04T00:40:12.413Z",
- "eventType": "item_state_changed",
- "detail": {
- "id": "1eb3bdf7-d557-434f-aa9c-3f8ec88581b0",
- "from": "parsed",
- "to": "planned"
- }
- },
- {
- "id": "4e290d98-fcfb-4e14-b3f1-21255a508b00",
- "ts": "2026-05-04T00:40:12.415Z",
- "eventType": "item_state_changed",
- "detail": {
- "id": "1eb3bdf7-d557-434f-aa9c-3f8ec88581b0",
- "from": "planned",
- "to": "awaiting_approval"
- }
- },
- {
- "id": "d3775e86-9699-4d84-8b1a-02100db0e39c",
- "ts": "2026-05-04T00:40:12.416Z",
- "eventType": "item_state_changed",
- "detail": {
- "id": "1eb3bdf7-d557-434f-aa9c-3f8ec88581b0",
- "from": "awaiting_approval",
- "to": "in_progress"
- }
- },
- {
- "id": "f828199b-9174-44aa-ba03-fd1800bdeb16",
- "ts": "2026-05-04T00:40:12.418Z",
- "eventType": "item_state_changed",
- "detail": {
- "id": "1eb3bdf7-d557-434f-aa9c-3f8ec88581b0",
- "from": "in_progress",
- "to": "done"
- }
- },
- {
- "id": "558a03cd-c45f-4454-8cb6-5ef6012389b9",
- "ts": "2026-05-04T00:40:12.419Z",
- "eventType": "inbox_item_added",
- "detail": {
- "id": "46d58ecc-c354-4430-ac22-d9d6328593ed",
- "deadline": "2026-05-20"
- }
- },
- {
- "id": "af00aec6-b07b-482d-ad8c-e1033931f372",
- "ts": "2026-05-04T00:40:12.421Z",
- "eventType": "action_proposed",
- "detail": {
- "actionId": "0791224e-1172-4472-90e5-e1605cdbf074",
- "itemId": "46d58ecc-c354-4430-ac22-d9d6328593ed"
- }
- },
- {
- "id": "a91f33b2-4058-4e5d-b88e-6d23f71e7d25",
- "ts": "2026-05-04T00:40:12.424Z",
- "eventType": "action_approved",
- "detail": {
- "actionId": "0791224e-1172-4472-90e5-e1605cdbf074"
- }
- },
- {
- "id": "9e2befc5-e5ce-468e-b8fa-b4839d4277dd",
- "ts": "2026-05-04T00:40:12.425Z",
- "eventType": "action_reverted",
- "detail": {
- "actionId": "0791224e-1172-4472-90e5-e1605cdbf074"
- }
- },
- {
- "id": "6757193e-ddb8-47bb-a027-e0b0088588f0",
- "ts": "2026-05-04T00:40:12.427Z",
- "eventType": "weekly_brief_generated",
- "detail": {
- "total": 2,
- "overdue": 0,
- "soon": 1,
- "awaiting": 1,
- "approved": 0
- }
- },
- {
- "id": "16f37add-fe9e-4bd6-8ad9-034513c79616",
- "ts": "2026-05-04T00:42:29.151Z",
- "eventType": "demo_seed_loaded",
- "detail": {
- "count": 3
- }
- },
- {
- "id": "56002da5-a6bb-49a3-8030-2d01fd88639d",
- "ts": "2026-05-04T00:43:52.005Z",
- "eventType": "demo_seed_loaded",
- "detail": {
- "count": 3
- }
- },
- {
- "id": "1aad706c-8f12-4fe9-b526-e9330660f686",
- "ts": "2026-05-04T00:45:38.118Z",
- "eventType": "demo_seed_loaded",
- "detail": {
- "count": 3
- }
- },
- {
- "id": "29634391-90cf-4003-bc15-b8491a1093a2",
- "ts": "2026-05-04T00:45:40.678Z",
- "eventType": "demo_seed_loaded",
- "detail": {
- "count": 3
- }
- },
- {
- "id": "9e6fa8e4-04ab-4b27-9cc0-61c653ef012d",
- "ts": "2026-05-04T00:45:41.482Z",
- "eventType": "demo_seed_loaded",
- "detail": {
- "count": 3
- }
- },
- {
- "id": "7fe9c261-704f-42d5-a30d-cc080863a049",
- "ts": "2026-05-04T00:48:21.452Z",
- "eventType": "rollback_applied",
- "detail": {
- "id": "1eb3bdf7-d557-434f-aa9c-3f8ec88581b0",
- "to": "in_progress"
- }
- },
- {
- "id": "8fb6a59d-441a-42df-8b31-ee0c2010d3bd",
- "ts": "2026-05-04T00:50:23.959Z",
- "eventType": "demo_reset",
- "detail": {}
- },
- {
- "id": "02621bb9-fb32-4e39-a089-f304517d448d",
- "ts": "2026-05-04T00:50:23.967Z",
- "eventType": "demo_seed_loaded",
- "detail": {
- "added": 3
- }
- },
- {
- "id": "9d260bf3-eb7e-4205-826a-63b994712cb3",
- "ts": "2026-05-04T00:50:23.973Z",
- "eventType": "demo_seed_loaded",
- "detail": {
- "added": 0
- }
- },
- {
- "id": "b8fbd6d8-94c5-4271-80f5-c590e35a36c4",
- "ts": "2026-05-04T01:55:43.387Z",
- "eventType": "demo_reset",
- "detail": {}
- },
- {
- "id": "83873c0c-f3cb-4cf8-93da-0d1e1da0b345",
- "ts": "2026-05-04T01:55:43.395Z",
- "eventType": "demo_seed_loaded",
- "detail": {
- "added": 3
- }
- },
- {
- "id": "81710124-fd7a-4ce2-a219-217eee7aa391",
- "ts": "2026-05-04T01:57:02.449Z",
- "eventType": "demo_seed_loaded",
- "detail": {
- "added": 0
- }
- },
- {
- "id": "9f2898dd-818c-4129-bd83-ffd1ddfda82d",
- "ts": "2026-05-04T02:05:26.792Z",
- "eventType": "day_plan_generated",
- "detail": {
- "count": 3
- }
- },
- {
- "id": "364d68f5-0b13-4114-b851-21a7be421792",
- "ts": "2026-05-04T02:30:49.114Z",
- "eventType": "scheduler_settings_updated",
- "detail": {
- "enabled": true,
- "intervalSec": 30,
- "quietStart": "23:00",
- "quietEnd": "08:00"
- }
- },
- {
- "id": "05d5cbf7-6f2e-4033-a9ec-dde3659b3fbb",
- "ts": "2026-05-04T02:33:53.785Z",
- "eventType": "day_plan_generated",
- "detail": {
- "count": 3
- }
- }
- ],
- "settings": {
- "installProfile": "core-only",
- "aiEnabled": false,
- "aiModel": "phi3:mini",
- "aiTier": "lite",
- "openclawEnabled": false,
- "scheduler": {
- "enabled": true,
- "intervalSec": 30,
- "quietStart": "23:00",
- "quietEnd": "08:00"
- }
- },
- "profile": {
- "householdSize": 1,
- "income": 0,
- "location": "",
- "employment": "unknown"
- },
- "opportunities": [
- {
- "id": "opp-grant-1",
- "type": "grant",
- "name": "Local Utility Relief",
- "deadline": "2026-06-15",
- "rules": {
- "maxIncome": 50000,
- "locations": [
- "PA",
- "NJ"
- ]
- }
- },
- {
- "id": "opp-train-1",
- "type": "training",
- "name": "Workforce Upskill Voucher",
- "deadline": "2026-07-01",
- "rules": {
- "maxIncome": 70000,
- "employment": [
- "unemployed",
- "part-time"
- ]
- }
- },
- {
- "id": "opp-job-1",
- "type": "job",
- "name": "Remote Ops Analyst Fellowship",
- "deadline": "2026-06-01",
- "rules": {
- "locations": [
- "US"
- ],
- "minHousehold": 1
- }
- },
- {
- "id": "opp-aid-1",
- "type": "aid",
- "name": "Family Food Support Program",
- "deadline": "2026-05-20",
- "rules": {
- "maxIncome": 45000,
- "minHousehold": 2
- }
- }
- ],
- "opportunityActions": [],
- "baseline": {
- "manualMinutesPerTask": 45,
- "assistedMinutesPerTask": 20
- },
- "scenarios": [
- "household-admin",
- "job-seeker-pipeline",
- "small-business-compliance"
- ],
- "notifications": []
+  "items": [
+    {
+      "id": "ecc6b9e0-e1d2-4a64-9bfd-a57c23db765e",
+      "createdAt": "2026-05-04T01:55:43.395Z",
+      "type": "note",
+      "docType": "bill",
+      "text": "Utility bill final notice due 2026-05-08",
+      "deadline": "2026-05-08",
+      "deadlineConfidence": "explicit",
+      "extractionNotes": "Seeded demo deadline",
+      "checklist": [
+        "Verify account and amount",
+        "Check due date",
+        "Choose pay/dispute plan",
+        "Save confirmation"
+      ],
+      "actionTemplates": [
+        "Verify amount and due date",
+        "Prepare payment or dispute action"
+      ],
+      "status": "planned"
+    },
+    {
+      "id": "0861e28c-52ed-4143-ae2a-f4d4748f6fd0",
+      "createdAt": "2026-05-04T01:55:43.395Z",
+      "type": "note",
+      "docType": "application",
+      "text": "Submit aid application by 2026-05-06",
+      "deadline": "2026-05-06",
+      "deadlineConfidence": "explicit",
+      "extractionNotes": "Seeded demo deadline",
+      "checklist": [
+        "Collect required documents",
+        "Complete form fields",
+        "Review eligibility notes",
+        "Submit and track confirmation"
+      ],
+      "actionTemplates": [
+        "Collect docs checklist",
+        "Prepare submission package"
+      ],
+      "status": "awaiting_approval"
+    },
+    {
+      "id": "93c895c6-476c-43e8-aa88-a2b62d018c0c",
+      "createdAt": "2026-05-04T01:55:43.395Z",
+      "type": "note",
+      "docType": "other",
+      "text": "Renew license before 2026-05-20",
+      "deadline": "2026-05-20",
+      "deadlineConfidence": "explicit",
+      "extractionNotes": "Seeded demo deadline",
+      "checklist": [
+        "Clarify task intent",
+        "Set deadline",
+        "Create action plan"
+      ],
+      "actionTemplates": [
+        "Create next-step plan"
+      ],
+      "status": "inbox"
+    }
+  ],
+  "actions": [
+    {
+      "id": "bb9a0651-14e8-497e-aac7-c0e578d636b5",
+      "itemId": "0861e28c-52ed-4143-ae2a-f4d4748f6fd0",
+      "title": "Prepare docs and submit",
+      "risk": "high",
+      "status": "awaiting_approval",
+      "createdAt": "2026-05-04T01:55:43.395Z"
+    }
+  ],
+  "approvals": [
+    {
+      "id": "25be4337-c7ba-4a42-88b6-dd825672e0f9",
+      "actionId": "bb9a0651-14e8-497e-aac7-c0e578d636b5",
+      "status": "pending",
+      "createdAt": "2026-05-04T01:55:43.395Z"
+    }
+  ],
+  "audit": [
+    {
+      "id": "3aa44b47-111a-4e66-9ae7-ceff2f996fc5",
+      "ts": "2026-05-03T22:14:18.761Z",
+      "eventType": "weekly_brief_generated",
+      "detail": {
+        "total": 0,
+        "overdue": 0,
+        "soon": 0,
+        "awaiting": 0,
+        "approved": 0
+      }
+    },
+    {
+      "id": "695b5569-e3a7-4a5d-b85c-44a5d1d0a55c",
+      "ts": "2026-05-04T00:40:12.408Z",
+      "eventType": "inbox_item_added",
+      "detail": {
+        "id": "1eb3bdf7-d557-434f-aa9c-3f8ec88581b0",
+        "deadline": "2026-05-06"
+      }
+    },
+    {
+      "id": "69cc05f9-c87c-4b1e-b397-b52f2499b7af",
+      "ts": "2026-05-04T00:40:12.411Z",
+      "eventType": "item_state_changed",
+      "detail": {
+        "id": "1eb3bdf7-d557-434f-aa9c-3f8ec88581b0",
+        "from": "inbox",
+        "to": "parsed"
+      }
+    },
+    {
+      "id": "16e051b2-8f8e-42a1-b9ed-30b33dfc200a",
+      "ts": "2026-05-04T00:40:12.413Z",
+      "eventType": "item_state_changed",
+      "detail": {
+        "id": "1eb3bdf7-d557-434f-aa9c-3f8ec88581b0",
+        "from": "parsed",
+        "to": "planned"
+      }
+    },
+    {
+      "id": "4e290d98-fcfb-4e14-b3f1-21255a508b00",
+      "ts": "2026-05-04T00:40:12.415Z",
+      "eventType": "item_state_changed",
+      "detail": {
+        "id": "1eb3bdf7-d557-434f-aa9c-3f8ec88581b0",
+        "from": "planned",
+        "to": "awaiting_approval"
+      }
+    },
+    {
+      "id": "d3775e86-9699-4d84-8b1a-02100db0e39c",
+      "ts": "2026-05-04T00:40:12.416Z",
+      "eventType": "item_state_changed",
+      "detail": {
+        "id": "1eb3bdf7-d557-434f-aa9c-3f8ec88581b0",
+        "from": "awaiting_approval",
+        "to": "in_progress"
+      }
+    },
+    {
+      "id": "f828199b-9174-44aa-ba03-fd1800bdeb16",
+      "ts": "2026-05-04T00:40:12.418Z",
+      "eventType": "item_state_changed",
+      "detail": {
+        "id": "1eb3bdf7-d557-434f-aa9c-3f8ec88581b0",
+        "from": "in_progress",
+        "to": "done"
+      }
+    },
+    {
+      "id": "558a03cd-c45f-4454-8cb6-5ef6012389b9",
+      "ts": "2026-05-04T00:40:12.419Z",
+      "eventType": "inbox_item_added",
+      "detail": {
+        "id": "46d58ecc-c354-4430-ac22-d9d6328593ed",
+        "deadline": "2026-05-20"
+      }
+    },
+    {
+      "id": "af00aec6-b07b-482d-ad8c-e1033931f372",
+      "ts": "2026-05-04T00:40:12.421Z",
+      "eventType": "action_proposed",
+      "detail": {
+        "actionId": "0791224e-1172-4472-90e5-e1605cdbf074",
+        "itemId": "46d58ecc-c354-4430-ac22-d9d6328593ed"
+      }
+    },
+    {
+      "id": "a91f33b2-4058-4e5d-b88e-6d23f71e7d25",
+      "ts": "2026-05-04T00:40:12.424Z",
+      "eventType": "action_approved",
+      "detail": {
+        "actionId": "0791224e-1172-4472-90e5-e1605cdbf074"
+      }
+    },
+    {
+      "id": "9e2befc5-e5ce-468e-b8fa-b4839d4277dd",
+      "ts": "2026-05-04T00:40:12.425Z",
+      "eventType": "action_reverted",
+      "detail": {
+        "actionId": "0791224e-1172-4472-90e5-e1605cdbf074"
+      }
+    },
+    {
+      "id": "6757193e-ddb8-47bb-a027-e0b0088588f0",
+      "ts": "2026-05-04T00:40:12.427Z",
+      "eventType": "weekly_brief_generated",
+      "detail": {
+        "total": 2,
+        "overdue": 0,
+        "soon": 1,
+        "awaiting": 1,
+        "approved": 0
+      }
+    },
+    {
+      "id": "16f37add-fe9e-4bd6-8ad9-034513c79616",
+      "ts": "2026-05-04T00:42:29.151Z",
+      "eventType": "demo_seed_loaded",
+      "detail": {
+        "count": 3
+      }
+    },
+    {
+      "id": "56002da5-a6bb-49a3-8030-2d01fd88639d",
+      "ts": "2026-05-04T00:43:52.005Z",
+      "eventType": "demo_seed_loaded",
+      "detail": {
+        "count": 3
+      }
+    },
+    {
+      "id": "1aad706c-8f12-4fe9-b526-e9330660f686",
+      "ts": "2026-05-04T00:45:38.118Z",
+      "eventType": "demo_seed_loaded",
+      "detail": {
+        "count": 3
+      }
+    },
+    {
+      "id": "29634391-90cf-4003-bc15-b8491a1093a2",
+      "ts": "2026-05-04T00:45:40.678Z",
+      "eventType": "demo_seed_loaded",
+      "detail": {
+        "count": 3
+      }
+    },
+    {
+      "id": "9e6fa8e4-04ab-4b27-9cc0-61c653ef012d",
+      "ts": "2026-05-04T00:45:41.482Z",
+      "eventType": "demo_seed_loaded",
+      "detail": {
+        "count": 3
+      }
+    },
+    {
+      "id": "7fe9c261-704f-42d5-a30d-cc080863a049",
+      "ts": "2026-05-04T00:48:21.452Z",
+      "eventType": "rollback_applied",
+      "detail": {
+        "id": "1eb3bdf7-d557-434f-aa9c-3f8ec88581b0",
+        "to": "in_progress"
+      }
+    },
+    {
+      "id": "8fb6a59d-441a-42df-8b31-ee0c2010d3bd",
+      "ts": "2026-05-04T00:50:23.959Z",
+      "eventType": "demo_reset",
+      "detail": {}
+    },
+    {
+      "id": "02621bb9-fb32-4e39-a089-f304517d448d",
+      "ts": "2026-05-04T00:50:23.967Z",
+      "eventType": "demo_seed_loaded",
+      "detail": {
+        "added": 3
+      }
+    },
+    {
+      "id": "9d260bf3-eb7e-4205-826a-63b994712cb3",
+      "ts": "2026-05-04T00:50:23.973Z",
+      "eventType": "demo_seed_loaded",
+      "detail": {
+        "added": 0
+      }
+    },
+    {
+      "id": "b8fbd6d8-94c5-4271-80f5-c590e35a36c4",
+      "ts": "2026-05-04T01:55:43.387Z",
+      "eventType": "demo_reset",
+      "detail": {}
+    },
+    {
+      "id": "83873c0c-f3cb-4cf8-93da-0d1e1da0b345",
+      "ts": "2026-05-04T01:55:43.395Z",
+      "eventType": "demo_seed_loaded",
+      "detail": {
+        "added": 3
+      }
+    },
+    {
+      "id": "81710124-fd7a-4ce2-a219-217eee7aa391",
+      "ts": "2026-05-04T01:57:02.449Z",
+      "eventType": "demo_seed_loaded",
+      "detail": {
+        "added": 0
+      }
+    },
+    {
+      "id": "9f2898dd-818c-4129-bd83-ffd1ddfda82d",
+      "ts": "2026-05-04T02:05:26.792Z",
+      "eventType": "day_plan_generated",
+      "detail": {
+        "count": 3
+      }
+    },
+    {
+      "id": "364d68f5-0b13-4114-b851-21a7be421792",
+      "ts": "2026-05-04T02:30:49.114Z",
+      "eventType": "scheduler_settings_updated",
+      "detail": {
+        "enabled": true,
+        "intervalSec": 30,
+        "quietStart": "23:00",
+        "quietEnd": "08:00"
+      }
+    },
+    {
+      "id": "05d5cbf7-6f2e-4033-a9ec-dde3659b3fbb",
+      "ts": "2026-05-04T02:33:53.785Z",
+      "eventType": "day_plan_generated",
+      "detail": {
+        "count": 3
+      }
+    }
+  ],
+  "settings": {
+    "installProfile": "core-only",
+    "aiEnabled": false,
+    "aiModel": "phi3:mini",
+    "aiTier": "lite",
+    "openclawEnabled": false,
+    "scheduler": {
+      "enabled": true,
+      "intervalSec": 30,
+      "quietStart": "23:00",
+      "quietEnd": "08:00"
+    }
+  },
+  "profile": {
+    "householdSize": 1,
+    "income": 0,
+    "location": "",
+    "employment": "unknown"
+  },
+  "opportunities": [
+    {
+      "id": "opp-grant-1",
+      "type": "grant",
+      "name": "Local Utility Relief",
+      "deadline": "2026-06-15",
+      "rules": {
+        "maxIncome": 50000,
+        "locations": [
+          "PA",
+          "NJ"
+        ]
+      }
+    },
+    {
+      "id": "opp-train-1",
+      "type": "training",
+      "name": "Workforce Upskill Voucher",
+      "deadline": "2026-07-01",
+      "rules": {
+        "maxIncome": 70000,
+        "employment": [
+          "unemployed",
+          "part-time"
+        ]
+      }
+    },
+    {
+      "id": "opp-job-1",
+      "type": "job",
+      "name": "Remote Ops Analyst Fellowship",
+      "deadline": "2026-06-01",
+      "rules": {
+        "locations": [
+          "US"
+        ],
+        "minHousehold": 1
+      }
+    },
+    {
+      "id": "opp-aid-1",
+      "type": "aid",
+      "name": "Family Food Support Program",
+      "deadline": "2026-05-20",
+      "rules": {
+        "maxIncome": 45000,
+        "minHousehold": 2
+      }
+    }
+  ],
+  "opportunityActions": [],
+  "baseline": {
+    "manualMinutesPerTask": 45,
+    "assistedMinutesPerTask": 20
+  },
+  "scenarios": [
+    "household-admin",
+    "job-seeker-pipeline",
+    "small-business-compliance"
+  ],
+  "notifications": []
 }

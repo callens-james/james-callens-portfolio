@@ -1,4 +1,4 @@
 {
- "case": ["id","type","payer","status","deadline","priority","notes"],
- "types": ["claim","prior-auth","referral","appeal"]
+  "case": ["id","type","payer","status","deadline","priority","notes"],
+  "types": ["claim","prior-auth","referral","appeal"]
 }

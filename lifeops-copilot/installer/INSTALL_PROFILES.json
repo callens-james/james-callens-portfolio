@@ -1,23 +1,23 @@
 {
- "profiles": [
- {
- "id": "core-only",
- "label": "LifeOps (Core Only)",
- "recommended": true,
- "components": ["core"],
- "warnings": []
- },
- {
- "id": "local-ai",
- "label": "LifeOps + Local AI",
- "components": ["core", "local-ai"],
- "warnings": ["Higher RAM/CPU usage on older computers"]
- },
- {
- "id": "openclaw",
- "label": "LifeOps + OpenClaw Integration",
- "components": ["core", "openclaw"],
- "warnings": ["Advanced integration with additional permissions required"]
- }
- ]
+  "profiles": [
+    {
+      "id": "core-only",
+      "label": "LifeOps (Core Only)",
+      "recommended": true,
+      "components": ["core"],
+      "warnings": []
+    },
+    {
+      "id": "local-ai",
+      "label": "LifeOps + Local AI",
+      "components": ["core", "local-ai"],
+      "warnings": ["Higher RAM/CPU usage on older computers"]
+    },
+    {
+      "id": "openclaw",
+      "label": "LifeOps + OpenClaw Integration",
+      "components": ["core", "openclaw"],
+      "warnings": ["Advanced integration with additional permissions required"]
+    }
+  ]
 }
