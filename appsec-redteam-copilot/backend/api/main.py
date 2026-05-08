@@ -10,6 +10,7 @@ from agents.triage_rules import triage_file, triage_snippet
 from agents.alerts import should_alert, send_telegram_alert, build_alert
 from agents.safety_policy import load_policy, save_policy, evaluate_command, audit
 from agents.global_gate import evaluate_global_action, approve
+from agents.mutation_broker import check_mutation, exec_with_token
 from evaluators.report_store import save_report, list_reports
 from rag.git_diff import find_repo_root, changed_files
 from rag.advisory_ingest import refresh_cache
@@ -309,6 +310,14 @@ def safety_gate_check(action:str='command', cmd:str=''):
 @app.post('/safety/gate/approve')
 def safety_gate_approve(token:str, ttl:int=600):
     return approve(token, ttl_seconds=ttl)
+
+@app.post('/broker/check')
+def broker_check(cmd:str):
+    return check_mutation(cmd)
+
+@app.post('/broker/exec')
+def broker_exec(cmd:str, token:str=''):
+    return exec_with_token(cmd, token=token)
 
 @app.post('/config/workspace-root')
 def config_workspace_root(path:str):

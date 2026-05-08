@@ -13,21 +13,21 @@ REPO="$(cd "$(dirname "$0")/.." && pwd)"
 mkdir -p "$REPO/backend/tmp"
 cp "$TMP_FILE" "$REPO/backend/tmp/safe_run_candidate.sh"
 
-RESP=$(curl -s -G --data-urlencode "cmd=$CMD" -X POST "http://127.0.0.1:3480/analyze-command" || true)
+RESP=$(curl -s -G --data-urlencode "cmd=$CMD" -X POST "http://127.0.0.1:3480/broker/check" || true)
 VERDICT=$(echo "$RESP" | python3 -c 'import sys,json; 
 try:
- j=json.load(sys.stdin); print(j.get("verdict","allow"))
+ j=json.load(sys.stdin); print(j.get("policy",{}).get("verdict","allow"))
 except Exception:
  print("allow")')
 RISK=$(echo "$RESP" | python3 -c 'import sys,json;
 try:
- j=json.load(sys.stdin); print(j.get("risk","low"))
+ j=json.load(sys.stdin); print(j.get("policy",{}).get("risk","low"))
 except Exception:
  print("low")')
 
 NEEDS_CONFIRM=$(echo "$RESP" | python3 -c 'import sys,json
 try:
- j=json.load(sys.stdin); print(str(j.get("policy",{}).get("needsConfirm", False)).lower())
+ j=json.load(sys.stdin); print(str(j.get("needsPrompt", False)).lower())
 except Exception:
  print("false")')
 TYPED_CONFIRM=$(echo "$RESP" | python3 -c 'import sys,json
@@ -56,4 +56,26 @@ if [ "$VERDICT" = "warn" ] || [ "$NEEDS_CONFIRM" = "true" ]; then
     fi
   fi
 fi
-bash -lc "$CMD"
+TOKEN=$(echo "$RESP" | python3 -c 'import sys,json
+try:
+ j=json.load(sys.stdin); print(j.get("approvalToken",""))
+except Exception:
+ print("")')
+EXEC=$(curl -s -G --data-urlencode "cmd=$CMD" --data-urlencode "token=$TOKEN" -X POST "http://127.0.0.1:3480/broker/exec" || true)
+OK=$(echo "$EXEC" | python3 -c 'import sys,json
+try:
+ j=json.load(sys.stdin); print(str(j.get("ok",False)).lower())
+except Exception:
+ print("false")')
+if [ "$OK" != "true" ]; then
+  echo "[safe-run] execution failed or denied"
+  echo "$EXEC"
+  exit 4
+fi
+echo "$EXEC" | python3 -c 'import sys,json
+try:
+ j=json.load(sys.stdin); print(j.get("stdout","")[-2000:])
+ e=j.get("stderr","")
+ if e: print(e[-2000:])
+except Exception:
+ pass'
