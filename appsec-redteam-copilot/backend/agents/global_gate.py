@@ -1,0 +1,58 @@
+from __future__ import annotations
+import hashlib, time
+from agents.safety_policy import evaluate_command
+
+_APPROVAL_CACHE = {}
+
+
+def _fingerprint(cmd:str)->str:
+    return hashlib.sha256(cmd.encode()).hexdigest()[:16]
+
+
+def evaluate_global_action(action:str, cmd:str):
+    """Single-prompt global gate model.
+    Returns normalized decision envelope for UI/agent surfaces.
+    """
+    pe = evaluate_command(cmd)
+    fp = _fingerprint(cmd)
+    now = int(time.time())
+    cached = _APPROVAL_CACHE.get(fp)
+
+    if cached and cached.get('exp',0) > now and pe.get('verdict') in ('allow','warn'):
+        return {
+          'allowed': True,
+          'needsPrompt': False,
+          'approvalReused': True,
+          'approvalToken': fp,
+          'policy': pe,
+          'message': 'Recent approval reused.'
+        }
+
+    verdict = pe.get('verdict','allow')
+    needs = pe.get('needsConfirm', False) or verdict in ('warn','block')
+    typed = pe.get('typedConfirm', False) or verdict == 'block'
+
+    if verdict == 'allow' and not needs:
+        return {
+          'allowed': True,
+          'needsPrompt': False,
+          'approvalReused': False,
+          'approvalToken': fp,
+          'policy': pe,
+          'message': 'Allowed (low risk).'
+        }
+
+    return {
+      'allowed': False,
+      'needsPrompt': True,
+      'typedConfirm': typed,
+      'approvalReused': False,
+      'approvalToken': fp,
+      'policy': pe,
+      'message': 'Approval required before execution.'
+    }
+
+
+def approve(token:str, ttl_seconds:int=600):
+    _APPROVAL_CACHE[token] = {'exp': int(time.time()) + max(60, ttl_seconds)}
+    return {'ok': True, 'token': token, 'ttl': ttl_seconds}
