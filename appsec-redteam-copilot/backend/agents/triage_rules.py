@@ -11,6 +11,14 @@ SECRET_PATTERNS = [
 
 INJECTION_HINTS = ["SELECT * FROM", "UNION SELECT", "exec(", "subprocess.Popen(", "os.system("]
 AUTH_HINTS = ["auth", "token", "password", "jwt", "session", "oauth"]
+DESTRUCTIVE_CMD_PATTERNS = [
+    re.compile(r"(^|\s)rm\s+-rf\s+/(\s|$)"),
+    re.compile(r"(^|\s)rm\s+-rf\s+--no-preserve-root(\s|$)"),
+    re.compile(r"(^|\s):\s*\(\)\s*\{\s*:\s*\|\s*:\s*&\s*\}\s*;\s*:(\s|$)"),  # fork bomb
+    re.compile(r"(^|\s)mkfs\.(ext4|xfs|btrfs|vfat)\b"),
+    re.compile(r"(^|\s)dd\s+if=/dev/(zero|random)\s+of=/dev/"),
+    re.compile(r"(^|\s)shred\s+-n\s*\d+\s+-z\s+/dev/"),
+]
 IGNORE_BASENAMES = {"triage_rules.py"}
 
 def _strip_comment_lines(txt:str):
@@ -54,6 +62,11 @@ def triage_file(path:str):
             findings.append({'type':'auth_surface','severity':'info','detail':'auth-related terms found'})
             score += 5
 
+        for rx in DESTRUCTIVE_CMD_PATTERNS:
+            if rx.search(body):
+                findings.append({'type':'destructive_command','severity':'high','detail':rx.pattern})
+                score += 80
+
     evidence = []
     if findings:
         evidence = find_evidence(body if 'body' in locals() else '', top_k=3)
@@ -88,6 +101,11 @@ def triage_snippet(file_path:str, line:int, code:str):
     if any(h in lower for h in AUTH_HINTS):
         findings.append({'type':'auth_surface','severity':'info','detail':'auth-related terms found'})
         score += 5
+
+    for rx in DESTRUCTIVE_CMD_PATTERNS:
+        if rx.search(body):
+            findings.append({'type':'destructive_command','severity':'high','detail':rx.pattern})
+            score += 80
 
     risk='low'
     if score >= 50: risk='high'
