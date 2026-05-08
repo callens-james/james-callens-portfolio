@@ -11,6 +11,7 @@ from agents.alerts import should_alert, send_telegram_alert, build_alert
 from agents.safety_policy import load_policy, save_policy, evaluate_command, audit, verify_audit_chain
 from agents.global_gate import evaluate_global_action, approve
 from agents.mutation_broker import check_mutation, exec_with_token
+from agents.capability_broker import issue_capability, inherit_capability, validate_capability
 from evaluators.report_store import save_report, list_reports
 from rag.git_diff import find_repo_root, changed_files
 from rag.advisory_ingest import refresh_cache
@@ -327,12 +328,29 @@ def safety_gate_check(action:str='command', cmd:str=''):
 def safety_gate_approve(token:str, cmd:str, ttl:int=600, action:str='command', workspace:str='/workspace', actor:str='local'):
     return approve(token, cmd=cmd, action=action, workspace=workspace, actor=actor, ttl_seconds=ttl)
 
+@app.post('/capability/issue')
+def capability_issue(actor:str='local', workspace:str='/workspace', actionClass:str='modify_files', ttl:int=600):
+    return issue_capability(actor=actor, workspace=workspace, actionClass=actionClass, ttl=ttl)
+
+@app.post('/capability/inherit')
+def capability_inherit(parentToken:str, actor:str='worker', ttl:int=300):
+    return inherit_capability(parentToken, actor=actor, ttl=ttl)
+
+@app.post('/capability/validate')
+def capability_validate(capabilityToken:str, actor:str='local', workspace:str='/workspace'):
+    return validate_capability(capabilityToken, actor=actor, workspace=workspace)
+
 @app.post('/broker/check')
 def broker_check(cmd:str):
     return check_mutation(cmd)
 
 @app.post('/broker/exec')
-def broker_exec(cmd:str, token:str='', actor:str='local'):
+def broker_exec(cmd:str, token:str='', actor:str='local', workspace:str='/workspace', capabilityToken:str=''):
+    pol=load_policy()
+    if pol.get('brokerRequiredForMutation', True):
+        vc=validate_capability(capabilityToken, actor=actor, workspace=workspace)
+        if not vc.get('ok'):
+            return {'ok': False, 'error': 'capability required', 'reason': vc.get('reason','missing')}
     return exec_with_token(cmd, token=token, actor=actor)
 
 @app.post('/config/workspace-root')

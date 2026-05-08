@@ -17,6 +17,7 @@ DEFAULT_POLICY = {
   'brokerOnlyMode': True,
   'requirePolicyAdminConfirm': True,
   'policyAdminPhrase': 'CONFIRM POLICY CHANGE',
+  'brokerRequiredForMutation': True,
 }
 
 DESTRUCTIVE = [
