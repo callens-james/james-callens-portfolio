@@ -18,7 +18,10 @@ DEFAULT_POLICY = {
   'requirePolicyAdminConfirm': True,
   'policyAdminPhrase': 'CONFIRM POLICY CHANGE',
   'brokerRequiredForMutation': True,
+  'emergencyOverrideActive': False,
+  'emergencyOverrideExpiresAt': 0,
 }
+
 
 DESTRUCTIVE = [
   re.compile(r'(^|\s)rm\s+-rf\s+/(\s|$)'),
@@ -59,7 +62,7 @@ def classify_command(cmd: str):
 
 
 def evaluate_command(cmd: str, triage_verdict='allow', triage_risk='low'):
-    p = load_policy()
+    p = normalize_override(load_policy())
     c = classify_command(cmd)
     out = {
       'policy': p,
@@ -162,7 +165,7 @@ def _extract_paths(cmd:str):
     return out
 
 def enforce_scope_and_batch(cmd:str):
-    p = load_policy()
+    p = normalize_override(load_policy())
     paths = _extract_paths(cmd)
     out = {'outsideScope': False, 'pathCount': len(paths), 'batchExceeded': False, 'paths': paths}
     root = p.get('workspaceRoot','/workspace')
@@ -175,3 +178,25 @@ def enforce_scope_and_batch(cmd:str):
     if len(paths) > int(p.get('batchFileLimit',100)):
         out['batchExceeded']=True
     return out
+
+
+def set_emergency_override(enable:bool, minutes:int=15):
+    p=load_policy()
+    if enable:
+        p['emergencyOverrideActive']=True
+        p['emergencyOverrideExpiresAt']=int(time.time())+max(1,minutes)*60
+        audit({'type':'emergency-override-enabled','minutes':minutes})
+    else:
+        p['emergencyOverrideActive']=False
+        p['emergencyOverrideExpiresAt']=0
+        audit({'type':'emergency-override-disabled'})
+    save_policy(p)
+    return p
+
+def normalize_override(p:dict):
+    if p.get('emergencyOverrideActive') and p.get('emergencyOverrideExpiresAt',0) < int(time.time()):
+        p['emergencyOverrideActive']=False
+        p['emergencyOverrideExpiresAt']=0
+        save_policy(p)
+        audit({'type':'emergency-override-auto-disabled'})
+    return p

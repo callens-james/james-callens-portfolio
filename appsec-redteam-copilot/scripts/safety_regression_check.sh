@@ -31,3 +31,12 @@ echo "$ver" | grep -q '"ok": true' && ok "audit chain verifies" || no "audit cha
 
 echo "\nSummary: pass=$pass fail=$fail"
 [ "$fail" -eq 0 ]
+
+
+# 5) capability child scope validation
+cap=$(curl -s -G --data-urlencode "actor=parent" --data-urlencode "workspace=/workspace" --data-urlencode "actionClass=modify_files" --data-urlencode "ttl=120" -X POST "$BASE/capability/issue")
+pt=$(echo "$cap" | python3 -c 'import sys,json; print(json.load(sys.stdin).get("capabilityToken",""))')
+child=$(curl -s -G --data-urlencode "parentToken=$pt" --data-urlencode "actor=child" --data-urlencode "ttl=60" -X POST "$BASE/capability/inherit")
+ct=$(echo "$child" | python3 -c 'import sys,json; print(json.load(sys.stdin).get("capabilityToken",""))')
+cv=$(curl -s -G --data-urlencode "childToken=$ct" --data-urlencode "parentToken=$pt" -X POST "$BASE/capability/validate-child")
+echo "$cv" | grep -q '"ok": true' && ok "capability child scope validation" || no "capability child scope validation"

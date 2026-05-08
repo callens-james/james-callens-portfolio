@@ -8,7 +8,7 @@ import json
 from watchers.change_queue import list_items
 from agents.triage_rules import triage_file, triage_snippet
 from agents.alerts import should_alert, send_telegram_alert, build_alert
-from agents.safety_policy import load_policy, save_policy, evaluate_command, audit, verify_audit_chain
+from agents.safety_policy import load_policy, save_policy, evaluate_command, audit, verify_audit_chain, set_emergency_override, normalize_override
 from agents.global_gate import evaluate_global_action, approve
 from agents.mutation_broker import check_mutation, exec_with_token
 from agents.capability_broker import issue_capability, inherit_capability, validate_capability, list_capabilities, validate_child_action
@@ -252,7 +252,7 @@ def alerts_test(msg:str='AppSec test alert ✅'):
 
 @app.post('/analyze-command')
 def analyze_command(cmd:str):
-    p = load_policy()
+    p = normalize_override(load_policy())
     if p.get('brokerOnlyMode', True):
         return {'ok': False, 'error': 'broker-only mode enabled; use /broker/check and /broker/exec'}
     r = triage_snippet('/local/command', 1, cmd)
@@ -296,9 +296,16 @@ def safety_policy_set(body: dict, adminConfirm:str=''):
     return save_policy(body)
 
 
+@app.post('/safety/override')
+def safety_override(enable:bool, adminConfirm:str='', minutes:int=15):
+    cur=load_policy()
+    if adminConfirm != cur.get('policyAdminPhrase','CONFIRM POLICY CHANGE'):
+        return {'ok':False,'error':'admin confirmation required'}
+    return set_emergency_override(enable, minutes=minutes)
+
 @app.get('/safety/mode')
 def safety_mode():
-    p = load_policy()
+    p = normalize_override(load_policy())
     return {'brokerOnlyMode': p.get('brokerOnlyMode', True), 'commandGuard': p.get('commandGuard', True), 'agentSafeMode': p.get('agentSafeMode', True)}
 
 @app.get('/safety/audit')
@@ -336,7 +343,8 @@ def safety_metrics(limit:int=5000):
         except Exception:
             continue
     rate=(brokered/total) if total else 0.0
-    return {'events':total,'brokerCoverageRate':round(rate,4),'counts':counts}
+    status='SAFE' if rate>=0.95 else ('WARN' if rate>=0.8 else 'RISK')
+    return {'events':total,'brokerCoverageRate':round(rate,4),'coverageStatus':status,'counts':counts}
 
 @app.get('/safety/audit/verify')
 def safety_audit_verify(limit:int=Query(5000, ge=1, le=50000)):

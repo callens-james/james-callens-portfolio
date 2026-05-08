@@ -28,7 +28,7 @@
   <label>Workspace root: <input id="polWorkspaceRoot" placeholder="/workspace" style="width:320px"></label><br><label>Admin confirm phrase: <input id="polAdminConfirm" placeholder="CONFIRM POLICY CHANGE" style="width:320px"></label><br>
   <button onclick="loadPolicy()">Reload Policy</button>
   <button onclick="savePolicy()">Save Policy</button> <button onclick="verifyAudit()">Verify Audit Integrity</button> <button onclick="loadSafetyMetrics()">Safety Metrics</button>
-  <pre id="policyOut"></pre>
+  <label>Emergency override minutes: <input id="overrideMins" type="number" value="15" style="width:90px"></label> <button onclick="enableOverride()">Enable Override</button> <button onclick="disableOverride()">Disable Override</button><pre id="policyOut"></pre>
 </div>
 
 <div class="card"><h3>How to use these buttons</h3><ul><li><b>System Check</b>: verify app health/config first</li><li><b>Preview Diff/Impact</b>: understand what changed</li><li><b>Analyze Pre-Change Hunks</b>: security verdict before execution/merge</li><li><b>Run Eval</b>: benchmark quality</li><li><b>Refresh Advisories</b>: update evidence references</li></ul></div>
@@ -174,7 +174,20 @@ async function loadPolicy(){
   document.getElementById('masterSafeMode').checked=!!(p.agentSafeMode && p.brokerOnlyMode && p.commandGuard && p.alwaysConfirmHighImpact);
   document.getElementById('polWorkspaceRoot').value=p.workspaceRoot||'/workspace';
   document.getElementById('policyOut').textContent=JSON.stringify(p,null,2);
+  if(p.emergencyOverrideActive){ document.getElementById('status').textContent='⚠️ UNSAFE MODE ACTIVE (temporary override)'; }
 }
+async function enableOverride(){
+  const phrase=document.getElementById('polAdminConfirm').value||'';
+  const mins=document.getElementById('overrideMins').value||15;
+  const d=await fetch(`/safety/override?enable=true&minutes=${mins}&adminConfirm=${encodeURIComponent(phrase)}`,{method:'POST'}).then(r=>r.json());
+  document.getElementById('policyOut').textContent=JSON.stringify(d,null,2);
+}
+async function disableOverride(){
+  const phrase=document.getElementById('polAdminConfirm').value||'';
+  const d=await fetch(`/safety/override?enable=false&adminConfirm=${encodeURIComponent(phrase)}`,{method:'POST'}).then(r=>r.json());
+  document.getElementById('policyOut').textContent=JSON.stringify(d,null,2);
+}
+
 async function loadSafetyMetrics(){
   const d=await j('/safety/metrics');
   document.getElementById('policyOut').textContent=JSON.stringify(d,null,2);
