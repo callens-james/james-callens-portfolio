@@ -75,9 +75,3 @@ If Docker is not available, see project-specific local run instructions in this 
 
 Licensed under **AGPL-3.0-only** unless otherwise noted.
 See `LICENSE` and `NOTICE`.
-
-## Dual Push Helper
-To sync this standalone repo back to portfolio mirror safely:
-```bash
-bash scripts/sync_to_portfolio_safe.sh
-```
