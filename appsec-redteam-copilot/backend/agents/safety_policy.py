@@ -1,5 +1,6 @@
 from __future__ import annotations
 from pathlib import Path
+import hashlib
 import json, re, time
 
 POLICY_PATH = Path('/app/backend/data/safety_policy.json')
@@ -103,9 +104,46 @@ def evaluate_command(cmd: str, triage_verdict='allow', triage_risk='low'):
 
 def audit(event: dict):
     AUDIT_PATH.parent.mkdir(parents=True, exist_ok=True)
-    row = {'ts': int(time.time()), **event}
+    prev='GENESIS'
+    if AUDIT_PATH.exists():
+        lines=AUDIT_PATH.read_text(errors='ignore').splitlines()
+        for ln in reversed(lines):
+            try:
+                j=json.loads(ln)
+                prev=j.get('entryHash','GENESIS')
+                break
+            except Exception:
+                continue
+    row = {'ts': int(time.time()), **event, 'prevHash': prev}
+    canon=json.dumps(row, sort_keys=True)
+    row['entryHash']=hashlib.sha256(canon.encode()).hexdigest()
     with AUDIT_PATH.open('a') as f:
         f.write(json.dumps(row) + '\n')
+
+def verify_audit_chain(limit:int=5000):
+    if not AUDIT_PATH.exists():
+        return {'ok': True, 'checked': 0, 'errors': []}
+    lines=AUDIT_PATH.read_text(errors='ignore').splitlines()[-limit:]
+    prev='GENESIS'
+    errors=[]
+    checked=0
+    for i,ln in enumerate(lines, start=1):
+        try:
+            row=json.loads(ln)
+            claimed_prev=row.get('prevHash','')
+            claimed_hash=row.get('entryHash','')
+            tmp=dict(row)
+            tmp.pop('entryHash',None)
+            calc=hashlib.sha256(json.dumps(tmp, sort_keys=True).encode()).hexdigest()
+            if claimed_prev != prev:
+                errors.append({'line':i,'type':'prev_mismatch'})
+            if claimed_hash != calc:
+                errors.append({'line':i,'type':'hash_mismatch'})
+            prev=claimed_hash or prev
+            checked+=1
+        except Exception:
+            errors.append({'line':i,'type':'parse_error'})
+    return {'ok': len(errors)==0, 'checked': checked, 'errors': errors}
 
 
 def _extract_paths(cmd:str):

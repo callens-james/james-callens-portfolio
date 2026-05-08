@@ -8,7 +8,7 @@ import json
 from watchers.change_queue import list_items
 from agents.triage_rules import triage_file, triage_snippet
 from agents.alerts import should_alert, send_telegram_alert, build_alert
-from agents.safety_policy import load_policy, save_policy, evaluate_command, audit
+from agents.safety_policy import load_policy, save_policy, evaluate_command, audit, verify_audit_chain
 from agents.global_gate import evaluate_global_action, approve
 from agents.mutation_broker import check_mutation, exec_with_token
 from evaluators.report_store import save_report, list_reports
@@ -300,6 +300,10 @@ def safety_audit(limit:int=Query(200, ge=1, le=5000)):
         except Exception:
             continue
     return {'items': items}
+
+@app.get('/safety/audit/verify')
+def safety_audit_verify(limit:int=Query(5000, ge=1, le=50000)):
+    return verify_audit_chain(limit=limit)
 
 @app.post('/safety/gate/check')
 def safety_gate_check(action:str='command', cmd:str=''):
