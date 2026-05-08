@@ -25,16 +25,35 @@ try:
 except Exception:
  print("low")')
 
+NEEDS_CONFIRM=$(echo "$RESP" | python3 -c 'import sys,json
+try:
+ j=json.load(sys.stdin); print(str(j.get("policy",{}).get("needsConfirm", False)).lower())
+except Exception:
+ print("false")')
+TYPED_CONFIRM=$(echo "$RESP" | python3 -c 'import sys,json
+try:
+ j=json.load(sys.stdin); print(str(j.get("policy",{}).get("typedConfirm", False)).lower())
+except Exception:
+ print("false")')
+
 echo "[safe-run] verdict=$VERDICT risk=$RISK"
 if [ "$VERDICT" = "block" ]; then
   echo "[safe-run] BLOCKED. Command not executed."
   exit 2
 fi
-if [ "$VERDICT" = "warn" ]; then
-  read -r -p "[safe-run] WARN detected. Type YES to run anyway: " ans
-  if [ "$ans" != "YES" ]; then
-    echo "[safe-run] Cancelled."
-    exit 3
+if [ "$VERDICT" = "warn" ] || [ "$NEEDS_CONFIRM" = "true" ]; then
+  if [ "$TYPED_CONFIRM" = "true" ]; then
+    read -r -p "[safe-run] HIGH-IMPACT ACTION. Type CONFIRM DELETE to proceed: " ans
+    if [ "$ans" != "CONFIRM DELETE" ]; then
+      echo "[safe-run] Cancelled."
+      exit 3
+    fi
+  else
+    read -r -p "[safe-run] WARN detected. Type YES to run anyway: " ans
+    if [ "$ans" != "YES" ]; then
+      echo "[safe-run] Cancelled."
+      exit 3
+    fi
   fi
 fi
 bash -lc "$CMD"

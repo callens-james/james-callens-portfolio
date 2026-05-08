@@ -8,6 +8,7 @@ import json
 from watchers.change_queue import list_items
 from agents.triage_rules import triage_file, triage_snippet
 from agents.alerts import should_alert, send_telegram_alert, build_alert
+from agents.safety_policy import load_policy, save_policy, evaluate_command, audit
 from evaluators.report_store import save_report, list_reports
 from rag.git_diff import find_repo_root, changed_files
 from rag.advisory_ingest import refresh_cache
@@ -248,13 +249,25 @@ def alerts_test(msg:str='AppSec test alert ✅'):
 @app.post('/analyze-command')
 def analyze_command(cmd:str):
     r = triage_snippet('/local/command', 1, cmd)
-    verdict='allow'
+    triage_verdict='allow'
     if r.get('risk') == 'high':
-        verdict='block'
+        triage_verdict='block'
     elif r.get('risk') == 'medium':
-        verdict='warn'
-    payload={'project':'local-shell','summary':'Analyzed command string','risk':r.get('risk','low'),'verdict':verdict,'findings':[r],'source':'command-string'}
+        triage_verdict='warn'
+
+    policy_eval = evaluate_command(cmd, triage_verdict=triage_verdict, triage_risk=r.get('risk','low'))
+    verdict = policy_eval.get('verdict', triage_verdict)
+    payload={
+      'project':'local-shell',
+      'summary':'Analyzed command string',
+      'risk':policy_eval.get('risk', r.get('risk','low')),
+      'verdict':verdict,
+      'findings':[r],
+      'source':'command-string',
+      'policy': policy_eval
+    }
     saved = save_report(payload)
+    audit({'type':'analyze-command','cmd':cmd,'verdict':verdict,'risk':payload['risk'],'policyReason':policy_eval.get('reason','')})
     if should_alert(saved.get('verdict','allow')):
         send_telegram_alert(build_alert(saved))
     return saved
@@ -263,6 +276,28 @@ def analyze_command(cmd:str):
 @app.get('/config/watch')
 def config_watch():
     return get_config()
+
+@app.get('/safety/policy')
+def safety_policy_get():
+    return load_policy()
+
+@app.post('/safety/policy')
+def safety_policy_set(body: dict):
+    return save_policy(body)
+
+@app.get('/safety/audit')
+def safety_audit(limit:int=Query(200, ge=1, le=5000)):
+    p = Path('/app/backend/data/safety_audit.jsonl')
+    if not p.exists():
+        return {'items': []}
+    lines = p.read_text(errors='ignore').splitlines()[-limit:]
+    items=[]
+    for ln in lines:
+        try:
+            items.append(json.loads(ln))
+        except Exception:
+            continue
+    return {'items': items}
 
 @app.post('/config/workspace-root')
 def config_workspace_root(path:str):
