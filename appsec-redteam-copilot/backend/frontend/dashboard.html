@@ -57,6 +57,14 @@
 
 <div class="card"><h3>Directory Picker</h3><div>Current: <code id="pickerPath">/workspace</code></div><button title="Go to parent directory" onclick="pickerUp()">Up</button> <button title="Use current picker directory in path input" onclick="pickerUseCurrent()">Use Current Path</button><div id="pickerDirs" style="max-height:220px;overflow:auto;margin-top:8px"></div></div>
 
+
+<div class="card advanced">
+  <h3>Out-of-Band Mutation Monitor (Alert-first)</h3>
+  <button onclick="monitorBaseline()">Capture Baseline</button>
+  <button onclick="monitorCheck()">Check for Unbrokered Mutations</button>
+  <pre id="monitorOut"></pre>
+</div>
+
 <div class="card advanced">
   <h3>Capability Visibility</h3>
   <button onclick="loadCapabilities()">Refresh Capabilities</button>
@@ -210,6 +218,16 @@ function applyMasterSafeMode(){
 async function loadCapabilities(){
   const d=await j('/capability/list?limit=200');
   document.getElementById('capOut').textContent=JSON.stringify(d,null,2);
+}
+
+
+async function monitorBaseline(){
+  const d=await fetch('/monitor/baseline',{method:'POST'}).then(r=>r.json());
+  document.getElementById('monitorOut').textContent=JSON.stringify(d,null,2);
+}
+async function monitorCheck(){
+  const d=await fetch('/monitor/check',{method:'POST'}).then(r=>r.json());
+  document.getElementById('monitorOut').textContent=JSON.stringify(d,null,2);
 }
 
 let gateToken='';

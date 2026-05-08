@@ -51,3 +51,16 @@ def list_capabilities(limit:int=200):
         row={'token':t,'actor':c.get('actor'),'workspace':c.get('workspace'),'actionClass':c.get('actionClass'),'exp':c.get('exp'),'expired':c.get('exp',0)<now,'usedCount':c.get('usedCount',0),'parent':c.get('parent')}
         items.append(row)
     return {'items': items}
+
+
+def validate_child_action(childToken:str, parentToken:str):
+    c=_CAPS.get(childToken)
+    p=_CAPS.get(parentToken)
+    if not c or not p: return {'ok':False,'reason':'missing'}
+    if c.get('parent') != parentToken: return {'ok':False,'reason':'not-child-of-parent'}
+    # child cannot exceed parent scope
+    if c.get('workspace') != p.get('workspace'): return {'ok':False,'reason':'workspace-expansion'}
+    if c.get('maxFiles',0) > p.get('maxFiles',0): return {'ok':False,'reason':'maxfiles-expansion'}
+    if set(c.get('allowedPaths',[])) - set(p.get('allowedPaths',[])):
+        return {'ok':False,'reason':'allowedpaths-expansion'}
+    return {'ok':True}

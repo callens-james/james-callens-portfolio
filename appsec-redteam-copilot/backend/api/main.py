@@ -11,7 +11,8 @@ from agents.alerts import should_alert, send_telegram_alert, build_alert
 from agents.safety_policy import load_policy, save_policy, evaluate_command, audit, verify_audit_chain
 from agents.global_gate import evaluate_global_action, approve
 from agents.mutation_broker import check_mutation, exec_with_token
-from agents.capability_broker import issue_capability, inherit_capability, validate_capability, list_capabilities
+from agents.capability_broker import issue_capability, inherit_capability, validate_capability, list_capabilities, validate_child_action
+from agents.mutation_monitor import capture_baseline, detect_out_of_band
 from evaluators.report_store import save_report, list_reports
 from rag.git_diff import find_repo_root, changed_files
 from rag.advisory_ingest import refresh_cache
@@ -343,6 +344,18 @@ def capability_inherit(parentToken:str, actor:str='worker', ttl:int=300):
 @app.post('/capability/validate')
 def capability_validate(capabilityToken:str, actor:str='local', workspace:str='/workspace'):
     return validate_capability(capabilityToken, actor=actor, workspace=workspace)
+
+@app.post('/capability/validate-child')
+def capability_validate_child(childToken:str, parentToken:str):
+    return validate_child_action(childToken, parentToken)
+
+@app.post('/monitor/baseline')
+def monitor_baseline():
+    return capture_baseline()
+
+@app.post('/monitor/check')
+def monitor_check():
+    return detect_out_of_band()
 
 @app.post('/broker/check')
 def broker_check(cmd:str):
