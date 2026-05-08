@@ -15,6 +15,21 @@
   <div><b>Recommended next action:</b> <span id="nextAction">Loading...</span></div>
 </div>
 <div class="card"><h3>Status</h3><div id="statusBadges">Loading...</div></div>
+
+<div class="card">
+  <h3>Safety Policy (Primary Guardrail)</h3>
+  <label><input type="checkbox" id="polAgentSafeMode"> Agent Safe Mode (default ON)</label><br>
+  <label><input type="checkbox" id="polCommandGuard"> Command Guard allow/warn/block (secondary)</label><br>
+  <label><input type="checkbox" id="polAlwaysConfirm"> Always confirm high-impact actions</label><br>
+  <label><input type="checkbox" id="polTypedConfirm"> Require typed confirmation for destructive actions</label><br>
+  <label><input type="checkbox" id="polScopeLock"> Workspace scope lock</label><br>
+  <label>Batch file limit: <input id="polBatchLimit" type="number" min="1" value="100" style="width:90px"></label><br>
+  <label>Workspace root: <input id="polWorkspaceRoot" placeholder="/workspace" style="width:320px"></label><br>
+  <button onclick="loadPolicy()">Reload Policy</button>
+  <button onclick="savePolicy()">Save Policy</button>
+  <pre id="policyOut"></pre>
+</div>
+
 <div class="card"><h3>How to use these buttons</h3><ul><li><b>System Check</b>: verify app health/config first</li><li><b>Preview Diff/Impact</b>: understand what changed</li><li><b>Analyze Pre-Change Hunks</b>: security verdict before execution/merge</li><li><b>Run Eval</b>: benchmark quality</li><li><b>Refresh Advisories</b>: update evidence references</li></ul></div>
 <div class="card"><h3>Quick Setup Helpers</h3><ul><li>Use First-Run Setup below to set your project path.</li><li>Enable command guard: <code>alias runsafe='bash &lt;PROJECT_ROOT&gt;/scripts/safe-run.sh'</code></li><li>Enable on boot: see README section <b>Enable on Boot</b>.</li></ul></div>
 <div class="card" id="setupCard" style="display:none"><h3>First-Run Setup</h3><p>Set your project/workspace path to monitor.</p><input id="setupPath" style="width:70%" placeholder="/absolute/path"/> <button title="Initialize first-run path config" onclick="runFirstSetup()">Initialize</button><div id="setupMsg"></div></div>
@@ -130,6 +145,34 @@ function copyGuardStatus(){
   document.getElementById('guardCmdOut').textContent = cmd;
 }
 
+
+async function loadPolicy(){
+  const p=await j('/safety/policy');
+  document.getElementById('polAgentSafeMode').checked=!!p.agentSafeMode;
+  document.getElementById('polCommandGuard').checked=!!p.commandGuard;
+  document.getElementById('polAlwaysConfirm').checked=!!p.alwaysConfirmHighImpact;
+  document.getElementById('polTypedConfirm').checked=!!p.requireTypedConfirmForDestructive;
+  document.getElementById('polScopeLock').checked=!!p.workspaceScopeLock;
+  document.getElementById('polBatchLimit').value=p.batchFileLimit||100;
+  document.getElementById('polWorkspaceRoot').value=p.workspaceRoot||'/workspace';
+  document.getElementById('policyOut').textContent=JSON.stringify(p,null,2);
+}
+async function savePolicy(){
+  const body={
+    agentSafeMode:document.getElementById('polAgentSafeMode').checked,
+    commandGuard:document.getElementById('polCommandGuard').checked,
+    alwaysConfirmHighImpact:document.getElementById('polAlwaysConfirm').checked,
+    requireTypedConfirmForDestructive:document.getElementById('polTypedConfirm').checked,
+    workspaceScopeLock:document.getElementById('polScopeLock').checked,
+    batchFileLimit:Number(document.getElementById('polBatchLimit').value||100),
+    workspaceRoot:document.getElementById('polWorkspaceRoot').value||'/workspace'
+  };
+  const r=await fetch('/safety/policy',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+  const data=await r.json();
+  document.getElementById('policyOut').textContent=JSON.stringify(data,null,2);
+  document.getElementById('status').textContent='Safety policy saved';
+}
+
 let beginnerMode=true;
 function toggleMode(){
   beginnerMode=!beginnerMode;
@@ -191,6 +234,7 @@ async function runFirstSetup(){
   await loadSetupStatus();
 refreshGuidance();
 toggleMode();
+loadPolicy();
 }
 
 refreshAll();
@@ -199,5 +243,6 @@ loadPicker(pickerCurrent);
 loadSetupStatus();
 refreshGuidance();
 toggleMode();
+loadPolicy();
 </script>
 </body></html>
