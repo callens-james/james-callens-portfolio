@@ -2,6 +2,7 @@
 <style>body{font-family:Arial;background:#0f172a;color:#e2e8f0;padding:20px}.card{background:#111827;border:1px solid #334155;border-radius:8px;padding:12px;margin:10px 0}button{margin-left:6px}.badge{padding:2px 8px;border-radius:999px;font-size:12px}.risk-overdue{background:#7f1d1d;color:#fecaca}.risk-due-soon{background:#78350f;color:#fde68a}.risk-stable{background:#14532d;color:#bbf7d0}.st{background:#1e293b;color:#cbd5e1}.small{font-size:12px;color:#93c5fd}.hidden{display:none}.msg{padding:6px 8px;background:#0b1220;border:1px solid #334155;border-radius:6px;display:inline-block}.primary{background:#1d4ed8;color:#fff}.success{background:#065f46;color:#fff}select{min-width:140px;max-width:100%;padding:4px 6px;background:#0b1220;color:#e2e8f0;border:1px solid #334155;border-radius:6px;line-height:1.4;height:30px}select option{background:#0b1220;color:#e2e8f0}input{max-width:100%}</style></head>
 <body><div id='toast' style='position:fixed;right:16px;bottom:16px;z-index:9999;background:#111827;color:#e5e7eb;border:1px solid #334155;padding:10px 12px;border-radius:8px;display:none;max-width:320px'></div>
 <h1>LifeOps Copilot (v0.4.0-sprint4)</h1><div id='setupBanner' class='small'></div>
+<div class='card'><h3>Start Here (Do These in Order)</h3><ol><li><b>Setup Wizard:</b> click <i>Load Profiles</i>, pick one, then <i>Apply Selected Profile</i>.</li><li><b>Quick Demo:</b> click <i>Run Quick Start Demo</i> to auto-seed sample data.</li><li><b>Verify Health:</b> run terminal script <code>bash release/demo_health_check.sh</code>.</li><li><b>Review outputs:</b> check Queue, Digest, Plan, Metrics sections.</li><li><b>Mark setup complete:</b> tick the checkbox in First-Time Setup and click Save.</li></ol><p class='small'>If a dropdown is empty, click its section's refresh/load button (Profiles, Datasets, Backups, Scenarios).</p></div>
 
 
 <div class='card'><h3>First-Time Setup (Sprint 3.9)</h3>
@@ -162,7 +163,16 @@ async function loadUsers(){
   const me = await j('/user/me');
   meInfo.textContent = `Current user: ${me.user.name} (${me.user.role})`;
 }
-function switchUser(){ LIFEOPS_USER = userSel.value; userMsg.textContent = 'Switched to '+LIFEOPS_USER; load(); }
+function switchUser(){ LIFEOPS_USER = userSel.value; userMsg.textContent = 'Switched to '+LIFEOPS_USER; async function initUI(){
+  await load();
+  try{await loadUsers();}catch(e){}
+  try{await wizardLoadProfiles();}catch(e){}
+  try{await loadScenarios();}catch(e){}
+  try{await loadDatasets();}catch(e){}
+  try{await listBackups();}catch(e){}
+}
+
+initUI(); }
 
 async function load(){
  await loadUsers();
@@ -178,21 +188,111 @@ async function load(){
 }
 function itemsDiv(items){document.getElementById('items').innerHTML=items.map(i=>`<div><b>${i.priority}</b> | <span class="badge risk-${i.risk}">${i.risk}</span> | <span class="badge st">${i.status}</span> | ${i.deadline||'-'} | ${i.text} <button onclick="inspectItem('${i.id}')">Inspect</button> <button onclick="propose('${i.id}')">Propose</button> <button onclick="advance('${i.id}','parsed')">Parse</button><button onclick="advance('${i.id}','planned')">Plan</button><button onclick="advance('${i.id}','awaiting_approval')">Await</button><button onclick="advance('${i.id}','in_progress')">Start</button><button onclick="advance('${i.id}','done')">Done</button></div>`).join('');}
 async function inspectItem(id){const d=await j('/items/'+id); itemDetail.innerHTML=`<div>Type:${d.docType||'other'} Risk:${d.risk} Priority:${d.priority}</div><div>Confidence:${d.deadlineConfidence||'n/a'} Notes:${d.extractionNotes||''}</div><ul>${(d.checklist||[]).map(x=>`<li>${x}</li>`).join('')}</ul><ul>${(d.actionTemplates||[]).map(x=>`<li>${x}</li>`).join('')}</ul>`;}
-async function addItem(){try{await j('/inbox/add',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text:txt.value})}); showMsg('added');}catch(e){showMsg(e.message)} load();}
-async function seedDemo(){const r=await j('/demo/seed',{method:'POST'}); showMsg(`demo data loaded (+${r.added})`); load();}
-async function resetDemo(){await j('/demo/reset',{method:'POST'}); showMsg('demo reset'); load();}
-async function quickStartDemo(){const steps=[]; try{await j('/demo/reset',{method:'POST'});steps.push('reset')}catch{} try{const r=await j('/demo/seed',{method:'POST'});steps.push('seed+'+r.added)}catch{} try{await j('/scenarios/load',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:'job-seeker-pipeline'})});steps.push('scenario')}catch{} try{await loadOpportunities();steps.push('opps')}catch{} try{await loadQueue();steps.push('queue')}catch{} try{await loadDigest();steps.push('digest')}catch{} try{await planDay();steps.push('plan')}catch{} showMsg(`Quick Start: ${steps.length}/7 | ${steps.join(', ')}`); load();}
-async function advance(id,status){try{await j('/items/'+id+'/state',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({status})});}catch(e){showMsg('Transition blocked: '+e.message)} load();}
-async function propose(id){await j('/actions/propose',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({itemId:id,title:'Prepare response and checklist'})}); load();}
-async function approveAction(id,risk){try{if(risk==='high'){const phrase=prompt('Type: APPROVE HIGH RISK');await j('/actions/'+id+'/approve',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({confirmPhrase:phrase||''})});}else await j('/actions/'+id+'/approve',{method:'POST'});}catch(e){showMsg(e.message)} load();}
-async function revertAction(id){await j('/actions/'+id+'/revert',{method:'POST'}); load();}
+async function addItem(){try{await j('/inbox/add',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text:txt.value})}); showMsg('added');}catch(e){showMsg(e.message)} async function initUI(){
+  await load();
+  try{await loadUsers();}catch(e){}
+  try{await wizardLoadProfiles();}catch(e){}
+  try{await loadScenarios();}catch(e){}
+  try{await loadDatasets();}catch(e){}
+  try{await listBackups();}catch(e){}
+}
+
+initUI();}
+async function seedDemo(){const r=await j('/demo/seed',{method:'POST'}); showMsg(`demo data loaded (+${r.added})`); async function initUI(){
+  await load();
+  try{await loadUsers();}catch(e){}
+  try{await wizardLoadProfiles();}catch(e){}
+  try{await loadScenarios();}catch(e){}
+  try{await loadDatasets();}catch(e){}
+  try{await listBackups();}catch(e){}
+}
+
+initUI();}
+async function resetDemo(){await j('/demo/reset',{method:'POST'}); showMsg('demo reset'); async function initUI(){
+  await load();
+  try{await loadUsers();}catch(e){}
+  try{await wizardLoadProfiles();}catch(e){}
+  try{await loadScenarios();}catch(e){}
+  try{await loadDatasets();}catch(e){}
+  try{await listBackups();}catch(e){}
+}
+
+initUI();}
+async function quickStartDemo(){const steps=[]; try{await j('/demo/reset',{method:'POST'});steps.push('reset')}catch{} try{const r=await j('/demo/seed',{method:'POST'});steps.push('seed+'+r.added)}catch{} try{await j('/scenarios/load',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:'job-seeker-pipeline'})});steps.push('scenario')}catch{} try{await loadOpportunities();steps.push('opps')}catch{} try{await loadQueue();steps.push('queue')}catch{} try{await loadDigest();steps.push('digest')}catch{} try{await planDay();steps.push('plan')}catch{} showMsg(`Quick Start: ${steps.length}/7 | ${steps.join(', ')}`); async function initUI(){
+  await load();
+  try{await loadUsers();}catch(e){}
+  try{await wizardLoadProfiles();}catch(e){}
+  try{await loadScenarios();}catch(e){}
+  try{await loadDatasets();}catch(e){}
+  try{await listBackups();}catch(e){}
+}
+
+initUI();}
+async function advance(id,status){try{await j('/items/'+id+'/state',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({status})});}catch(e){showMsg('Transition blocked: '+e.message)} async function initUI(){
+  await load();
+  try{await loadUsers();}catch(e){}
+  try{await wizardLoadProfiles();}catch(e){}
+  try{await loadScenarios();}catch(e){}
+  try{await loadDatasets();}catch(e){}
+  try{await listBackups();}catch(e){}
+}
+
+initUI();}
+async function propose(id){await j('/actions/propose',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({itemId:id,title:'Prepare response and checklist'})}); async function initUI(){
+  await load();
+  try{await loadUsers();}catch(e){}
+  try{await wizardLoadProfiles();}catch(e){}
+  try{await loadScenarios();}catch(e){}
+  try{await loadDatasets();}catch(e){}
+  try{await listBackups();}catch(e){}
+}
+
+initUI();}
+async function approveAction(id,risk){try{if(risk==='high'){const phrase=prompt('Type: APPROVE HIGH RISK');await j('/actions/'+id+'/approve',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({confirmPhrase:phrase||''})});}else await j('/actions/'+id+'/approve',{method:'POST'});}catch(e){showMsg(e.message)} async function initUI(){
+  await load();
+  try{await loadUsers();}catch(e){}
+  try{await wizardLoadProfiles();}catch(e){}
+  try{await loadScenarios();}catch(e){}
+  try{await loadDatasets();}catch(e){}
+  try{await listBackups();}catch(e){}
+}
+
+initUI();}
+async function revertAction(id){await j('/actions/'+id+'/revert',{method:'POST'}); async function initUI(){
+  await load();
+  try{await loadUsers();}catch(e){}
+  try{await wizardLoadProfiles();}catch(e){}
+  try{await loadScenarios();}catch(e){}
+  try{await loadDatasets();}catch(e){}
+  try{await listBackups();}catch(e){}
+}
+
+initUI();}
 async function loadBrief(){const b=await j('/brief/weekly'); brief.textContent=b.brief||'';}
-async function rollbackLast(){try{await j('/rollback/last',{method:'POST'}); showMsg('rollback applied');}catch(e){showMsg(e.message)} load();}
+async function rollbackLast(){try{await j('/rollback/last',{method:'POST'}); showMsg('rollback applied');}catch(e){showMsg(e.message)} async function initUI(){
+  await load();
+  try{await loadUsers();}catch(e){}
+  try{await wizardLoadProfiles();}catch(e){}
+  try{await loadScenarios();}catch(e){}
+  try{await loadDatasets();}catch(e){}
+  try{await listBackups();}catch(e){}
+}
+
+initUI();}
 
 async function saveModules(){
   const r = await j('/modules',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({career:modCareer.checked,smb:modSmb.checked,health:modHealth.checked})});
   moduleMsg.textContent = 'Modules saved: '+JSON.stringify(r.modules);
-  load();
+  async function initUI(){
+  await load();
+  try{await loadUsers();}catch(e){}
+  try{await wizardLoadProfiles();}catch(e){}
+  try{await loadScenarios();}catch(e){}
+  try{await loadDatasets();}catch(e){}
+  try{await listBackups();}catch(e){}
+}
+
+initUI();
 }
 async function exportCommon(){
   const c = await j('/export/common');
@@ -200,17 +300,53 @@ async function exportCommon(){
   const a = document.createElement('a'); a.href=URL.createObjectURL(b); a.download='lifeops_common_export.json'; a.click();
 }
 
-async function saveInstallProfile(){if(profile.value!=='core-only'&&!warnAck.checked){profileMsg.textContent='Acknowledge warnings first';return;} await j('/settings',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({installProfile:profile.value,aiEnabled:profile.value==='local-ai',openclawEnabled:profile.value==='openclaw'})}); profileMsg.textContent='saved'; load();}
+async function saveInstallProfile(){if(profile.value!=='core-only'&&!warnAck.checked){profileMsg.textContent='Acknowledge warnings first';return;} await j('/settings',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({installProfile:profile.value,aiEnabled:profile.value==='local-ai',openclawEnabled:profile.value==='openclaw'})}); profileMsg.textContent='saved'; async function initUI(){
+  await load();
+  try{await loadUsers();}catch(e){}
+  try{await wizardLoadProfiles();}catch(e){}
+  try{await loadScenarios();}catch(e){}
+  try{await loadDatasets();}catch(e){}
+  try{await listBackups();}catch(e){}
+}
+
+initUI();}
 async function testModel(){const r=await j('/model/check?model='+encodeURIComponent(modelSelect.value)); modelMsg.textContent=r.compatible?`Compatible ${r.model}`:`Not recommended (${r.requiredRamGb}GB required)`;}
-async function applyModel(){await j('/settings',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({aiModel:modelSelect.value})}); modelMsg.textContent='Applied'; load();}
-async function saveScheduler(){await j('/settings/scheduler',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({enabled:schEnabled.checked,intervalSec:Number(schInt.value||60),quietStart:schStart.value,quietEnd:schEnd.value})}); showMsg('Scheduler saved'); load();}
+async function applyModel(){await j('/settings',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({aiModel:modelSelect.value})}); modelMsg.textContent='Applied'; async function initUI(){
+  await load();
+  try{await loadUsers();}catch(e){}
+  try{await wizardLoadProfiles();}catch(e){}
+  try{await loadScenarios();}catch(e){}
+  try{await loadDatasets();}catch(e){}
+  try{await listBackups();}catch(e){}
+}
+
+initUI();}
+async function saveScheduler(){await j('/settings/scheduler',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({enabled:schEnabled.checked,intervalSec:Number(schInt.value||60),quietStart:schStart.value,quietEnd:schEnd.value})}); showMsg('Scheduler saved'); async function initUI(){
+  await load();
+  try{await loadUsers();}catch(e){}
+  try{await wizardLoadProfiles();}catch(e){}
+  try{await loadScenarios();}catch(e){}
+  try{await loadDatasets();}catch(e){}
+  try{await listBackups();}catch(e){}
+}
+
+initUI();}
 async function loadNotifications(){const rows=await j('/notifications'); notifications.innerHTML=rows.slice(0,20).map(n=>`<div>${n.ts} [${n.level}] ${n.message} ${n.read?'':`<button onclick="markRead('${n.id}')">Read</button>`} <button onclick="snoozeNotif('${n.id}')">Snooze</button></div>`).join('')||'No notifications';}
 async function markRead(id){await j('/notifications/'+id,{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({read:true})}); loadNotifications();}
 async function snoozeNotif(id){await j('/notifications/'+id,{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({snoozeMinutes:30})}); loadNotifications();}
 async function loadConfirmations(){const rows=await j('/confirmations/high-risk'); confirmCenter.innerHTML=rows.map(r=>`<div>[HIGH] ${r.title}</div>`).join('')||'No high-risk pending';}
 async function loadTimeline(){const t=await j('/timeline'); timeline.innerHTML=t.slice(0,20).map(e=>`<div>${e.ts} | ${e.eventType}</div>`).join('');}
 async function exportBundle(){const b=await j('/export/bundle'); const blob=new Blob([JSON.stringify(b,null,2)],{type:'application/json'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='lifeops_bundle.json'; a.click();}
-async function setMode(mode){const r=await j('/settings/mode',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({mode})}); modeMsg.textContent='Mode: '+r.mode; load();}
+async function setMode(mode){const r=await j('/settings/mode',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({mode})}); modeMsg.textContent='Mode: '+r.mode; async function initUI(){
+  await load();
+  try{await loadUsers();}catch(e){}
+  try{await wizardLoadProfiles();}catch(e){}
+  try{await loadScenarios();}catch(e){}
+  try{await loadDatasets();}catch(e){}
+  try{await listBackups();}catch(e){}
+}
+
+initUI();}
 async function saveOpportunityProfile(){await j('/profile',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({householdSize:Number(pfHouse.value||1),income:Number(pfIncome.value||0),location:pfLoc.value||'',employment:pfEmp.value||'unknown'})}); showMsg('Opportunity profile saved'); loadOpportunities();}
 async function loadOpportunities(){const opp=await j('/opportunities'); opps.innerHTML=opp.map(o=>`<div><b>${o.score}</b> ${o.name} (${o.type}) due ${o.deadline} <button onclick="addOppAction('${o.id}')">Add to Plan</button><div class='small'>${(o.reasons||[]).join('; ')}</div></div>`).join(''); const acts=await j('/opportunity-actions'); oppActions.innerHTML=acts.map(a=>`<div>${a.name} | ${a.status} | due ${a.deadline} <button onclick="setOppStatus('${a.id}','in-progress')">Start</button><button onclick="setOppStatus('${a.id}','submitted')">Submitted</button><button onclick="setOppStatus('${a.id}','blocked')">Blocked</button></div>`).join('')||'No actions';}
 async function addOppAction(id){await j('/opportunities/'+id+'/add-action',{method:'POST'}); loadOpportunities();}
@@ -258,30 +394,102 @@ async function loadImpact(){const o=await j('/outcomes'); const i=await j('/impa
 async function saveImpactAssumptions(){await j('/impact/assumptions',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({manualMinutesPerTask:Number(blManual.value||45),assistedMinutesPerTask:Number(blAssist.value||20)})}); loadImpact();}
 async function generateCaseStudy(){const r=await j('/case-study/md'); caseStudy.textContent=r.markdown||'';}
 async function loadScenarios(){const sc=await j('/scenarios'); scenarioSel.innerHTML=sc.map(x=>`<option value='${x}'>${x}</option>`).join('');}
-async function loadScenario(){await j('/scenarios/load',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:scenarioSel.value})}); showMsg('Scenario loaded'); load();}
+async function loadScenario(){await j('/scenarios/load',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:scenarioSel.value})}); showMsg('Scenario loaded'); async function initUI(){
+  await load();
+  try{await loadUsers();}catch(e){}
+  try{await wizardLoadProfiles();}catch(e){}
+  try{await loadScenarios();}catch(e){}
+  try{await loadDatasets();}catch(e){}
+  try{await listBackups();}catch(e){}
+}
+
+initUI();}
 function runDemoScript(){caseStudy.textContent='Demo: Quick Start -> Queue -> Confirmations -> Plan -> Export -> Impact';}
 async function showVersion(){const v=await j('/version'); releaseMsg.textContent='Version: '+v.version;}
 async function exportConfig(){const c=await j('/config/export'); const b=new Blob([JSON.stringify(c,null,2)],{type:'application/json'}); const a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download='lifeops_config.json'; a.click();}
-async function importConfigPrompt(){const txt=prompt('Paste config JSON'); if(!txt) return; try{await j('/config/import',{method:'POST',headers:{'Content-Type':'application/json'},body:txt}); showMsg('Config imported'); load();}catch(e){showMsg('Import failed')}}
+async function importConfigPrompt(){const txt=prompt('Paste config JSON'); if(!txt) return; try{await j('/config/import',{method:'POST',headers:{'Content-Type':'application/json'},body:txt}); showMsg('Config imported'); async function initUI(){
+  await load();
+  try{await loadUsers();}catch(e){}
+  try{await wizardLoadProfiles();}catch(e){}
+  try{await loadScenarios();}catch(e){}
+  try{await loadDatasets();}catch(e){}
+  try{await listBackups();}catch(e){}
+}
+
+initUI();}catch(e){showMsg('Import failed')}}
 async function saveDataset(){const r=await j('/datasets/save',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:dsName.value||'demo'})}); releaseMsg.textContent='Saved '+r.file; loadDatasets();}
 async function loadDatasets(){const list=await j('/datasets'); dsList.innerHTML=list.map(x=>`<option value='${x}'>${x}</option>`).join('');}
-async function loadDataset(){if(!dsList.value) return; await j('/datasets/load',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:dsList.value})}); releaseMsg.textContent='Loaded '+dsList.value; load();}
+async function loadDataset(){if(!dsList.value) return; await j('/datasets/load',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:dsList.value})}); releaseMsg.textContent='Loaded '+dsList.value; async function initUI(){
+  await load();
+  try{await loadUsers();}catch(e){}
+  try{await wizardLoadProfiles();}catch(e){}
+  try{await loadScenarios();}catch(e){}
+  try{await loadDatasets();}catch(e){}
+  try{await listBackups();}catch(e){}
+}
+
+initUI();}
 
 async function saveSecurity(){ await j('/security',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({lockEnabled:secLock.checked,passcode:secPass.value||undefined,redactionDefault:secRedact.checked})}); secMsg.textContent='Security settings saved'; }
 async function unlockSession(){ const r=await j('/security/unlock',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({passcode:unlockPass.value||''})}); secMsg.textContent=r.unlocked?'Unlocked':'Unlock failed'; }
 async function runSelfcheck(){ const r=await j('/selfcheck'); selfcheckOut.textContent=`Selfcheck passed: ${r.passed} | version: ${r.stateVersion}`; }
 async function listBackups(){ const b=await j('/backups'); backupSel.innerHTML=b.map(x=>`<option value="${x}">${x}</option>`).join(''); }
-async function restoreBackup(){ if(!backupSel.value) return; const r=await j('/backups/restore',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:backupSel.value})}); showMsg(r.ok?'Backup restored':'Restore failed'); load(); }
+async function restoreBackup(){ if(!backupSel.value) return; const r=await j('/backups/restore',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:backupSel.value})}); showMsg(r.ok?'Backup restored':'Restore failed'); async function initUI(){
+  await load();
+  try{await loadUsers();}catch(e){}
+  try{await wizardLoadProfiles();}catch(e){}
+  try{await loadScenarios();}catch(e){}
+  try{await loadDatasets();}catch(e){}
+  try{await listBackups();}catch(e){}
+}
+
+initUI(); }
 async function loadPerf(){ const p=await j('/perf'); perfOut.textContent=JSON.stringify(p); }
 async function exportDataPackage(){ const q=`?redacted=${dpRedacted.checked?1:0}&audit=${dpAudit.checked?1:0}&notes=${dpNotes.checked?1:0}`; const d=await j('/data/export-package'+q); const b=new Blob([JSON.stringify(d,null,2)],{type:'application/json'}); const a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download='lifeops_data_package.json'; a.click(); }
 async function previewImportPrompt(){ const txt=prompt('Paste data package JSON'); if(!txt) return; try{ const r=await j('/data/import-preview',{method:'POST',headers:{'Content-Type':'application/json'},body:txt}); integrityOut.textContent=JSON.stringify(r,null,2);}catch(e){showMsg('Import preview failed');}}
-async function applyImportPrompt(){ const txt=prompt('Paste data package JSON to APPLY'); if(!txt) return; try{ const r=await j('/data/import-apply',{method:'POST',headers:{'Content-Type':'application/json'},body:txt}); showMsg(r.ok?'Import applied':'Import failed'); load(); }catch(e){showMsg('Import apply failed');}}
-async function clearDataPrompt(){ const phrase=prompt('Type CLEAR DATA to confirm'); const mod=clearModule.value; const r=await j('/data/clear',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({module:mod,confirmPhrase:phrase||''})}); showMsg(r.ok?'Data cleared':'Clear failed'); load(); }
+async function applyImportPrompt(){ const txt=prompt('Paste data package JSON to APPLY'); if(!txt) return; try{ const r=await j('/data/import-apply',{method:'POST',headers:{'Content-Type':'application/json'},body:txt}); showMsg(r.ok?'Import applied':'Import failed'); async function initUI(){
+  await load();
+  try{await loadUsers();}catch(e){}
+  try{await wizardLoadProfiles();}catch(e){}
+  try{await loadScenarios();}catch(e){}
+  try{await loadDatasets();}catch(e){}
+  try{await listBackups();}catch(e){}
+}
+
+initUI(); }catch(e){showMsg('Import apply failed');}}
+async function clearDataPrompt(){ const phrase=prompt('Type CLEAR DATA to confirm'); const mod=clearModule.value; const r=await j('/data/clear',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({module:mod,confirmPhrase:phrase||''})}); showMsg(r.ok?'Data cleared':'Clear failed'); async function initUI(){
+  await load();
+  try{await loadUsers();}catch(e){}
+  try{await wizardLoadProfiles();}catch(e){}
+  try{await loadScenarios();}catch(e){}
+  try{await loadDatasets();}catch(e){}
+  try{await listBackups();}catch(e){}
+}
+
+initUI(); }
 async function loadIntegrity(){ const r=await j('/data/integrity'); integrityOut.textContent=JSON.stringify(r,null,2); }
 async function wizardLoadProfiles(){ const d=await j('/installer/profiles'); wizProfile.innerHTML=(d.profiles||[]).map(p=>`<option value="${p.id}">${p.label}${p.recommended?' (recommended)':''}</option>`).join(''); wizMsg.textContent='Profiles loaded'; }
-async function wizardApplyProfile(){ const profileId=wizProfile.value||'core-only'; if(profileId!=='core-only'&&!wizAck.checked){wizMsg.textContent='Acknowledge warnings first'; return;} await j('/installer/apply-profile',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({profileId})}); wizMsg.textContent='Applied '+profileId; load(); }
+async function wizardApplyProfile(){ const profileId=wizProfile.value||'core-only'; if(profileId!=='core-only'&&!wizAck.checked){wizMsg.textContent='Acknowledge warnings first'; return;} await j('/installer/apply-profile',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({profileId})}); wizMsg.textContent='Applied '+profileId; async function initUI(){
+  await load();
+  try{await loadUsers();}catch(e){}
+  try{await wizardLoadProfiles();}catch(e){}
+  try{await loadScenarios();}catch(e){}
+  try{await loadDatasets();}catch(e){}
+  try{await listBackups();}catch(e){}
+}
+
+initUI(); }
 let wizStep=1; function wizardNext(){ wizStep=wizStep>=4?1:wizStep+1; const labels={1:'Step 1: Choose install profile',2:'Step 2: Select model tier and test compatibility',3:'Step 3: Configure scheduler and quiet hours',4:'Step 4: Review summary and launch'}; const el=document.getElementById('wizStep'); if(el) el.textContent=labels[wizStep]; }
-async function activateV2Demo(){ await j('/v2/demo/activate',{method:'POST'}); showMsg('V2 demo mode activated'); load(); }
+async function activateV2Demo(){ await j('/v2/demo/activate',{method:'POST'}); showMsg('V2 demo mode activated'); async function initUI(){
+  await load();
+  try{await loadUsers();}catch(e){}
+  try{await wizardLoadProfiles();}catch(e){}
+  try{await loadScenarios();}catch(e){}
+  try{await loadDatasets();}catch(e){}
+  try{await listBackups();}catch(e){}
+}
+
+initUI(); }
 async function checkV2Readiness(){ const r=await j('/v2/release-readiness'); v2Readiness.textContent=`Ready: ${r.passed} | Version: ${r.version}`; }
 async function loadV2CaseStudies(){ const d=await j('/v2/case-studies'); v2CaseStudies.textContent=JSON.stringify(d.docs,null,2); }
 
@@ -289,5 +497,14 @@ async function loadV2CaseStudies(){ const d=await j('/v2/case-studies'); v2CaseS
 function toggleAdvanced(){ const beginner=document.getElementById('beginnerModeChk')?.checked; document.querySelectorAll('.advanced').forEach(el=>el.classList.toggle('hidden', !!beginner)); }
 async function saveOnboarding(){ const beginnerMode=!!document.getElementById('beginnerModeChk')?.checked; const setupComplete=!!document.getElementById('setupDoneChk')?.checked; await j('/onboarding',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({beginnerMode,setupComplete})}); onbMsg.textContent='Onboarding saved'; toggleAdvanced(); }
 
-load();
+async function initUI(){
+  await load();
+  try{await loadUsers();}catch(e){}
+  try{await wizardLoadProfiles();}catch(e){}
+  try{await loadScenarios();}catch(e){}
+  try{await loadDatasets();}catch(e){}
+  try{await listBackups();}catch(e){}
+}
+
+initUI();
 </script></body></html>
