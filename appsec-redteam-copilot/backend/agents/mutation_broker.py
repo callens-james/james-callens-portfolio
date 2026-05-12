@@ -78,7 +78,7 @@ def grant(token:str, cmd:str, action:str='command', workspace:str=WORKSPACE_ROOT
 
 def exec_with_token(cmd:str, token:str='', actor:str='local'):
     decision = check_mutation(cmd)
-    required = decision.get('needsPrompt', False) or not decision.get('allowed', False)
+    required = decision.get('needsPrompt', False) or not decision.get('allowed', False) or decision.get('approvalReused', False)
     expected = decision.get('approvalToken', '')
     if required:
         if token != expected:

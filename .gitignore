@@ -17,8 +17,11 @@ id_rsa*
 
 # Node/Python artifacts
 node_modules/
+.venv/
+**/.venv/
 __pycache__/
 *.pyc
+*.py[cod]
 
 # Logs
 *.log

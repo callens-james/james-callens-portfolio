@@ -4,14 +4,18 @@ Practical, local-first AI engineering projects focused on real workflows, safety
 
 ## Start Here
 - **Flagship:** `appsec-redteam-copilot`
-- Open this first: `appsec-redteam-copilot/README.md`
-- Quick demo path: dashboard -> pre-change verdict -> eval -> markdown report
+- Portfolio page: [`projects/appsec-redteam-copilot.md`](./projects/appsec-redteam-copilot.md)
+- Open this first: [`appsec-redteam-copilot/docs/PORTFOLIO_ONE_PAGER.md`](./appsec-redteam-copilot/docs/PORTFOLIO_ONE_PAGER.md)
+- Proof pack: [`appsec-redteam-copilot/release/proof-pack/README.md`](./appsec-redteam-copilot/release/proof-pack/README.md)
+- Quick demo path: dashboard -> pre-change verdict -> proof pack -> safety limits
 
 
 ## Featured Projects
 
-- **AppSec Red Team Copilot** — pre-change and post-change code-risk triage with verdict gates (`allow/warn/block`), advisory-backed evidence, eval harness, and Docker + service-mode ops.
+- **AppSec Red Team Copilot** — local-first pre-change AppSec triage with verdict gates (`allow/warn/block`), proof-backed safety validation, audit verification, and Dockerized operator workflow.
+  - Portfolio page: [`projects/appsec-redteam-copilot.md`](./projects/appsec-redteam-copilot.md)
   - Folder: [`appsec-redteam-copilot/`](./appsec-redteam-copilot)
+  - Evidence: [`appsec-redteam-copilot/release/proof-pack/`](./appsec-redteam-copilot/release/proof-pack)
 
 - **LifeOps Copilot** — local-first life/work operations platform (paperwork, planning, approvals, reporting, exports, privacy controls).
   - Folder: [`lifeops-copilot/`](./lifeops-copilot)
@@ -65,8 +69,8 @@ This portfolio and included projects are licensed under **AGPL-3.0-only** unless
 1. Open dashboard
 2. Run pre-change analysis
 3. Show verdict + findings
-4. Run eval
-5. Generate markdown report
+4. Show proof pack validation evidence
+5. Explain safety limits clearly
 
 ## What this portfolio proves
 - I build **governed AI systems**, not wrapper demos

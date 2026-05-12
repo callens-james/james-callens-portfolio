@@ -18,7 +18,7 @@ def evaluate_global_action(action:str, cmd:str):
     now = int(time.time())
     cached = _APPROVAL_CACHE.get(fp)
 
-    if cached and cached.get('exp',0) > now and pe.get('verdict') in ('allow','warn'):
+    if cached and not cached.get('used') and cached.get('exp',0) > now and pe.get('verdict') in ('allow','warn'):
         return {
           'allowed': True,
           'needsPrompt': False,

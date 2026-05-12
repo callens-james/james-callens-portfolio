@@ -1,6 +1,19 @@
 # Project Index
 
-## 1) AI Mission Control Dashboard
+## 1) AppSec Red Team Copilot
+**Status:** Portfolio-ready branch
+
+- Summary: local-first pre-change AppSec triage with verdict gates, proof-backed safety validation, and audit verification
+- Featured page: [`projects/appsec-redteam-copilot.md`](./appsec-redteam-copilot.md)
+
+### Highlights
+- analyzes risky git diff hunks before merge
+- clear `allow` / `warn` / `block` verdicts
+- proof pack with safety regression, audit verification, broker coverage, and emergency override lifecycle evidence
+
+---
+
+## 2) AI Mission Control Dashboard
 **Status:** Active
 
 - Summary: local-first AI operations dashboard with chat + execution control
@@ -13,7 +26,7 @@
 
 ---
 
-## 2) Job Application Pipeline Automation
+## 3) Job Application Pipeline Automation
 **Status:** Active
 
 - Summary: remote-first job sourcing, fit scoring, prioritization, and follow-up tracking

@@ -9,7 +9,7 @@
   },
   {
     "id": "case_secret_1",
-    "content": "API_KEY = \"ghp_abcdefghijklmnopqrstuvwxyz123456\"",
+    "content": "GITHUB_TEST_SECRET = \"github_pat_REDACTED_TEST_TOKEN_PATTERN\"",
     "expectedRisk": "high",
     "expectedTypes": [
       "secret_pattern"

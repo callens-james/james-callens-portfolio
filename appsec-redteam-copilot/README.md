@@ -2,6 +2,28 @@
 
 Local-first AI safety guard for coding workflows.
 
+AppSec Red Team Copilot reviews risky code changes before merge, assigns clear `allow` / `warn` / `block` verdicts, and backs safety claims with validation evidence.
+
+## Reviewer quick path
+
+If you are reviewing this as a portfolio project:
+
+1. Read `docs/PORTFOLIO_ONE_PAGER.md`.
+2. Read `docs/REVIEWER_GUIDE.md`.
+3. Skim the screenshots with `docs/SCREENSHOTS.md`.
+4. Follow the demo flow in `docs/DEMO_SCRIPT.md`.
+5. Review validation evidence in `release/proof-pack/validation-evidence-2026-05-12.md`.
+6. Check safety limits in `docs/SECURITY_GUARANTEES_AND_LIMITS.md`.
+
+Latest local validation highlights:
+
+- install/dashboard check passed
+- safety regression passed: `11/11`
+- audit verification: `ok=true`
+- broker coverage: `1.0`, status `SAFE`
+- eval harness: `riskAccuracy=1.0`, `typeCoverage=1.0` on 4 labeled cases
+- emergency override lifecycle tested and cleaned up inactive
+
 ## START HERE (explicit install)
 
 ### Linux/macOS
@@ -115,6 +137,15 @@ Expected:
 - **Operational deployment** (Docker + systemd)
 - **Secret hygiene** with local-only environment config
 
+## Portfolio readiness
+- Portfolio one-pager: `docs/PORTFOLIO_ONE_PAGER.md`
+- Reviewer guide: `docs/REVIEWER_GUIDE.md`
+- Screenshot guide: `docs/SCREENSHOTS.md`
+- Portfolio readiness notes: `docs/PORTFOLIO_READINESS.md`
+- Promotion package template: `docs/PORTFOLIO_PROMOTION_PACKAGE_TEMPLATE.md`
+- Runtime artifact policy: `docs/RUNTIME_ARTIFACTS.md`
+- Proof pack index: `release/proof-pack/README.md`
+
 ## 30-Second Demo
 1. Open `/dashboard`
 2. Run pre-change analysis
@@ -123,6 +154,8 @@ Expected:
 5. Generate markdown report
 
 ## Screenshots
+See `docs/SCREENSHOTS.md` for what each screenshot proves.
+
 ![Dashboard Overview](docs/screenshots/dashboard-overview.jpg)
 ![Pre-change Findings](docs/screenshots/prechange-findings.jpg)
 ![Findings Table](docs/screenshots/prechange-table.jpg)

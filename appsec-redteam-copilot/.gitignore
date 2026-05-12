@@ -5,3 +5,14 @@ backend/tmp/
 backend/data/SECURITY_REPORT.md
 backend/data/eval_reports/
 backend/data/eval_tmp/
+
+# Python/runtime artifacts
+.venv/
+__pycache__/
+*.py[cod]
+
+# local runtime/cache artifacts
+backend/data/advisories_cache.json
+backend/data/safety_audit.jsonl
+backend/data/safety_policy.json
+backend/watchers/change_queue.jsonl

@@ -332,19 +332,25 @@ def safety_metrics(limit:int=5000):
     counts={}
     total=0
     brokered=0
+    execution_events=0
+    broker_event_types={'broker-exec','broker-deny','global-gate-check'}
+    non_execution_events={'emergency-override-enabled','emergency-override-disabled','emergency-override-auto-disabled'}
     for ln in lines:
         try:
             j=json.loads(ln)
             t=j.get('type','unknown')
             counts[t]=counts.get(t,0)+1
             total+=1
-            if t in ('broker-exec','broker-deny','global-gate-check'):
+            if t in broker_event_types:
+                execution_events+=1
                 brokered+=1
+            elif t not in non_execution_events:
+                execution_events+=1
         except Exception:
             continue
-    rate=(brokered/total) if total else 0.0
+    rate=(brokered/execution_events) if execution_events else 0.0
     status='SAFE' if rate>=0.95 else ('WARN' if rate>=0.8 else 'RISK')
-    return {'events':total,'brokerCoverageRate':round(rate,4),'coverageStatus':status,'counts':counts}
+    return {'events':total,'executionEvents':execution_events,'brokerCoverageRate':round(rate,4),'coverageStatus':status,'counts':counts}
 
 @app.get('/safety/audit/verify')
 def safety_audit_verify(limit:int=Query(5000, ge=1, le=50000)):

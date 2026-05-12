@@ -5,7 +5,9 @@ API='http://127.0.0.1:3480'
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-PATH=str(ROOT / 'backend' / 'api' / 'main.py')
+# The API runs inside Docker, where the repository is mounted at /workspace.
+# Use the container-visible path so the hook works from the host checkout.
+PATH='/workspace/backend/api/main.py'
 
 def main():
     try:

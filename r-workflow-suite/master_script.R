@@ -89,7 +89,7 @@ fr_summary.rFUNC = function(wd,funcpath)({ # FR PART 1 ---- setwd(wd) files=list
 #Created by Annie Ly and James Callens
 # shiny.rFUNC <- function(funcpath) {
 # rsconnect::setAccountInfo(name='hurd-laboratory',
-# token='ADFBE4B587F0AF514F372FB49C6F4FBB',
+# credential placeholder redacted,
 # secret='j0ilSenal+/AgEXhXDN9VQAFrqVnwcO4fKpRECpY') # # LOADING LIBRARIES ----
 # library(plyr)
 # library(lubridate)

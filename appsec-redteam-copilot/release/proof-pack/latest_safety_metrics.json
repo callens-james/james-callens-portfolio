@@ -1,0 +1,1 @@
+{"events":26,"executionEvents":23,"brokerCoverageRate":1.0,"coverageStatus":"SAFE","counts":{"global-gate-check":7,"broker-exec":14,"broker-deny":2,"emergency-override-enabled":1,"emergency-override-auto-disabled":1,"emergency-override-disabled":1}}
