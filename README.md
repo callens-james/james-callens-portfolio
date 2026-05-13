@@ -20,8 +20,10 @@ Practical, local-first AI engineering projects focused on real workflows, safety
 - **LifeOps Copilot** — local-first life/work operations platform (paperwork, planning, approvals, reporting, exports, privacy controls).
   - Folder: [`lifeops-copilot/`](./lifeops-copilot)
 
-- **Ops Insight Copilot (Analyst Workbench)** — analyst workflow system for KPI extraction, anomaly review, and action-oriented weekly briefs.
+- **Ops Insight Copilot (Analyst Workbench)** — analyst workflow system for CSV intake, KPI snapshots, anomaly review, recommended actions, weekly briefs, exports, and audit evidence.
+  - Portfolio page: [`projects/ops-insight-copilot.md`](./projects/ops-insight-copilot.md)
   - Folder: [`ops-insight-copilot-analyst-workbench/`](./ops-insight-copilot-analyst-workbench)
+  - Reviewer guide: [`ops-insight-copilot-analyst-workbench/docs/REVIEWER_GUIDE.md`](./ops-insight-copilot-analyst-workbench/docs/REVIEWER_GUIDE.md)
 
 - **Safe AI Suite** — safety engineering toolkit with risk gating, traceability, and evaluation workflows.
   - Folder: [`safe-ai-suite/`](./safe-ai-suite)

@@ -13,7 +13,20 @@
 
 ---
 
-## 2) AI Mission Control Dashboard
+## 2) Ops Insight Copilot — Analyst Workbench
+**Status:** Portfolio-ready workspace artifact
+
+- Summary: local-first analyst workflow that turns operations CSVs into KPIs, anomaly flags, recommendations, weekly briefs, exports, and audit evidence
+- Featured page: [`projects/ops-insight-copilot.md`](./ops-insight-copilot.md)
+
+### Highlights
+- reviewer-friendly CSV demo path
+- explainable KPI/anomaly/recommendation pipeline
+- proof pack with smoke, API slice, and end-to-end demo-flow validation
+
+---
+
+## 3) AI Mission Control Dashboard
 **Status:** Active
 
 - Summary: local-first AI operations dashboard with chat + execution control
@@ -26,7 +39,7 @@
 
 ---
 
-## 3) Job Application Pipeline Automation
+## 4) Job Application Pipeline Automation
 **Status:** Active
 
 - Summary: remote-first job sourcing, fit scoring, prioritization, and follow-up tracking

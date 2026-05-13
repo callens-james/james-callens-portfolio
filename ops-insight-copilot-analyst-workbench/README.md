@@ -7,25 +7,20 @@ Local-first analyst dashboard that converts raw operations exports into:
 - weekly executive brief
 - audit/export artifacts
 
-## Why I built this
-I built this to solve a common operations pain: analysts spend too much time manually cleaning exports, calculating KPIs, and writing status summaries. The objective was a local-first workbench that turns raw data into clear decisions faster and more consistently.
+**One-line outcome:** a reviewer can upload one CSV and see the complete analyst workflow — KPI snapshot, anomaly queue, recommended actions, approval/undo control, weekly brief, exports, and audit trail — in a few minutes.
 
 ## Why this project exists
 Ops teams often export CSVs from support/CRM systems and then manually clean, analyze, and summarize. This tool standardizes that flow and speeds decision-making with human-in-the-loop controls.
 
-## How teams can use this
-- Weekly operations reporting for support/sales/customer teams
-- Early anomaly detection with explainable thresholds
-- Action planning with priority recommendations and approval controls
-- Exportable briefs and CSV outputs for leadership updates and handoffs
+It is intentionally bounded: this is a portfolio-grade analyst workbench, not a full BI platform or live CRM/helpdesk integration.
 
 ## Core capabilities
 1. **CSV upload + validation**
 2. **Auto-normalization** from multiple source formats:
- - normalized metrics CSV
- - support ticket export
- - CRM lead export
- - ops queue export
+   - normalized metrics CSV
+   - support ticket export
+   - CRM lead export
+   - ops queue export
 3. **KPI computation** (avg/min/max/count)
 4. **Anomaly detection** (threshold-based, explainable)
 5. **Recommendation generation** (priority + rationale)
@@ -35,43 +30,42 @@ Ops teams often export CSVs from support/CRM systems and then manually clean, an
 
 ## Run
 ```bash
-cd <workspace-home>/openclaw-workspace/ops-insight-copilot-analyst-workbench
+cd /home/james/openclaw-workspace/ops-insight-copilot-analyst-workbench
 npm install
 npm run dev
 ```
 Open: `http://<server-ip>:3350/`
 
-## Test
+## Fast reviewer demo
+Use:
+
+```text
+data/sample/ops_sample_alert.csv
+```
+
+Expected result:
+- 3 KPI rows
+- 3 anomaly flags
+- 3 recommendations
+- weekly brief with top actions
+- audit events for upload, approve/undo, and brief generation
+
+## Test / validation
+Start the server first (`npm run dev`), then run:
+
 ```bash
 npm run test
 npm run test:slice7
+npm run test:e2e
 ```
 
-## Demo assets
+## Reviewer assets
+- Reviewer guide: [`docs/REVIEWER_GUIDE.md`](./docs/REVIEWER_GUIDE.md)
+- Portfolio one-pager: [`docs/PORTFOLIO_ONE_PAGER.md`](./docs/PORTFOLIO_ONE_PAGER.md)
+- Sample data guide: [`docs/SAMPLE_DATA.md`](./docs/SAMPLE_DATA.md)
+- Screenshot guide: [`docs/SCREENSHOTS.md`](./docs/SCREENSHOTS.md)
 - Walkthrough: [`docs/14-demo-walkthrough.md`](./docs/14-demo-walkthrough.md)
-- Screenshots:
- - ![Dashboard main](./docs/screenshots/01-dashboard-main.jpg)
- - ![Brief and approvals](./docs/screenshots/02-brief-and-approvals.jpg)
+- Proof pack: [`release/proof-pack/README.md`](./release/proof-pack/README.md)
 
-## Lifecycle docs (fallback list)
+## Lifecycle docs
 Use docs/00..11 for full thought-to-finale process and handoff.
-
-
-## Quick Install / Run
-
-```bash
-# clone repo
-git clone https://github.com/callens-james/james-callens-portfolio.git
-cd ops-insight-copilot-analyst-workbench
-
-# preferred: Docker
-docker compose up --build
-```
-
-If Docker is not available, see project-specific local run instructions in this README.
-
-
-## Legal
-
-Licensed under **AGPL-3.0-only** unless otherwise noted.
-See `LICENSE` and `NOTICE`.

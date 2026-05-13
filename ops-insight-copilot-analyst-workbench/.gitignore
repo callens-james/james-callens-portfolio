@@ -1,5 +1,20 @@
+# Dependencies
 node_modules/
+
+# Runtime/log artifacts
 *.log
+npm-debug.log*
 .DS_Store
+
+# Local environment / secrets
 .env
 .env.*
+*.pem
+id_rsa*
+*secret*
+*token*
+*password*
+
+# Generated evidence that can be refreshed locally
+release/proof-pack/*.runtime.json
+release/proof-pack/*.runtime.txt

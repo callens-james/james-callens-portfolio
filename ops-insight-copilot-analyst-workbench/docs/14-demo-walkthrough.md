@@ -20,6 +20,14 @@
 - **Business value:** Faster reporting cycle, clearer priorities, and repeatable analyst outputs.
 
 ## Suggested sample files
-- `data/sample/ops_sample_alert.csv`
-- `data/sample/support_export_sample.csv`
-- `data/sample/crm_export_sample.csv`
+- Primary reviewer demo: `data/sample/ops_sample_alert.csv`
+- Source-format demos: `data/sample/support_export_sample.csv`, `data/sample/crm_export_sample.csv`
+- Details: [`SAMPLE_DATA.md`](./SAMPLE_DATA.md)
+
+## Expected primary-demo result
+Uploading `ops_sample_alert.csv` should produce:
+- 3 KPI rows
+- 3 anomalies: 2 high, 1 medium
+- 3 proposed recommendations
+- weekly brief with 3 top actions
+- audit entries for upload, recommendation update, and brief generation after approve/undo + brief steps
