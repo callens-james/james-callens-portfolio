@@ -18,7 +18,9 @@ The goal was to build a mission-control interface that keeps chat natural while 
 - Service-based runtime on port 3010
 - Local-first model strategy with fallback paths
 
-![Mission Control Main Interface](../assets/mission-control-main.jpg)
+![Mission Control HUD Interface](../assets/mission-control-hud-2026-05-13.png)
+
+_Visual proof: updated HUD-style operator cockpit with status signals, active operation context, and Mission Core visual layer._
 
 ## Key Design Decisions
 - **Dashboard-first UX**: operator cockpit, not terminal-only
