@@ -156,9 +156,9 @@ Expected:
 ## Screenshots
 See `docs/SCREENSHOTS.md` for what each screenshot proves.
 
-![Dashboard Overview](docs/screenshots/dashboard-overview.jpg)
-![Pre-change Findings](docs/screenshots/prechange-findings.jpg)
-![Findings Table](docs/screenshots/prechange-table.jpg)
+![Dashboard Overview](docs/screenshots/dashboard-overview.png)
+![Pre-change Findings](docs/screenshots/prechange-findings.png)
+![Findings Table](docs/screenshots/prechange-table.png)
 
 ---
 

@@ -57,9 +57,9 @@ Full demo: `docs/DEMO_SCRIPT.md`
 
 ## Screenshots
 
-- `docs/screenshots/dashboard-overview.jpg` — dashboard/operator surface
-- `docs/screenshots/prechange-findings.jpg` — risky-change finding output
-- `docs/screenshots/prechange-table.jpg` — findings table / triage view
+- `docs/screenshots/dashboard-overview.png` — dashboard/operator surface
+- `docs/screenshots/prechange-findings.png` — risky-change finding output
+- `docs/screenshots/prechange-table.png` — findings table / triage view
 
 Screenshot guide: `docs/SCREENSHOTS.md`
 

@@ -4,7 +4,7 @@ These screenshots are included so reviewers can understand the project quickly e
 
 ## Dashboard Overview
 
-File: `docs/screenshots/dashboard-overview.jpg`
+File: `docs/screenshots/dashboard-overview.png`
 
 Shows:
 
@@ -19,7 +19,7 @@ Reviewer takeaway:
 
 ## Pre-Change Findings
 
-File: `docs/screenshots/prechange-findings.jpg`
+File: `docs/screenshots/prechange-findings.png`
 
 Shows:
 
@@ -34,7 +34,7 @@ Reviewer takeaway:
 
 ## Findings Table
 
-File: `docs/screenshots/prechange-table.jpg`
+File: `docs/screenshots/prechange-table.png`
 
 Shows:
 
@@ -50,9 +50,9 @@ Reviewer takeaway:
 
 Recommended order:
 
-1. `dashboard-overview.jpg`
-2. `prechange-findings.jpg`
-3. `prechange-table.jpg`
+1. `dashboard-overview.png`
+2. `prechange-findings.png`
+3. `prechange-table.png`
 4. `release/proof-pack/validation-evidence-2026-05-12.md`
 
 Suggested narration:

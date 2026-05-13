@@ -10,9 +10,9 @@ Open dashboard:
 
 Use the existing screenshots if live demo time is short:
 
-- `docs/screenshots/dashboard-overview.jpg`
-- `docs/screenshots/prechange-findings.jpg`
-- `docs/screenshots/prechange-table.jpg`
+- `docs/screenshots/dashboard-overview.png`
+- `docs/screenshots/prechange-findings.png`
+- `docs/screenshots/prechange-table.png`
 
 ## Demo Flow
 

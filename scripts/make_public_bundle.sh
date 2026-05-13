@@ -21,7 +21,7 @@ allowed = [
  'projects/PROJECT_INDEX.md',
  'projects/ai-mission-control.md',
  'projects/job-pipeline.md',
- 'assets/mission-control-main.jpg',
+ 'assets/mission-control-main.png',
  'scripts/sensitive_scan.sh',
  'scripts/prepublish_check.sh',
 ]
