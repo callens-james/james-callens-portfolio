@@ -41,7 +41,7 @@ Shows broader product thinking and local-first workflow design. Best presented c
 
 These can support a deeper review, but should not compete with the top three projects on first pass.
 
-- **AI Mission Control Dashboard** — local AI operations dashboard with chat + execution control: [`ai-mission-control.md`](./ai-mission-control.md)
+- **Mission Control Dashboard** — local AI operations dashboard with chat, model routing, project continuity, file/document review, and guarded command workflows: [`ai-mission-control.md`](./ai-mission-control.md)
 - **Job Application Pipeline Automation** — sourcing/scoring/tracking workflow: [`job-pipeline.md`](./job-pipeline.md)
 - **Safe AI Suite** — safety engineering toolkit with risk gating and traceability patterns
 - **AI Toolkit / Workflow Studio / R Workflow Suite / Weather Dashboard** — supporting examples and older workflow artifacts
