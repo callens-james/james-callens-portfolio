@@ -7,7 +7,7 @@
 
 ## 1) AI Risk Gate
 ```bash
-cd "<workspace-home>/openclaw-workspace/Safe AI/projects/ai-risk-gate"
+cd "<repo-root>/ai-risk-gate"
 npm install
 npm start
 ```
@@ -15,7 +15,7 @@ Open: `http://<server-ip>:3344`
 
 ## 2) Timeline Viewer
 ```bash
-cd "<workspace-home>/openclaw-workspace/Safe AI/projects/timeline-viewer"
+cd "<repo-root>/timeline-viewer"
 npm install
 npm start
 ```
@@ -23,7 +23,7 @@ Open: `http://<server-ip>:3345`
 
 ## 3) Eval Harness
 ```bash
-cd "<workspace-home>/openclaw-workspace/Safe AI/projects/eval-harness"
+cd "<repo-root>/eval-harness"
 npm install
 npm start
 ```
@@ -31,13 +31,13 @@ Open: `http://<server-ip>:3346`
 
 ### Batch run only
 ```bash
-cd "<workspace-home>/openclaw-workspace/Safe AI/projects/eval-harness"
+cd "<repo-root>/eval-harness"
 npm run run:batch
 ```
 
 ## 4) Safe Automation Template
 ```bash
-cd "<workspace-home>/openclaw-workspace/Safe AI/projects/safe-automation-template"
+cd "<repo-root>/safe-automation-template"
 npm install
 npm run check
 npm start
@@ -46,12 +46,12 @@ Open: `http://<server-ip>:3347/health`
 
 ## Weekly Refresh (single command)
 ```bash
-cd "<workspace-home>/openclaw-workspace/Safe AI"
+cd "<workspace-root>"
 ./run_weekly_safe_ai.sh
 ```
 
 ## Publish Safety Gate
 ```bash
-cd "<workspace-home>/openclaw-workspace/Safe AI/github-ready"
+cd "<repo-root>"
 ./prepublish_check.sh
 ```

@@ -25,6 +25,19 @@ The suite demonstrates practical AI safety engineering:
 - Run repeatable regression evaluations after policy/model updates
 - Provide governance/compliance-friendly evidence for AI safety reviews
 
+
+## Local setup
+
+Each module is standalone. From a module folder, install dependencies and start it locally:
+
+```bash
+cd ai-risk-gate   # or timeline-viewer / eval-harness / safe-automation-template
+npm install
+npm start
+```
+
+Use the included sample configs and datasets as templates. Replace paths, policies, and logs with your own local values before personal use.
+
 ## Key evidence
 See:
 - `safe-ai-suite/docs/SAFE_AI_PROOF_PACK.md`
@@ -34,29 +47,9 @@ See:
 
 ## Safety gate before push
 ```bash
-cd "<workspace-home>/openclaw-workspace/Safe AI/github-ready"
+cd "<repo-root>"
 ./prepublish_check.sh
 ```
 
 ## Notes
 This folder contains only sanitized artifacts intended for public sharing.
-
-
-## Quick Install / Run
-
-```bash
-# clone repo
-git clone https://github.com/callens-james/james-callens-portfolio.git
-cd safe-ai-suite
-
-# preferred: Docker
-docker compose up --build
-```
-
-If Docker is not available, see project-specific local run instructions in this README.
-
-
-## Legal
-
-Licensed under **AGPL-3.0-only** unless otherwise noted.
-See `LICENSE` and `NOTICE`.

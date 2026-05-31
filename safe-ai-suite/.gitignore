@@ -3,3 +3,7 @@ node_modules/
 .DS_Store
 .env
 .env.*
+
+# Generated eval output
+*/reports/
+reports/
