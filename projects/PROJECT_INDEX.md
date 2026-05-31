@@ -43,5 +43,5 @@ These can support a deeper review, but should not compete with the top three pro
 
 - **Mission Control Dashboard** — local AI operations dashboard with chat, model routing, project continuity, file/document review, and guarded command workflows: [`ai-mission-control.md`](./ai-mission-control.md)
 - **Job Application Pipeline Automation** — sourcing/scoring/tracking workflow: [`job-pipeline.md`](./job-pipeline.md)
-- **Safe AI Suite** — published safety engineering toolkit with risk gating, eval evidence, prepublish hygiene, and traceability patterns: [`../safe-ai-suite/`](../safe-ai-suite/)
+- **Safe AI Suite** — published safety engineering toolkit with risk gating, eval evidence, prepublish hygiene, and traceability patterns: [`safe-ai-suite.md`](./safe-ai-suite.md)
 - **AI Toolkit / Workflow Studio / R Workflow Suite / Weather Dashboard** — supporting examples and older workflow artifacts

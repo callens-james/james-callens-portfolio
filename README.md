@@ -56,7 +56,7 @@ I build practical AI and data workflow systems for operations-heavy environments
 These are useful supporting artifacts, but they are not the recommended first click for recruiters.
 
 - [`projects/ai-mission-control.md`](./projects/ai-mission-control.md) — local AI operations dashboard with chat, project continuity, file/document review, model routing, and guarded command workflows
-- [`safe-ai-suite/`](./safe-ai-suite) — safety engineering toolkit with risk gating and traceability patterns
+- [`projects/safe-ai-suite.md`](./projects/safe-ai-suite.md) — safety engineering toolkit with risk gating, eval evidence, and traceability patterns
 - [`ai-toolkit/`](./ai-toolkit) — reusable AI/workflow templates and docs
 - [`workflow-studio/`](./workflow-studio) — workflow automation prototype
 - [`r-workflow-suite/`](./r-workflow-suite) — research/data workflow automation examples
