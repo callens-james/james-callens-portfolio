@@ -16,5 +16,7 @@
 - Next: UX polish and additional datasets
 
 ## Safe AI Suite
-- Status: Eval-backed safety framework complete
-- Next: continued documentation and scenario coverage updates
+- Status: Published / eval-backed safety framework complete
+- Runtime: Four standalone Node/Fastify modules plus proof-pack documentation
+- Quality: Prepublish OCR/leak scan, dependency audit, eval harness, and safe automation preflight passed
+- Next: continued scenario coverage updates only as new examples are useful
