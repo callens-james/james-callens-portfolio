@@ -25,7 +25,7 @@ services:
       - appsec-copilot
     volumes:
       - ./backend/watchers:/app/backend/watchers
-      - /home/james/openclaw-workspace:/home/james/openclaw-workspace
+      - ./workspace:/workspace
     environment:
       - PYTHONUNBUFFERED=1
     env_file:

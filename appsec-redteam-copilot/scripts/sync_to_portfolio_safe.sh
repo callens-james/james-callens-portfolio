@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 APP_DIR="$(cd "$(dirname "$0")/.." && pwd)"
-PORT_REPO="/home/james/openclaw-workspace/github-upload-temp/repo"
+PORT_REPO="${PORT_REPO:-../james-callens-portfolio}"
 SUBDIR="appsec-redteam-copilot"
 
 cd "$APP_DIR"

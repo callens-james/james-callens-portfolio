@@ -1,6 +1,6 @@
 # Preliminary setup before running the script should be to go to the open field computer. Run the analysis on the file(s) of choice.
 # (e.g. File > Data Analysis - then setup arenas, zones, and file selection)
-# Then go to the following file path --- C:\Users\hurdlab\AppData\Local\VirtualStore\Program Files\Activity Monitor
+# Then go to the following file path --- <local-data-path>\Activity Monitor
 # Find your analysis file (should have file extension of ".Zone") and copy it to a convenient location to access with this R script # Make sure there are 2 empty lines at the bottom of the notepad "zone" file
 wd <- "C:/Users/PC/Dropbox/tanni=joe=james/open_field/Icer_vector_pilot_Heroin_SA/Cohort 2/tr_openfield_2021august17/raw_and_script/"
 Export_File_Name <- "bigcenter.Zone"

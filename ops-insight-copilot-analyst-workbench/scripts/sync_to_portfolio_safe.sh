@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 PROJ_DIR="$(cd "$(dirname "$0")/.." && pwd)"
-PORT_REPO="/home/james/openclaw-workspace/github-upload-temp/repo"
+PORT_REPO="${PORT_REPO:-../james-callens-portfolio}"
 SUBDIR="$(basename "$PROJ_DIR")"
 
 cd "$PROJ_DIR"

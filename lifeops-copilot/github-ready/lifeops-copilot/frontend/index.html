@@ -112,7 +112,7 @@ Assisted min/task <input id='blAssist' type='number' value='20' style='width:70p
 <div class='card'><h3>Audit (latest)</h3><button onclick='rollbackLast()'>Rollback Last State Change</button><div id='audit'></div></div>
 </details>
 <script>
-const API='http://192.168.1.170:3360/api';
+const API='http://localhost:3360/api';
 const j=async(u,o)=>{const r=await fetch(API+u,o); const d=await r.json(); if(!r.ok||d.ok===false) throw new Error(d.error||'Something went wrong.'); return d;};
 const showMsg=(t)=>{document.getElementById('msg').textContent=t;};
 async function load(){

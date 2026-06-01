@@ -1,12 +1,12 @@
 # AppSec Red Team Copilot Report
 
 - Generated: 2026-05-06T19:36:06.541349 UTC
-- Project: `/home/james/openclaw-workspace/appsec-redteam-copilot`
+- Project: `<project-root>`
 - Summary: Analyzed git diff files: 1
 - Overall Risk: **🟢 LOW**
 
 ## Findings
-### `/home/james/openclaw-workspace/appsec-redteam-copilot/backend/api/main.py`
+### `<project-root>/backend/api/main.py`
 - Risk: **🟢 LOW**
 - Score: 0 | Confidence: 0.6
 

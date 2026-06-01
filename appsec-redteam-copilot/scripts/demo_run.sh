@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -e
-cd /home/james/openclaw-workspace/appsec-redteam-copilot
+cd "$(dirname "$0")/.."
 
 echo "[demo] ensure API is running on :3480"
 

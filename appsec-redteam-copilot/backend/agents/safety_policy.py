@@ -171,7 +171,7 @@ def enforce_scope_and_batch(cmd:str):
     root = p.get('workspaceRoot','/workspace')
     if p.get('workspaceScopeLock', True):
         for x in paths:
-            xp = x.replace('~','/home/james')
+            xp = x.replace('~','/home/user')
             if not xp.startswith(root):
                 out['outsideScope']=True
                 break

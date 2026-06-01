@@ -5,7 +5,7 @@ from agents.safety_policy import evaluate_command, audit
 from agents.global_gate import evaluate_global_action, approve, consume_approval
 
 PROTECTED_PREFIXES = [
-    '/home/james/.ssh',
+    '/home/user/.ssh',
     '/etc', '/boot', '/root', '/var/lib', '/usr', '/bin', '/sbin', '/lib', '/lib64',
 ]
 PROTECTED_NAMES = {'.env', '.env.local', 'id_rsa', 'id_ed25519', 'authorized_keys'}

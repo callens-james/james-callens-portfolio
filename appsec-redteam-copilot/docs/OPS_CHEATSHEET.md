@@ -49,4 +49,4 @@ sudo systemctl restart appsec-copilot.service
 
 ## Dashboard URL
 - Local: `http://127.0.0.1:3480/dashboard`
-- LAN: `http://192.168.1.170:3480/dashboard`
+- LAN: `http://localhost:3480/dashboard`
