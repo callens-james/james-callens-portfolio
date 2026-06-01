@@ -31,3 +31,8 @@ This is not prompt-only experimentation. It is a policy-and-evidence approach:
 - Runbook: [`docs/RUNBOOK_SAFE_AI_SUITE.md`](./docs/RUNBOOK_SAFE_AI_SUITE.md)
 - Failure taxonomy: [`docs/FAILURE_TAXONOMY_2026-05-02.md`](./docs/FAILURE_TAXONOMY_2026-05-02.md)
 - Metrics trend: [`docs/METRICS_TREND_TABLE.md`](./docs/METRICS_TREND_TABLE.md)
+
+## License
+
+Licensed under **AGPL-3.0-only** unless otherwise noted. See `../LICENSE` and `../NOTICE`.
+

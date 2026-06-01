@@ -53,3 +53,8 @@ cd "<repo-root>"
 
 ## Notes
 This folder contains only sanitized artifacts intended for public sharing.
+
+## License
+
+Licensed under **AGPL-3.0-only** unless otherwise noted. See `LICENSE` and `NOTICE`.
+
