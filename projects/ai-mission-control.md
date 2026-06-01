@@ -38,7 +38,7 @@ Mission Control is not framed as autonomous magic. It demonstrates practical hum
 - paid/API escalation is visible and guarded
 - local/private runtime state is excluded from public packaging
 - validation scripts check route presence, syntax, ignore hygiene, and obvious secret patterns
-- the honest product stance is local operator workbench, not production SaaS security
+- the honest product stance is local operator workbench with reviewable controls, not a hosted enterprise SaaS claim
 
 ## Portability Notes
 
