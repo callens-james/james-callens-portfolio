@@ -4,7 +4,7 @@
 Safe AI Suite is a publish-safe toolkit showing how to make AI-enabled automation reviewable: risk gating, decision traces, eval evidence, and guarded execution templates.
 
 ## Problem solved
-AI automation demos often skip the hard parts: deciding when an action is risky, preserving evidence, testing policy changes, and giving reviewers a clear audit trail. This project packages those safety patterns as small, inspectable modules.
+AI automation projects often skip the hard parts: deciding when an action is risky, preserving evidence, testing policy changes, and giving reviewers a clear audit trail. This project packages those safety patterns as small, inspectable modules.
 
 ## What it includes
 - **AI Risk Gate** — policy-based risk classification with `allow` / `confirm` style decisions and audit logging.

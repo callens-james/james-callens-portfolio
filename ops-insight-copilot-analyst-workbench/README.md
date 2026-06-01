@@ -36,7 +36,7 @@ npm run dev
 ```
 Open: `http://<server-ip>:3350/`
 
-## Fast reviewer demo
+## Fast reviewer walkthrough
 Use:
 
 ```text

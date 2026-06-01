@@ -58,7 +58,7 @@ These are useful supporting artifacts, but they are not the recommended first cl
 - [`projects/ai-mission-control.md`](./projects/ai-mission-control.md) — local AI operations dashboard with chat, project continuity, file/document review, model routing, and guarded command workflows
 - [`projects/safe-ai-suite.md`](./projects/safe-ai-suite.md) — safety engineering toolkit with risk gating, eval evidence, and traceability patterns
 - [`ai-toolkit/`](./ai-toolkit) — reusable AI/workflow templates and docs
-- [`workflow-studio/`](./workflow-studio) — workflow automation prototype
+- [`workflow-studio/`](./workflow-studio) — workflow automation workbench
 - [`r-workflow-suite/`](./r-workflow-suite) — research/data workflow automation examples
 - [`weather-dashboard/`](./weather-dashboard) — secondary UI/dashboard example
 
@@ -66,7 +66,7 @@ These are useful supporting artifacts, but they are not the recommended first cl
 
 ## What this portfolio proves
 
-- I build **governed AI systems**, not wrapper demos.
+- I build **governed AI systems**, not prompt-only tools.
 - I turn operational data into **repeatable analyst workflows**.
 - I use **validation, audit trails, and proof packs** to make projects reviewable.
 - I can operate across **data, automation, Linux/services, documentation, and productized workflows**.

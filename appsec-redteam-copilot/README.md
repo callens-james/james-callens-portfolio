@@ -131,7 +131,7 @@ Expected:
 ---
 
 ## What this proves
-- AI-assisted **risk gating** with `allow/warn/block`
+- Governed **risk gating** with `allow/warn/block`
 - **Pre-change** and post-change analysis patterns
 - **Eval-driven** quality checks + CI threshold enforcement
 - **Operational deployment** (Docker + systemd)

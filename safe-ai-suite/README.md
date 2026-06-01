@@ -14,7 +14,7 @@ Safe AI Suite is a publish-safe, local-first toolkit for making AI-enabled autom
 
 ## Why I built this
 
-AI automation demos often skip the hard parts: deciding when an action is risky, preserving evidence, testing policy changes, and giving reviewers a clear audit trail. This suite packages those safety patterns as small, inspectable modules.
+AI automation projects often skip the hard parts: deciding when an action is risky, preserving evidence, testing policy changes, and giving reviewers a clear audit trail. This suite packages those safety patterns as small, inspectable modules.
 
 ## Why it matters
 
