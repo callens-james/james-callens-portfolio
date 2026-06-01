@@ -1,6 +1,6 @@
 # About James Callens
 
-I build practical AI-assisted systems with a focus on:
+I build practical AI/data workflow systems with a focus on:
 - local-first architecture
 - safe execution and controllable automation
 - transparent, operator-friendly interfaces
@@ -13,7 +13,7 @@ I build practical AI-assisted systems with a focus on:
 - Keep rollback paths available
 
 ## Current Focus
-Designing a Jarvis-like local AI operator experience:
+Designing local AI operator workflows that make automation reviewable:
 - chat-first interface
 - routing/decision layer
 - controlled execution tools

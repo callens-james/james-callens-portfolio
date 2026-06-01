@@ -10,7 +10,7 @@ Start with the first two projects. They are the clearest recruiter proof points.
 - Proof pack: [`../appsec-redteam-copilot/release/proof-pack/README.md`](../appsec-redteam-copilot/release/proof-pack/README.md)
 
 ### Why it matters
-Shows James can build AI-assisted systems with practical security guardrails, operator workflows, and evidence that reviewers can inspect.
+Shows James can build governed automation systems with practical security guardrails, operator workflows, and evidence that reviewers can inspect.
 
 ---
 

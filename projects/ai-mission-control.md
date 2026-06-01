@@ -4,13 +4,13 @@
 
 Mission Control is a local AI operations dashboard: a private web UI that combines chat, project context, model routing, terminal-style command workflows, file/document review, notes, memory, job tracking, and operational status in one reviewable workspace.
 
-The project is best understood as an internal-style AI operations portal prototype. A user works through a browser dashboard while the backend routes to approved local or remote models, preserves project context, exposes system health, and puts guardrails around tool execution.
+The project is best understood as an internal-style AI operations portal. A user works through a browser dashboard while the backend routes to approved local or remote models, preserves project context, exposes system health, and puts guardrails around tool execution.
 
 ![Mission Control Dashboard HUD](../assets/mission-control-hud.png)
 
 ## Problem
 
-Most AI demos stop at chat. Real operational use needs more than a prompt box:
+Most AI tools stop at chat. Real operational use needs more than a prompt box:
 
 - context should persist across projects and threads
 - model/tool usage should be visible and intentional
@@ -79,4 +79,4 @@ These checks verify server syntax, expected route presence, ignore hygiene, and 
 
 ## Interview Sound Bite
 
-Mission Control is my prototype of an internal AI operations portal. Instead of treating AI as a chatbot, it treats AI as part of an operator workflow: context is preserved, system status is visible, risky actions are gated, and automation can be reviewed before it is trusted.
+Mission Control is my internal AI operations portal concept. Instead of treating AI as a chatbot, it treats AI as part of an operator workflow: context is preserved, system status is visible, risky actions are gated, and automation can be reviewed before it is trusted.

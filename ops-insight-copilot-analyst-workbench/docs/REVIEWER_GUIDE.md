@@ -12,7 +12,7 @@ Operations teams often export data from support, CRM, or queue tools and manuall
 
 ## Fast demo
 ```bash
-cd /home/james/openclaw-workspace/ops-insight-copilot-analyst-workbench
+cd ops-insight-copilot-analyst-workbench
 npm install
 npm run dev
 ```

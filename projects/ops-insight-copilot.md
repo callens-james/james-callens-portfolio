@@ -31,7 +31,7 @@ Use:
 ops-insight-copilot-analyst-workbench/data/sample/ops_sample_alert.csv
 ```
 
-Expected demo outcome:
+Expected walkthrough outcome:
 - 3 KPI rows
 - 3 anomaly flags
 - 3 proposed recommendations
@@ -47,7 +47,7 @@ npm run test:slice7
 npm run test:e2e
 ```
 
-The end-to-end demo test verifies upload validation, KPI generation, anomaly detection, recommendation generation, approve/undo control, weekly brief generation, and audit logging.
+The end-to-end workflow test verifies upload validation, KPI generation, anomaly detection, recommendation generation, approve/undo control, weekly brief generation, and audit logging.
 
 ## Portfolio positioning
 This project is strongest as a business-operations complement to AppSec Red Team Copilot:
@@ -63,4 +63,4 @@ Do not describe this as:
 - ML forecasting
 - enterprise auth or multi-tenant ready
 
-Best framing: local-first portfolio prototype demonstrating practical workflow automation, explainable rules, human controls, and reviewer-ready proof.
+Best framing: local-first portfolio workbench demonstrating practical workflow automation, explainable rules, human controls, and reviewer-ready proof.

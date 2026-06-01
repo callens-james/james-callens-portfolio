@@ -1,14 +1,14 @@
 # LifeOps Copilot
 
-Local-first autopilot for life + work operations.
+Local-first workflow/productization case study for life + work operations.
 
 Version: **v0.4.0-sprint4** (app)  
-Release milestone: **v0.3.0-v2-demo-final**
+Release milestone: **v0.3.0-v2-final**
 
 ---
 
 ## What this is
-LifeOps Copilot is a unified operations assistant for individuals and small teams. It combines:
+LifeOps Copilot is a local-first operations dashboard for individuals and small teams. It combines:
 - paperwork/task triage,
 - opportunity tracking,
 - career pipeline management,
@@ -23,7 +23,7 @@ It is designed to run locally and stay usable on lower-resource machines.
 
 ## What to do with it (quick start)
 1. Launch the app.
-2. Click **Run Quick Start Demo**.
+2. Click **Run Quick Start**.
 3. Review:
    - Unified Today Queue
    - Plan My Day
@@ -109,10 +109,10 @@ It is designed to run locally and stay usable on lower-resource machines.
 - Estimates manual vs assisted time impact.
 - Configurable assumptions.
 
-## 13) Case Studies + Scenarios + Demo Script
+## 13) Case Studies + Scenarios + Walkthrough
 - Load scenario templates.
 - Generate case-study markdown from live state.
-- Built-in demo script helper.
+- Built-in walkthrough helper.
 
 ## 14) Data Portability + Privacy
 - Export package (redacted/full, include/exclude notes/audit).
@@ -165,7 +165,7 @@ Location (Windows build host):
 
 ## Run locally (dev)
 ```bash
-cd /home/james/openclaw-workspace/lifeops-copilot
+cd lifeops-copilot
 npm install
 npm run dev
 ```

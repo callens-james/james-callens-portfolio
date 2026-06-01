@@ -30,7 +30,7 @@ It is intentionally bounded: this is a portfolio-grade analyst workbench, not a 
 
 ## Run
 ```bash
-cd /home/james/openclaw-workspace/ops-insight-copilot-analyst-workbench
+cd ops-insight-copilot-analyst-workbench
 npm install
 npm run dev
 ```
