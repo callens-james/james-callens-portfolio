@@ -8,7 +8,7 @@ A reusable local-first starter for guarded automation.
 - Blocked action policy
 - Audit log trail
 - Preflight safety script
-- Rollback script placeholder
+- Rollback script starter for environment-specific recovery steps
 
 ## Run
 ```bash
