@@ -171,7 +171,7 @@ fr_summary.rFUNC = function(wd,funcpath)({ # FR PART 1 ---- setwd(wd) files=list
 # shiny.rFUNC <- function(funcpath) {
 # rsconnect::setAccountInfo(name='hurd-laboratory',
 # credential placeholder redacted,
-# secret='<redacted>' # # LOADING LIBRARIES ----
+# sensitive value redacted # # LOADING LIBRARIES ----
 # library(plyr)
 # library(lubridate)
 # library(DT)
